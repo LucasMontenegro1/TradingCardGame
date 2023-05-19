@@ -11,5 +11,5 @@ RUN mvn package -DskipTests
 # Stage 1: Run jar with JRE
 FROM eclipse-temurin:17-jre-focal AS deploy
 
-COPY --from=build /app/target/demo-0.0.1-SNAPSHOT.jar /app/main.jar
+COPY --from=build /app/target/tp-0.0.1-SNAPSHOT.jar /app/main.jar
 CMD ["java", "-jar", "/app/main.jar"]
