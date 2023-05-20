@@ -6,10 +6,22 @@ public class Carta {
     Tipo tipo;
 
 
-    Carta(Tipo tipo, String nombre, String descripcion){
+    public Carta(Tipo tipo, String nombre, String descripcion){
         this.tipo = tipo;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
 
+    public Tipo getTipo() {
+        return tipo;
+    }
+
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }
