@@ -1,5 +1,7 @@
-package fiuba.tdd.tp.carta;
+package fiuba.tdd.tp.carta.tipos;
 
-public class Criatura implements Tipo{
+import fiuba.tdd.tp.carta.Tipo;
+
+public class Criatura implements Tipo {
 
 }

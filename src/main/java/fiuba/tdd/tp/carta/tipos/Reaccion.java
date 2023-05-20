@@ -1,4 +1,6 @@
-package fiuba.tdd.tp.carta;
+package fiuba.tdd.tp.carta.tipos;
 
-public class Reaccion implements Tipo{
+import fiuba.tdd.tp.carta.Tipo;
+
+public class Reaccion implements Tipo {
 }

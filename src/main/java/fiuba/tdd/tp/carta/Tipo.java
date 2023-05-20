@@ -1,2 +1,4 @@
-package fiuba.tdd.tp.carta;public interface Tipo {
+package fiuba.tdd.tp.carta;
+
+public interface Tipo {
 }
