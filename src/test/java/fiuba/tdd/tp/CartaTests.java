@@ -32,7 +32,7 @@ public class CartaTests {
         String descripcion = "Descripción de la carta";
 
         Carta carta = new Carta(tipo, nombre, descripcion);
-        Assertions.assertTrue(carta.isTipo(Tipo.Accion));
+        Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CartaTests {
         String descripcion = "Descripción de la carta";
 
         Carta carta = new Carta(tipo, nombre, descripcion);
-        Assertions.assertTrue(carta.isTipo(Tipo.Accion));
+        Assertions.assertTrue(carta.isTipo(Tipo.Reaccion));
     }
 
 
@@ -63,7 +63,7 @@ public class CartaTests {
         String descripcion = "Descripción de la carta";
 
         Carta carta = new Carta(tipo, nombre, descripcion);
-        Assertions.assertTrue(carta.isTipo(Tipo.Accion));
+        Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class CartaTests {
         String descripcion = "Descripción de la carta";
 
         Carta carta = new Carta(tipo, nombre, descripcion);
-        Assertions.assertTrue(carta.isTipo(Tipo.Accion));
+        Assertions.assertTrue(carta.isTipo(Tipo.Energia));
     }
     @Test
     public void crearCartaConVariosTipos(){
