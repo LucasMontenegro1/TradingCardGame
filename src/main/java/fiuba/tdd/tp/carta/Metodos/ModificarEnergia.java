@@ -10,7 +10,7 @@ public class ModificarEnergia implements MetodoCarta {
     private int cantidad;
     private Energia tipo;
 
-    public ObtenerEnergia(Energia tipo, int cantidad){
+    public ModificarEnergia(Energia tipo, int cantidad){
         this.tipo = tipo;
         this.cantidad = cantidad;
     }
