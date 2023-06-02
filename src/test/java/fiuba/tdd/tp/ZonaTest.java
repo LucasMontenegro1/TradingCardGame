@@ -13,6 +13,8 @@ import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class ZonaTest {
 
+    // Zona de Artefactos
+
     @Test
     public void testZonaDeArtefactoCambiarZona() {
         Zona zona = new ZonaArtefecto();
@@ -43,6 +45,8 @@ public class ZonaTest {
         assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
     }
 
+    // Zona de Combate
+
     @Test
     public void testZonaDeCombateCambiarZona() {
         Zona zona = new ZonaCombate();
@@ -70,6 +74,38 @@ public class ZonaTest {
     @Test
     public void testZonaDeCombateDescartar() {
         Zona zona = new ZonaCombate();
+        assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
+    }
+
+    // Zona de Descarte
+
+    @Test
+    public void testZonaDeDescarteCambiarZona() {
+        Zona zona = new ZonaDescarte();
+        assertEquals(zona.cambiarZona().getClass(), ZonaDescarte.class);
+    }
+
+    @Test
+    public void testZonaDeDescarteMoverACombate() {
+        Zona zona = new ZonaDescarte();
+        assertEquals(zona.moverACombate().getClass(), ZonaDescarte.class);
+    }
+
+    @Test
+    public void testZonaDeDescarteMoverAReserva() {
+        Zona zona = new ZonaDescarte();
+        assertEquals(zona.moverAReserva().getClass(), ZonaDescarte.class);
+    }
+
+    @Test
+    public void testZonaDeDescarteInvocar() {
+        Zona zona = new ZonaDescarte();
+        assertEquals(zona.invocar().getClass(), ZonaDescarte.class);
+    }
+
+    @Test
+    public void testZonaDeDescarteDescartar() {
+        Zona zona = new ZonaDescarte();
         assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
     }
 }
