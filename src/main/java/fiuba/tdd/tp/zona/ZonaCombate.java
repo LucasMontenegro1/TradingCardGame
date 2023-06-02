@@ -1,30 +1,30 @@
 package fiuba.tdd.tp.zona;
 
-public class ZonaArtefecto implements Zona {
+public class ZonaCombate implements Zona {
 
     @Override
     public Zona cambiarZona() {
-        return new ZonaArtefecto();
+        return new ZonaReserva();
     }
-    
+
     @Override
     public Zona moverACombate() {
-        return new ZonaArtefecto();
+        return new ZonaCombate();
     }
 
     @Override
     public Zona moverAReserva() {
-        return new ZonaArtefecto();
+        return new ZonaCombate();
     }
 
     @Override
     public Zona invocar() {
-        return new ZonaArtefecto();
+        return new ZonaCombate();
     }
 
     @Override
     public Zona descartar() {
         return new ZonaDescarte();
     }
-
+    
 }
