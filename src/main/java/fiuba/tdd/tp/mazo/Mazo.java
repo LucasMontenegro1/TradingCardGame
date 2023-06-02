@@ -9,4 +9,9 @@ import fiuba.tdd.tp.modo.Modo;
 public class Mazo {
     public List<Carta> cartas = new ArrayList<Carta>();
     public Modo modo;
+
+    public Carta tomar_carta(){
+        return cartas.get(cartas.size());
+    }
+
 }
