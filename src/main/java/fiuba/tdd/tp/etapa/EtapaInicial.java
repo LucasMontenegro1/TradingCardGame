@@ -24,7 +24,7 @@ public class EtapaInicial implements Etapa {
 
     @Override
     public Etapa finalizar() {
-        return null;
+        return new EtapaPrincipal();
     }
     
     @Override
