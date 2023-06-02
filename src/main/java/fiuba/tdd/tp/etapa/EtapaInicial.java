@@ -24,6 +24,10 @@ public class EtapaInicial implements Etapa {
 
     @Override
     public Etapa finalizar() {
+
+        if (this.cartaAsignada == null){
+            return new EtapaFinal();
+        }
         return new EtapaPrincipal();
     }
     
