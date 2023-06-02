@@ -22,7 +22,7 @@ public class EtapaPrincipal implements Etapa{
 
     @Override
     public Etapa finalizar() {
-        return null;
+        return new EtapaDeAtaque();
     }
 
     @Override
