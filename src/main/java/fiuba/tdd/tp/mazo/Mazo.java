@@ -16,4 +16,8 @@ public class Mazo {
         return cartas.get(random.nextInt(cartas.size()));
     }
 
+    public void agregarCarta(Carta carta){
+        this.cartas.add(carta);
+    }
+
 }
