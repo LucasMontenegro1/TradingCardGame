@@ -140,4 +140,36 @@ public class ZonaTest {
         Zona zona = new ZonaMano();
         assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
     }
+
+    // Zona de Reserva
+
+    @Test
+    public void testZonaDeReservaCambiarZona() {
+        Zona zona = new ZonaReserva();
+        assertEquals(zona.cambiarZona().getClass(), ZonaCombate.class);
+    }
+
+    @Test
+    public void testZonaDeReservaMoverACombate() {
+        Zona zona = new ZonaReserva();
+        assertEquals(zona.moverACombate().getClass(), ZonaReserva.class);
+    }
+
+    @Test
+    public void testZonaDeReservaMoverAReserva() {
+        Zona zona = new ZonaReserva();
+        assertEquals(zona.moverAReserva().getClass(), ZonaReserva.class);
+    }
+
+    @Test
+    public void testZonaDeReservaInvocar() {
+        Zona zona = new ZonaReserva();
+        assertEquals(zona.invocar().getClass(), ZonaReserva.class);
+    }
+
+    @Test
+    public void testZonaDeReservaDescartar() {
+        Zona zona = new ZonaReserva();
+        assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
+    }
 }
