@@ -42,4 +42,34 @@ public class ZonaTest {
         Zona zona = new ZonaArtefecto();
         assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
     }
+
+    @Test
+    public void testZonaDeCombateCambiarZona() {
+        Zona zona = new ZonaCombate();
+        assertEquals(zona.cambiarZona().getClass(), ZonaReserva.class);
+    }
+
+    @Test
+    public void testZonaDeCombateMoverACombate() {
+        Zona zona = new ZonaCombate();
+        assertEquals(zona.moverACombate().getClass(), ZonaCombate.class);
+    }
+
+    @Test
+    public void testZonaDeCombateMoverAReserva() {
+        Zona zona = new ZonaCombate();
+        assertEquals(zona.moverAReserva().getClass(), ZonaCombate.class);
+    }
+
+    @Test
+    public void testZonaDeCombateInvocar() {
+        Zona zona = new ZonaCombate();
+        assertEquals(zona.invocar().getClass(), ZonaCombate.class);
+    }
+
+    @Test
+    public void testZonaDeCombateDescartar() {
+        Zona zona = new ZonaCombate();
+        assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
+    }
 }
