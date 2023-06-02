@@ -10,7 +10,7 @@ public class Modo1 implements Modo {
 
     @Override
     public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos) {
-        return null;
+        return mazo.tomar_carta();
     }
 
     @Override
