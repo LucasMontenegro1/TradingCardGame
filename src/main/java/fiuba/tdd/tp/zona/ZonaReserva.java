@@ -1,15 +1,16 @@
 package fiuba.tdd.tp.zona;
 
-public class ZonaMano implements Zona {
 
-    @Override
+public class ZonaReserva implements Zona {
+
+    @Override 
     public Zona cambiarZona() {
-        return new ZonaMano();
+        return new ZonaCombate();
     }
 
     @Override
     public Zona moverACombate() {
-        return new ZonaCombate();
+       return new ZonaReserva();
     }
 
     @Override
@@ -18,12 +19,13 @@ public class ZonaMano implements Zona {
     }
 
     @Override
-    public Zona invocar(){
-        return new ZonaArtefecto();
-    }    
+    public Zona invocar() {
+        return new ZonaReserva();
+    }
 
     @Override
     public Zona descartar() {
         return new ZonaDescarte();
     }
+
 }
