@@ -2,6 +2,7 @@ package fiuba.tdd.tp.mazo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.modo.Modo;
@@ -11,7 +12,8 @@ public class Mazo {
     public Modo modo;
 
     public Carta tomar_carta(){
-        return cartas.get(cartas.size());
+        Random random = new Random();
+        return cartas.get(random.nextInt(cartas.size()));
     }
 
 }

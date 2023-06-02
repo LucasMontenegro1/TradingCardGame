@@ -8,7 +8,7 @@ import java.util.List;
 public class Modo2 implements Modo{
     @Override
     public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos) {
-        if (puntos == 6) {
+        if (puntos > 6) {
             return null;
         }
         return mazo.tomar_carta();
