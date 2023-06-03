@@ -27,4 +27,48 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
         assertEquals(jugador.cantdDinero, 0);
     }
+
+    @Test 
+    void testJugadorDepositaDinero() {
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(100);
+        assertEquals(jugador.cantdDinero, 100);
+    }
+
+    @Test 
+    void testJugadorRealizaDosDepositos() {
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(100);
+        jugador.depositarDinero(300);
+        assertEquals(jugador.cantdDinero, 400);
+    }
+
+    @Test
+    void testJugadorRealizaExtraccion() {
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(100);
+        
+        jugador.extraerDinero(50);
+        assertEquals(jugador.cantdDinero, 50);
+    }
+
+    @Test
+    void testJugadorRealizaDosExtracciones() {
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(100);
+        
+        jugador.extraerDinero(50);
+        jugador.extraerDinero(20);
+        assertEquals(jugador.cantdDinero, 30);
+    }
+
+    @Test
+    void testJugadorNoPuedeExtraerDeMas() {
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(100);
+        
+        jugador.extraerDinero(150);
+
+        assertEquals(jugador.cantdDinero, 100);
+    }
 }
