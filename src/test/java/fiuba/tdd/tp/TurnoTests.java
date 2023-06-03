@@ -59,7 +59,7 @@ public class TurnoTests {
         String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 
@@ -83,10 +83,9 @@ public class TurnoTests {
 
         Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -109,10 +108,9 @@ public class TurnoTests {
 
         Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -135,10 +133,9 @@ public class TurnoTests {
 		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaReserva();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -165,10 +162,9 @@ public class TurnoTests {
 		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaReserva();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -193,10 +189,9 @@ public class TurnoTests {
 		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -225,7 +220,7 @@ public class TurnoTests {
         String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -251,10 +246,9 @@ public class TurnoTests {
 		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Artefacto;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -280,10 +274,9 @@ public class TurnoTests {
 		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Artefacto;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		
@@ -310,7 +303,7 @@ public class TurnoTests {
         String descripcion = "Descripción de la carta";
         Zona zona = new ZonaReserva();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 		

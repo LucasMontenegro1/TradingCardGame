@@ -8,22 +8,31 @@ import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Carta {
     String nombre;
-    String descripcion;
     List<Tipo> tipos;
     List<Atributo> atributos;
+
     public Zona zona;
 
-    public Carta(List<Tipo> tipos, String nombre, String descripcion, Zona zona) {
-        this.tipos = tipos;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.atributos = new ArrayList<>();
+    public Carta(CartasDisponibles carta, Zona zona){
+        this.tipos = carta.tipos();
+        this.nombre = carta.nombreCarta();
+        this.atributos = carta.atributos();
         this.zona = zona;
     }
 
-    public Carta(List<Tipo> tipos, String nombre,
-            String descripcion, List<Atributo> atributos, Zona zona) {
-        this(tipos, nombre, descripcion, zona);
+
+    public Carta(List<Tipo> tipos, String nombre, Zona zona) {
+        this.tipos = tipos;
+        this.nombre = nombre;
+        this.atributos = new ArrayList<>();
+        this.zona = zona;
+        if (!this.isTipo(Tipo.Criatura) && !this.atributos.isEmpty()){
+            throw new IllegalArgumentException("Solo las cartas tipo criatura pueden tener atributos");
+        }
+    }
+
+    public Carta(List<Tipo> tipos, String nombre, List<Atributo> atributos, Zona zona) {
+        this(tipos, nombre, zona);
         if (this.isTipo(Tipo.Criatura)) {
             this.atributos = atributos;
         } else {
@@ -31,11 +40,10 @@ public class Carta {
         }
     }
 
-    public Carta(Tipo tipo, String nombre, String descripcion, Zona zona) {
+    public Carta(Tipo tipo, String nombre, Zona zona) {
         this.tipos = new ArrayList<Tipo>();
         this.tipos.add(tipo);
         this.nombre = nombre;
-        this.descripcion = descripcion;
         this.zona = zona;
     }
 
@@ -49,10 +57,6 @@ public class Carta {
 
     public String getNombre() {
         return nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
     }
 
     public void cambiarZona() {
