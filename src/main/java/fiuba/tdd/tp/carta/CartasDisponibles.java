@@ -1,5 +1,7 @@
 package fiuba.tdd.tp.carta;
 
+// TODO: que el constructor de carta reciba una carta disponible del enum
+// Carta nuevaCarta = new Carta(carta);
 public enum CartasDisponibles {
     ENERGIA("Energía", 10),
     ALQUMISTA("Alquimista", 20),

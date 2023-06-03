@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.jugador.Jugador;
@@ -95,6 +96,19 @@ public class JugadorTests {
     }
 
     @Test
+    void testJugadorCompraUnaMismaCartaDosVeces() throws DineroInsuficiente {        
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(50);
+        
+        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+
+        assertEquals(jugador.getCartas().size(), 1);
+        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombreCarta()), 2);
+        assertEquals(jugador.getCantdDinero(), 10);
+    }
+
+    @Test
     void testJugadorCompraUnaCartaYSeDescuentaSuDinero() throws DineroInsuficiente {        
         Jugador jugador = new Jugador("Juan", "1234");
         jugador.depositarDinero(50);
@@ -115,4 +129,29 @@ public class JugadorTests {
         assertEquals(jugador.getCantdDinero(), 0);
         assertEquals(jugador.getCartas().size(), 0);
     }
+
+    @Test
+    void testJugadorDejaDeTenerUnaCarta() throws DineroInsuficiente, CartaNoEncontrada {
+        Jugador jugador = new Jugador("Juan", "1234");
+        jugador.depositarDinero(100);
+        
+        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUMISTA);
+        jugador.comprarCarta(CartasDisponibles.ALQUMISTA);  
+
+        jugador.eliminarCarta(CartasDisponibles.ALQUMISTA);
+
+        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombreCarta()), 2);
+        assertEquals(jugador.getCantdDinero(), 40);
+    }
+
+    @Test
+    void testJugadorNoPuedeEliminarUnaCartaQueNoTiene() throws CartaNoEncontrada {
+        Jugador jugador = new Jugador("Juan", "1234");
+
+        assertThrows(CartaNoEncontrada.class, () -> {
+            jugador.eliminarCarta(CartasDisponibles.ALQUMISTA);
+        });
+    }
+
 }
