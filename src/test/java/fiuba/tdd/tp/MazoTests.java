@@ -29,10 +29,9 @@ public class MazoTests {
 
         Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 
@@ -52,10 +51,9 @@ public class MazoTests {
 
         Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
-        Carta carta = new Carta(tipo, nombre, descripcion, zona);
+        Carta carta = new Carta(tipo, nombre, zona);
 		
 		mazo.agregarCarta(carta);
 

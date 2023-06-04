@@ -20,7 +20,6 @@ public class Carta {
         this.zona = zona;
     }
 
-
     public Carta(List<Tipo> tipos, String nombre, Zona zona) {
         this.tipos = tipos;
         this.nombre = nombre;
