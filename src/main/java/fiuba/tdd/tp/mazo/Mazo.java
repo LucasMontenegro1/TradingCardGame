@@ -18,6 +18,10 @@ public class Mazo {
             throw new MazoInvalido("No se puede crear el mazo con las cartas seleccionadas");
         }
     }
+
+    public Modo getModo() {
+        return this.modo;
+    }
     
     public Integer cantdCartas() {
         Integer cantCartas = 0;
@@ -37,11 +41,7 @@ public class Mazo {
         }
     }
 
-    public void eliminarCarta(String nombreCarta) throws MazoInvalido {
-        if (!this.modo.removerCarta(this.cartas, nombreCarta)) {
-            throw new MazoInvalido("No es posible agregar la carta");
-        }
-
+    private void eliminar(String nombreCarta) {
         Integer cantidad = this.cartas.get(nombreCarta) != null ? this.cartas.get(nombreCarta) : 0;
         if (cantidad == 1) {
             this.cartas.remove(nombreCarta);
@@ -50,14 +50,11 @@ public class Mazo {
         }
     }
 
-    /*
-    public Integer tomarCarta() {
-        if (cartas.size() == 0){
-            return null;
+    public void eliminarCarta(String nombreCarta) throws MazoInvalido {
+        if (!this.modo.removerCarta(this.cartas, nombreCarta)) {
+            throw new MazoInvalido("No es posible agregar la carta");
         }
 
-        Random random = new Random();
-        return this.cartas.get(random.nextInt(this.cartas.size()));
+        eliminar(nombreCarta);
     }
-     */
 }

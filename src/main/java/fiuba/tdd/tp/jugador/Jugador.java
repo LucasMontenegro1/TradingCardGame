@@ -1,12 +1,12 @@
 package fiuba.tdd.tp.jugador;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
-import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.mazo.Mazo;
 
 public class Jugador {
 
@@ -14,6 +14,7 @@ public class Jugador {
     private String contra;
     private int cantdDinero;
     private HashMap<String, Integer> cartas = new HashMap<>();
+    private HashMap<String, Mazo> mazos = new HashMap<>();
 
 
     public Jugador(String nombreJugador, String contra) {
@@ -32,6 +33,10 @@ public class Jugador {
 
     public Object getNombre() {
         return nombre;
+    }
+
+    public HashMap<String, Mazo> getMazos() {
+        return this.mazos;
     }
 
     public void depositarDinero(int cantidad) {
@@ -77,5 +82,17 @@ public class Jugador {
         } else {
             this.cartas.put(nombreCarta, cantidad-1);
         }
+    }
+
+    public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente {
+        if (this.mazos.get(nombre) != null) {
+            throw new MazoExistente("No puede agregar un mazo con ese nombre");
+        }
+
+        this.mazos.put(nombre, mazo);
+    }
+
+    public void eliminarMazo(String nombre) {
+        this.mazos.remove(nombre);
     }
 }

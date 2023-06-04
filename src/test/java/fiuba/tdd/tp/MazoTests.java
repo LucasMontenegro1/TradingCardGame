@@ -178,43 +178,4 @@ public class MazoTests {
         assertEquals(mazo.cantdCartas(), 60);
     }
 
-    /*
-    @Test
-    void testAgregarUnaCartaAUnMazo(){
-
-        Mazo mazo = new Mazo();
-
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		mazo.agregarCarta(carta);
-
-        assertEquals(1, mazo.cartas.size());
-    }
-
-    @Test
-    void testTomarUnaCartaDeUnMazoVacio(){
-        Mazo mazo = new Mazo();
-
-        assert mazo.tomar_carta() == null;
-    }
-
-    @Test
-    void testTomarUnaCartaDeUnMazoConCartas(){
-        Mazo mazo = new Mazo();
-
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		mazo.agregarCarta(carta);
-
-        assert mazo.tomar_carta() instanceof Carta;
-    }
-    */
 }

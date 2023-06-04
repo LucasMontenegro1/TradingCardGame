@@ -1,8 +1,13 @@
 package fiuba.tdd.tp;
 
+import java.util.HashMap;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaFinal;
@@ -20,51 +25,50 @@ import fiuba.tdd.tp.zona.ZonaMano;
 import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class TurnoTests {
-	/*
+	
+	private Mazo mazoModoUno;
+	private Mazo mazoModoDos;
+
+    @BeforeEach
+    public void setUp() throws MazoInvalido {
+		HashMap<String, Integer> cartas = new HashMap<>();
+        
+        Modo modoUno = new Modo1();
+		Modo modoDos = new Modo2();
+
+		cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        mazoModoUno = new Mazo(cartas, modoUno);
+
+		cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 60);
+		mazoModoDos = new Mazo(cartas, modoDos);
+    }
+
     @Test
 	void testCreacionTurno() {
-		Modo modo = new Modo1();
 		
 		Integer puntos = 15;
-	
-		Mazo mazo = new Mazo();
 
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+        Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
 
     @Test
 	void testIniciarTurno(){
-		Modo modo = new Modo1();
-		
+
 		Integer puntos = 15;
 	
-		Mazo mazo = new Mazo();
-
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
 
     @Test 
 	void testPasarDeEtapaEnTurnoModoUno(){
-		Modo modo = new Modo1();
 		
 		Integer puntos = 4;
 		
-        Mazo mazo = new Mazo();
-
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		mazo.agregarCarta(carta);
-
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+        Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -75,22 +79,10 @@ public class TurnoTests {
 
 
     @Test 
-	void testPasarDeEtapaEnTurnoModoDosConMenosDeSeisPuntosDeVictoria(){
-		Modo modo = new Modo2();
-		
+	void testPasarDeEtapaEnTurnoModoDosConMenosDeSeisPuntosDeVictoria(){		
 		Integer puntos = 2;
 		
-        Mazo mazo = new Mazo();
-
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+        Turno nuevoTurno = new Turno(mazoModoDos.getModo(), mazoModoDos, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -101,21 +93,10 @@ public class TurnoTests {
 
     @Test 
 	void testPasarDeEtapaEnTurnoModoDosConMasDeSeisPuntosDeVictoria(){
-        Modo modo = new Modo2();
 		
 		Integer puntos = 10;
 		
-        Mazo mazo = new Mazo();
-
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+        Turno nuevoTurno = new Turno(mazoModoDos.getModo(), mazoModoDos, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -126,21 +107,16 @@ public class TurnoTests {
     }
 
     @Test
-	void testMoverUnaCriaturaEnEtapaPrincipal(){
-		Modo modo = new Modo1();
-		
+	void testMoverUnaCriaturaEnEtapaPrincipal(){		
 		Integer puntos = 3;
 	
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
         Zona zona = new ZonaReserva();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -155,21 +131,16 @@ public class TurnoTests {
 	}
 
     @Test
-	void testNoSePuedeMoverUnaCriaturaEnEtapaInicial(){
-		Modo modo = new Modo1();
-		
+	void testNoSePuedeMoverUnaCriaturaEnEtapaInicial(){		
 		Integer puntos = 3;
 		
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
         Zona zona = new ZonaReserva();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -182,21 +153,16 @@ public class TurnoTests {
 	}
 
     @Test
-	void testInvocarDesdeManoEnEtapaPrincipalUnaCriaturaAZonaReserva(){
-		Modo modo = new Modo1();
-		
+	void testInvocarDesdeManoEnEtapaPrincipalUnaCriaturaAZonaReserva(){		
 		Integer puntos = 3;
 	
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
         Zona zona = new ZonaMano();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -210,22 +176,16 @@ public class TurnoTests {
 	}
 
     @Test
-	void testInvocarDesdeManoEnEtapaPrincipalUnaCriaturaAZonaDeCombate(){
-		Modo modo = new Modo1();
-		
+	void testInvocarDesdeManoEnEtapaPrincipalUnaCriaturaAZonaDeCombate(){		
 		Integer puntos = 3;
 	
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Criatura;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaMano();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -239,21 +199,16 @@ public class TurnoTests {
 	}
 
     @Test
-	void testInvocarDesdeManoEnEtapaPrincipalUnArtefacto(){
-		Modo modo = new Modo1();
-		
+	void testInvocarDesdeManoEnEtapaPrincipalUnArtefacto(){		
 		Integer puntos = 3;
 	
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Artefacto;
         String nombre = "Carta1";
         Zona zona = new ZonaMano();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -267,21 +222,16 @@ public class TurnoTests {
 	}
 
     @Test
-	void testInvocarDesdeManoEnEtapaInicialUnArtefacto(){
-		Modo modo = new Modo1();
-		
+	void testInvocarDesdeManoEnEtapaInicialUnArtefacto(){		
 		Integer puntos = 3;
 	
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Artefacto;
         String nombre = "Carta1";
         Zona zona = new ZonaMano();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -293,22 +243,16 @@ public class TurnoTests {
 	}
 
     @Test
-	void testInvocarDesdeZonaDeReservaEnEtapaPrincipalUnArtefacto(){
-		Modo modo = new Modo1();
-		
+	void testInvocarDesdeZonaDeReservaEnEtapaPrincipalUnArtefacto(){		
 		Integer puntos = 3;
 	
-		Mazo mazo = new Mazo();
 		Tipo tipo = Tipo.Artefacto;
         String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
         Zona zona = new ZonaReserva();
 
         Carta carta = new Carta(tipo, nombre, zona);
 		
-		mazo.agregarCarta(carta);
-		
-        Turno nuevoTurno = new Turno(modo, mazo, puntos);
+		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
         
 		nuevoTurno.iniciarTurno();
 		
@@ -320,5 +264,4 @@ public class TurnoTests {
 
 		assert carta.zona instanceof ZonaReserva : "Error al pasar de zona la carta";
 	}
-	*/
 }
