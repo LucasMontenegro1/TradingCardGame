@@ -20,22 +20,30 @@ public class Modo1 implements Modo {
 
     }
 
-    public boolean agregarCarta(HashMap<String, Integer> cartas, String nombreCarta) {
-        int cantCarta = cartas.get(nombreCarta);
-        return !(cartas.size() == 60 || cantCarta == 3);
+    private Integer cantidadCartas(HashMap<String, Integer> cartas) {
+        Integer cantCartas = 0;
+        for (Integer cantidad : cartas.values()) {
+            cantCartas += cantidad;
+        }
+        
+        return cantCartas;
     }
 
-    public boolean removerCarta(int cantCartas) {
-        return cantCartas != 40;
+    public boolean agregarCarta(HashMap<String, Integer> cartas, String nombreCarta) {
+        Integer cantCartas = cantidadCartas(cartas);
+        Integer cantCarta = cartas.get(nombreCarta) != null ? cartas.get(nombreCarta) : 0;
+
+        return !(cantCartas == 60 || cantCarta == 3);
+    }
+
+    public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta) {
+        return cantidadCartas(cartas) != 40 && cartas.get(nombreCarta) != null;
     }
 
     @Override
     public boolean verificarMazoValido(HashMap<String, Integer> cartas) {
         
-        Integer cantCartas = 0;
-        for (Integer cantidad : cartas.values()) {
-            cantCartas += cantidad;
-        }
+        Integer cantCartas = cantidadCartas(cartas);
 
         if (cantCartas > 60 || 40 > cantCartas) {
             return false;

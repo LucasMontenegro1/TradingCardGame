@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.modo;
 
+import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.mazo.Mazo;
@@ -47,14 +48,12 @@ public class Modo2 implements Modo{
 
     @Override
     public boolean agregarCarta(HashMap<String, Integer> cartas, String nombreCarta) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'agregarCarta'");
+        return false;
     }
 
     @Override
-    public boolean removerCarta(int cantCartas) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'removerCarta'");
+    public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta) {
+        return false;
     }
 
 }

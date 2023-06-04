@@ -18,6 +18,37 @@ public class Mazo {
             throw new MazoInvalido("No se puede crear el mazo con las cartas seleccionadas");
         }
     }
+    
+    public Integer cantdCartas() {
+        Integer cantCartas = 0;
+        for (Integer cantidad : this.cartas.values()) {
+            cantCartas += cantidad;
+        }
+
+        return cantCartas;
+    }
+
+    public void agregarCarta(String nombreCarta) throws MazoInvalido {
+        if (this.modo.agregarCarta(cartas, nombreCarta)) {
+            Integer cantidad = this.cartas.get(nombreCarta) != null ? this.cartas.get(nombreCarta) : 0;
+            this.cartas.put(nombreCarta, cantidad+1);
+        } else {
+            throw new MazoInvalido("No es posible agregar la carta");
+        }
+    }
+
+    public void eliminarCarta(String nombreCarta) throws MazoInvalido {
+        if (!this.modo.removerCarta(this.cartas, nombreCarta)) {
+            throw new MazoInvalido("No es posible agregar la carta");
+        }
+
+        Integer cantidad = this.cartas.get(nombreCarta) != null ? this.cartas.get(nombreCarta) : 0;
+        if (cantidad == 1) {
+            this.cartas.remove(nombreCarta);
+        } else {
+            this.cartas.put(nombreCarta, cantidad-1);
+        }
+    }
 
     /*
     public Integer tomarCarta() {
@@ -27,10 +58,6 @@ public class Mazo {
 
         Random random = new Random();
         return this.cartas.get(random.nextInt(this.cartas.size()));
-    }
-
-    public void agregarCarta(Carta carta){
-        // this.cartas.add(carta);
     }
      */
 }
