@@ -13,6 +13,12 @@ public class Carta {
 
     public Zona zona;
 
+    public Carta(CartasDisponibles carta){
+        this.tipos = carta.tipos();
+        this.nombre = carta.nombreCarta();
+        this.atributos = carta.atributos();
+    }
+
     public Carta(CartasDisponibles carta, Zona zona){
         this.tipos = carta.tipos();
         this.nombre = carta.nombreCarta();
