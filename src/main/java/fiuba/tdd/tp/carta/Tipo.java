@@ -1,10 +1,19 @@
 package fiuba.tdd.tp.carta;
 
-public enum Tipo {
-    Accion,
-    Artefacto,
-    Criatura,
-    Reaccion,
+import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaDeAtaque;
+import fiuba.tdd.tp.etapa.EtapaPrincipal;
 
-    Energia
+public enum Tipo {
+    Accion(new EtapaPrincipal()),
+    Artefacto(new EtapaPrincipal()),
+    Criatura(new EtapaDeAtaque()),
+    Reaccion(new EtapaPrincipal()),
+
+    Energia(new EtapaPrincipal());
+
+    public Etapa etapa;
+    Tipo(Etapa etapa){
+        this.etapa = etapa;
+    }
 }
