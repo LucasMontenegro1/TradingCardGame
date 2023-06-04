@@ -1,9 +1,12 @@
 package fiuba.tdd.tp.modo;
 
+import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.mazo.Mazo;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class Modo2 implements Modo{
     @Override
@@ -11,7 +14,9 @@ public class Modo2 implements Modo{
         if (puntos > 6) {
             return null;
         }
-        return mazo.tomar_carta();
+
+        // return mazo.tomar_carta();
+        return new Carta(CartasDisponibles.ALQUMISTA);
     }
 
     @Override
@@ -20,7 +25,35 @@ public class Modo2 implements Modo{
     }
 
     @Override
-    public void agregarCarta(List<Carta> cartas, Carta carta) {
+    public boolean verificarMazoValido(HashMap<String, Integer> cartas) {
+        Integer cantCartas = 0;
+        for (Integer cantidad : cartas.values()) {
+            cantCartas += cantidad;
+        }
 
+        if (cantCartas != 60) {
+            return false;
+        }
+
+        for (Entry<String, Integer> carta : cartas.entrySet()) {
+            String nombreCarta = carta.getKey();
+            Integer cantidad = carta.getValue();
+            if (cantidad > 4 && nombreCarta != CartasDisponibles.ENERGIA.nombreCarta()) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
+    @Override
+    public boolean agregarCarta(HashMap<String, Integer> cartas, String nombreCarta) {
+        return false;
+    }
+
+    @Override
+    public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta) {
+        return false;
+    }
+
 }
