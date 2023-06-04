@@ -12,8 +12,12 @@ public class Mazo {
     public Modo modo;
 
     public Carta tomar_carta(){
+        if (cartas.size() == 0){
+            return null;
+        }
         Random random = new Random();
         return cartas.get(random.nextInt(cartas.size()));
+        
     }
 
     public void agregarCarta(Carta carta){
