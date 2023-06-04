@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.modo;
 
+import java.util.HashMap;
 import java.util.List;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -10,5 +11,5 @@ public interface Modo {
 
     public void iniciarPartida();
 
-    public void agregarCarta(List<Carta> cartas, Carta carta);
+    public boolean agregarCarta(HashMap<String, Integer> cartas, Carta carta);
 }
