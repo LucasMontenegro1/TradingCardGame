@@ -5,9 +5,9 @@ import fiuba.tdd.tp.mazo.Mazo;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Modo1 implements Modo {
-
 
     @Override
     public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos) {
@@ -19,14 +19,23 @@ public class Modo1 implements Modo {
 
     }
 
+    public boolean agregarCarta(HashMap<String, Integer> cartas, String nombreCarta) {
+        int cantCarta = cartas.get(nombreCarta);
+        return !(cartas.size() == 60 || cantCarta == 3);
+    }
+
+    public boolean removerCarta(int cantCartas) {
+        return cantCartas != 40;
+    }
+
     @Override
-    public boolean agregarCarta(HashMap<String, Integer> cartas, Carta carta) {
-        int cant_carta = cartas.get(carta.getNombre());
-        if (cartas.size() == 60 || cant_carta == 3) {
+    public boolean verificarMazoValido(HashMap<String, Integer> cartas){
+        if (cartas.size() > 60 && 40 > cartas.size()){
             return false;
-        } else {
-            cartas.put(carta.getNombre(), cant_carta + 1);
-            return true;
         }
+        for (Integer cantidad : cartas.values()) {
+            if (cantidad > 3) return false;
+        }
+        return true;
     }
 }

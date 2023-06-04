@@ -21,7 +21,14 @@ public class Modo2 implements Modo{
     }
 
     @Override
-    public boolean agregarCarta(HashMap<String, Integer> cartas, Carta carta) {
-        return false;
+    public boolean verificarMazoValido(HashMap<String, Integer> cartas){
+        if (cartas.size() != 60 ){
+            return false;
+        }
+        for (Integer cantidad : cartas.values()) {
+            if (cantidad > 4) return false;
+        }
+        return true;
     }
+
 }

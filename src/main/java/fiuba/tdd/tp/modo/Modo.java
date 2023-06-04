@@ -11,5 +11,5 @@ public interface Modo {
 
     public void iniciarPartida();
 
-    public boolean agregarCarta(HashMap<String, Integer> cartas, Carta carta);
+    public boolean verificarMazoValido(HashMap<String, Integer> cartas);
 }
