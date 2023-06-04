@@ -3,13 +3,20 @@ package fiuba.tdd.tp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.HashMap;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
+import fiuba.tdd.tp.Excepciones.MazoExistente;
+import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.jugador.Jugador;
+import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.modo.Modo;
+import fiuba.tdd.tp.modo.Modo1;
 
 @SpringBootTest
 public class JugadorTests {
@@ -154,4 +161,56 @@ public class JugadorTests {
         });
     }
 
+    @Test 
+    void testJugadorAgregaUnMazo() throws MazoInvalido, MazoExistente {
+        Jugador jugador = new Jugador("Juan", "1234");
+
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        
+        Modo modoMazo = new Modo1();
+
+        Mazo mazo = new Mazo(cartas, modoMazo);
+
+        jugador.agregarMazo("Mazo modo uno", mazo);
+
+        assertEquals(jugador.getMazos().size(), 1);
+    }
+
+    @Test 
+    void testJugadorIntentaAgregaUnMazoConMismoNombre() throws MazoInvalido, MazoExistente {
+        Jugador jugador = new Jugador("Juan", "1234");
+
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        
+        Modo modoMazo = new Modo1();
+
+        Mazo mazo = new Mazo(cartas, modoMazo);
+
+        jugador.agregarMazo("Mazo modo uno", mazo);
+
+        assertThrows(MazoExistente.class, () -> {
+            jugador.agregarMazo("Mazo modo uno", mazo);
+        });
+
+        assertEquals(jugador.getMazos().size(), 1);
+    }
+
+    @Test 
+    void testJugadorEliminaUnMazo() throws MazoInvalido, MazoExistente {
+        Jugador jugador = new Jugador("Juan", "1234");
+
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        
+        Modo modoMazo = new Modo1();
+
+        Mazo mazo = new Mazo(cartas, modoMazo);
+
+        jugador.agregarMazo("Mazo modo uno", mazo);
+        jugador.eliminarMazo("Mazo modo uno");
+
+        assertEquals(jugador.getMazos().size(), 0);
+    }
 }
