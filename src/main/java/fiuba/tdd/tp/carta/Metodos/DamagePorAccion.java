@@ -1,17 +1,16 @@
 package fiuba.tdd.tp.carta.Metodos;
 
-import fiuba.tdd.tp.carta.Atributo;
 import fiuba.tdd.tp.carta.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
+import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.zona.Zona;
-import fiuba.tdd.tp.zona.ZonaCombate;
+import fiuba.tdd.tp.zona.ZonaMano;
 
-public class Atacar implements MetodoCarta {
+public class DamagePorAccion implements MetodoCarta {
 
     private int hp;
 
-    public Atacar(int hp){
+    public DamagePorAccion(int hp){
         this.hp = hp;
     }
 
@@ -22,6 +21,6 @@ public class Atacar implements MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona) {
-        return etapa instanceof EtapaDeAtaque && zona instanceof ZonaCombate;
+        return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
 }

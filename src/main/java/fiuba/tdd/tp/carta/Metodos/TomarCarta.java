@@ -23,8 +23,8 @@ public class TomarCarta implements MetodoCarta {
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona) {
         if (this.tipo == Tipo.Criatura){
-            return tipo.etapa.getClass() == etapa.getClass() && zona.getClass() == ZonaCombate.class;
+            return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
         }
-        return tipo == Tipo.Energia && zona.getClass() != ZonaDescarte.class && zona.getClass()!= ZonaMano.class;
+        return tipo == Tipo.Energia && !(zona instanceof ZonaDescarte || zona instanceof ZonaMano);
     }
 }
