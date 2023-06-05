@@ -224,6 +224,7 @@ public class JugadorTests {
             jugador.agregarMazo("Mazo modo uno", mazo);
         });
 
+        assertEquals(jugador.getCartas().size(), 0);
         assertEquals(jugador.getMazos().size(), 1);
     }
 
@@ -248,5 +249,6 @@ public class JugadorTests {
         jugador.eliminarMazo("Mazo modo uno");
 
         assertEquals(jugador.getMazos().size(), 0);
+        assertEquals(jugador.getCartas().size(), 1);
     }
 }

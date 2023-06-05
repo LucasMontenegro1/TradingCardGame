@@ -114,6 +114,18 @@ public class Jugador {
     }
 
     public void eliminarMazo(String nombre) {
+        Mazo mazo = this.mazos.get(nombre);
+        if (mazo != null) {
+            for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
+                String nombreCarta = carta.getKey();
+                Integer cantidadMazo = carta.getValue();
+    
+                Integer cantidadAcual = this.cartas.get(nombreCarta) != null ? this.cartas.get(nombreCarta) : 0;
+    
+                this.cartas.put(nombreCarta, cantidadAcual+cantidadMazo);
+            }
+        }
+
         this.mazos.remove(nombre);
     }
 }
