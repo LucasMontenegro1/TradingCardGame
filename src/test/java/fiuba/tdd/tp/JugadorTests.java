@@ -162,8 +162,14 @@ public class JugadorTests {
     }
 
     @Test 
-    void testJugadorAgregaUnMazo() throws MazoInvalido, MazoExistente {
+    void testJugadorAgregaUnMazo() throws MazoInvalido, MazoExistente, CartaNoEncontrada, DineroInsuficiente {
         Jugador jugador = new Jugador("Juan", "1234");
+
+        jugador.depositarDinero(1000);
+
+        for (int i = 0; i < 40; i++) {
+            jugador.comprarCarta(CartasDisponibles.ENERGIA);
+        }
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
@@ -177,9 +183,33 @@ public class JugadorTests {
         assertEquals(jugador.getMazos().size(), 1);
     }
 
-    @Test 
-    void testJugadorIntentaAgregaUnMazoConMismoNombre() throws MazoInvalido, MazoExistente {
+    @Test
+    void testJugadorAgregaUnMazoSinCartasSuficientes() throws MazoInvalido {
         Jugador jugador = new Jugador("Juan", "1234");
+
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        
+        Modo modoMazo = new Modo1();
+
+        Mazo mazo = new Mazo(cartas, modoMazo);
+
+        assertThrows(CartaNoEncontrada.class, () -> {
+            jugador.agregarMazo("Mazo modo uno", mazo);
+        });
+
+        assertEquals(jugador.getMazos().size(), 0);
+    }
+
+    @Test 
+    void testJugadorIntentaAgregaUnMazoConMismoNombre() throws MazoInvalido, MazoExistente, CartaNoEncontrada, DineroInsuficiente {
+        Jugador jugador = new Jugador("Juan", "1234");
+
+        jugador.depositarDinero(1000);
+
+        for (int i = 0; i < 40; i++) {
+            jugador.comprarCarta(CartasDisponibles.ENERGIA);
+        }
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
@@ -198,8 +228,14 @@ public class JugadorTests {
     }
 
     @Test 
-    void testJugadorEliminaUnMazo() throws MazoInvalido, MazoExistente {
+    void testJugadorEliminaUnMazo() throws MazoInvalido, MazoExistente, CartaNoEncontrada, DineroInsuficiente {
         Jugador jugador = new Jugador("Juan", "1234");
+
+        jugador.depositarDinero(1000);
+
+        for (int i = 0; i < 40; i++) {
+            jugador.comprarCarta(CartasDisponibles.ENERGIA);
+        }
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);

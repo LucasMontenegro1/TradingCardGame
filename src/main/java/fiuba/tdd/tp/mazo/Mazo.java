@@ -6,7 +6,7 @@ import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.modo.Modo;
 
 public class Mazo {
-    private HashMap<String, Integer> cartas;
+    public HashMap<String, Integer> cartas;
     private Modo modo;
 
     public Mazo(HashMap<String, Integer> cartas, Modo modo) throws MazoInvalido {
