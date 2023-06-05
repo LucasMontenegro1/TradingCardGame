@@ -115,12 +115,60 @@ public class ModoTests {
     void testVerificarMazoConCartasRepetidasModo1() {
         Modo modo1 = new Modo1();
         HashMap<String, Integer> cartas = new HashMap<>();
-        for (int i = 1; i <= 15; i++) {
+        for (int i = 1; i <= 50; i++) {
             String key = "Carta" + i;
-            cartas.put(key, 3);
+            cartas.put(key, 1);
         }
         cartas.put("CartaRepetida", 4);
 
         assertEquals(modo1.verificarMazoValido(cartas),false);
+    }
+
+    @Test
+    void testVerificarMazoValidoModo2() {
+        Modo modo2 = new Modo2();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        for (int i = 1; i <= 60; i++) {
+            String key = "Carta" + i;
+            cartas.put(key, 1);
+        }
+        assertEquals(modo2.verificarMazoValido(cartas),true);
+    }
+
+    @Test
+    void testVerificarMazoMuyGrandeModo2() {
+        Modo modo2 = new Modo2();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        for (int i = 1; i <= 61; i++) {
+            String key = "Carta" + i;
+            cartas.put(key, 1);
+        }
+        assertEquals(modo2.verificarMazoValido(cartas),false);
+    }
+
+    @Test
+    void testVerificarMazoMuyChicoModo2() {
+        Modo modo2 = new Modo2();
+        HashMap<String, Integer> cartas = new HashMap<>();
+
+        for (int i = 1; i <= 59; i++) {
+            String key = "Carta" + i;
+            cartas.put(key, 1);
+        }
+
+        assertEquals(modo2.verificarMazoValido(cartas),false);
+    }
+
+    @Test
+    void testVerificarMazoConCartasRepetidasModo2() {
+        Modo modo2 = new Modo2();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        for (int i = 1; i <= 55; i++) {
+            String key = "Carta" + i;
+            cartas.put(key, 1);
+        }
+        cartas.put("CartaRepetida", 5);
+
+        assertEquals(modo2.verificarMazoValido(cartas),false);
     }
 }
