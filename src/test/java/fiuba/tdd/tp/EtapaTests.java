@@ -77,7 +77,9 @@ public class EtapaTests {
 	
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaReserva());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+
+        carta.zona = new ZonaReserva();
 
         etapaIncial.iniciar();
 
@@ -91,7 +93,9 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+
+        carta.zona = new ZonaMano();
 
         Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
 
@@ -107,7 +111,9 @@ public class EtapaTests {
 
         Integer puntos = 15;
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+
+        carta.zona = new ZonaMano();
 		
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
 
@@ -123,7 +129,9 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
+
+        carta.zona = new ZonaMano();
 		
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
 
@@ -166,7 +174,9 @@ public class EtapaTests {
 	
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaReserva());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaReserva();
 
         etapaIncial.iniciar();
 
@@ -180,7 +190,9 @@ public class EtapaTests {
 		
 		Integer puntos = 4;
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
 
@@ -196,7 +208,9 @@ public class EtapaTests {
 
         Integer puntos = 4;
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 		
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
 
@@ -212,7 +226,9 @@ public class EtapaTests {
 		
 		Integer puntos = 4;
 
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
+        
+        carta.zona = new ZonaMano();
 		
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
 
@@ -244,7 +260,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaPrincipalSePuedenMoverCartas(){
     
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaReserva());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaReserva();
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
@@ -257,7 +275,10 @@ public class EtapaTests {
 
     @Test
     void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeCombate(){
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
@@ -270,7 +291,10 @@ public class EtapaTests {
 
     @Test
     void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeReserva(){
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
@@ -284,7 +308,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaPrincipalSePuedeInvocarUnArtefactoAZonaDeArtefactos(){
 
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
@@ -316,7 +342,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaDeAtaqueNoSePuedenMoverCartas(){
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaReserva());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaReserva();
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
@@ -330,7 +358,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeCombate(){
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
@@ -345,7 +375,9 @@ public class EtapaTests {
     void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeReserva(){
     
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
@@ -359,7 +391,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnArtefactoAZonaDeArtefactos(){
         
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
@@ -382,7 +416,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedenMoverCartas(){
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaReserva());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaReserva();
 
         Etapa etapaFinal = new EtapaFinal();
 
@@ -396,7 +432,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedeInvocarUnaCriaturaAZonaDeCombate(){
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaFinal = new EtapaFinal();
 
@@ -410,7 +448,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedeInvocarUnaCriaturaAZonaDeReserva(){
     
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaFinal = new EtapaFinal();
 
@@ -424,7 +464,9 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedeInvocarUnArtefactoAZonaDeArtefactos(){
         
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA, new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
+        
+        carta.zona = new ZonaMano();
 
         Etapa etapaFinal = new EtapaFinal();
 
