@@ -15,7 +15,6 @@ public class ModoTests {
 
     @Test
     void testAgregarCartaModo1() {
-
         Modo modo1 = new Modo1();
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put("Carta1",1);
@@ -25,11 +24,28 @@ public class ModoTests {
 
     @Test
     void testAgregarCartaModo2Invalido() {
-
         Modo modo2 = new Modo2();
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put("Carta1",1);
 
         assertEquals(modo2.agregarCarta(cartas, "Carta2"),false);
+    }
+
+    @Test
+    void testAgregarCartaRepetidaModo1() {
+        Modo modo1 = new Modo1();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put("Carta1",3);
+
+        assertEquals(modo1.agregarCarta(cartas, "Carta1"),false);
+    }
+
+    @Test
+    void testAgregarCartasMazoLlenoModo1() {
+        Modo modo1 = new Modo1();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put("Carta1",60);
+
+        assertEquals(modo1.agregarCarta(cartas, "Carta2"),false);
     }
 }
