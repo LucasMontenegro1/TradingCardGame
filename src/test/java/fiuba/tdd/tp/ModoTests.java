@@ -48,4 +48,31 @@ public class ModoTests {
 
         assertEquals(modo1.agregarCarta(cartas, "Carta2"),false);
     }
+
+    @Test
+    void testRemoverCartaModo1() {
+        Modo modo1 = new Modo1();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put("Carta1",40);
+
+        assertEquals(modo1.removerCarta(cartas, "Carta1"),false);
+    }
+
+    @Test
+    void testRemoverCartaInexistenteModo1() {
+        Modo modo1 = new Modo1();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put("Carta1",50);
+
+        assertEquals(modo1.removerCarta(cartas, "Carta2"),false);
+    }
+
+    @Test
+    void testRemoverCartaValidoModo1() {
+        Modo modo1 = new Modo1();
+        HashMap<String, Integer> cartas = new HashMap<>();
+        cartas.put("Carta1",50);
+
+        assertEquals(modo1.removerCarta(cartas, "Carta1"),true);
+    }
 }
