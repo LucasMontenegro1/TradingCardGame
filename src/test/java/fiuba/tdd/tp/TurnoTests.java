@@ -6,10 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
-import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.Tipo;
-import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.etapa.EtapaFinal;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
@@ -18,11 +16,6 @@ import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.turno.Turno;
-import fiuba.tdd.tp.zona.Zona;
-import fiuba.tdd.tp.zona.ZonaArtefecto;
-import fiuba.tdd.tp.zona.ZonaCombate;
-import fiuba.tdd.tp.zona.ZonaMano;
-import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class TurnoTests {
 	
@@ -42,226 +35,161 @@ public class TurnoTests {
 		cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 60);
 		mazoModoDos = new Mazo(cartas, modoDos);
     }
-
-    @Test
-	void testCreacionTurno() {
+	
+	@Test
+	void testCreacionTurnoDeUnaPartidaModoUno() {
 		
 		Integer puntos = 15;
-
-        Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
+	
+        Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
 
-    @Test
-	void testIniciarTurno(){
-
+	@Test
+	void testIniciarTurnoDeUnaPartidaModoUno(){
+			
 		Integer puntos = 15;
-	
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
+
+        Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
 
-    @Test 
-	void testPasarDeEtapaEnTurnoModoUno(){
+	@Test
+	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoUno(){
+		
+		Integer puntos = 15;
+	
+		Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+
+		nuevoTurno.iniciarTurno();
+
+		nuevoTurno.pasarDeEtapa();
+        
+        assert nuevoTurno.etapaActual() instanceof EtapaPrincipal;
+	}
+
+	@Test 
+	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoUno(){
+		
+		Integer puntos = 15;
+        
+		Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+
+		nuevoTurno.iniciarTurno();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
+	}
+
+	@Test
+	void testCreacionTurnoDeUnaPartidaModoDos() {
+		
+		Integer puntos = 15;
+	
+        Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        
+        assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
+	}
+
+	@Test
+	void testIniciarTurnoDeUnaPartidaModoDos(){
+			
+		Integer puntos = 15;
+
+        Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        
+        assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
+	}
+
+	@Test
+	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoDos(){
 		
 		Integer puntos = 4;
-		
-        Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
+	
+		Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+
 		nuevoTurno.iniciarTurno();
+
+		nuevoTurno.pasarDeEtapa();
+        
+        assert nuevoTurno.etapaActual() instanceof EtapaPrincipal;
+	}
+
+	@Test 
+	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoDos(){
+		
+		Integer puntos = 15;
+        
+		Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+
+		nuevoTurno.iniciarTurno();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
+	}
+
+	@Test
+	void testAdministracionDeEtapasEnUnTurnoModoUno(){
+		
+		Integer puntos = 4;
+
+        Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+		
+		nuevoTurno.iniciarTurno();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
 		nuevoTurno.pasarDeEtapa();
 
-        assert nuevoTurno.etapaActual() instanceof EtapaPrincipal : "Error al pasar de etapa en el turno";
+        assert nuevoTurno.etapaActual() instanceof EtapaPrincipal;
+
+		nuevoTurno.pasarDeEtapa();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaDeAtaque;
+
+		nuevoTurno.pasarDeEtapa();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaFinal;
 	}
 
-
     @Test 
-	void testPasarDeEtapaEnTurnoModoDosConMenosDeSeisPuntosDeVictoria(){		
+	void testAdministracionDeEtapasEnUnTurnoModoDosConMenosDeSeisPuntosDeVictoria(){
+		
 		Integer puntos = 2;
 		
-        Turno nuevoTurno = new Turno(mazoModoDos.getModo(), mazoModoDos, puntos);
-        
+        Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+
 		nuevoTurno.iniciarTurno();
+		
+		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
 		nuevoTurno.pasarDeEtapa();
 
-        assert nuevoTurno.etapaActual() instanceof EtapaPrincipal : "Error al pasar de etapa en el turno";
+        assert nuevoTurno.etapaActual() instanceof EtapaPrincipal;
+
+		nuevoTurno.pasarDeEtapa();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaDeAtaque;
+
+		nuevoTurno.pasarDeEtapa();
+
+		assert nuevoTurno.etapaActual() instanceof EtapaFinal;
 	}
 
     @Test 
-	void testPasarDeEtapaEnTurnoModoDosConMasDeSeisPuntosDeVictoria(){
-		
+	void testAdministracionDeEtapasEnUnTurnoModoDosConMasDeSeisPuntosDeVictoria(){
+    	
 		Integer puntos = 10;
 		
-        Turno nuevoTurno = new Turno(mazoModoDos.getModo(), mazoModoDos, puntos);
-        
+		Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+
 		nuevoTurno.iniciarTurno();
+		
+		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
 		nuevoTurno.pasarDeEtapa();
         
-        assert nuevoTurno.etapaActual() instanceof EtapaFinal : "Error al pasar de etapa en el turno";
+        assert nuevoTurno.etapaActual() instanceof EtapaFinal;
 
     }
-
-    @Test
-	void testMoverUnaCriaturaEnEtapaPrincipal(){		
-		Integer puntos = 3;
-	
-		Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaReserva();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		nuevoTurno.pasarDeEtapa();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.moverCarta(carta);
-
-		assert carta.zona instanceof ZonaCombate : "Error al pasar de zona la carta";
-        
-	}
-
-    @Test
-	void testNoSePuedeMoverUnaCriaturaEnEtapaInicial(){		
-		Integer puntos = 3;
-		
-		Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaReserva();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.moverCarta(carta);
-
-		assert carta.zona instanceof ZonaReserva : "Error al pasar de zona la carta";
-
-	}
-
-    @Test
-	void testInvocarDesdeManoEnEtapaPrincipalUnaCriaturaAZonaReserva(){		
-		Integer puntos = 3;
-	
-		Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		nuevoTurno.pasarDeEtapa();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.invocarAZonaDeReserva(carta);
-
-		assert carta.zona instanceof ZonaReserva : "Error al pasar de zona la carta";
-	}
-
-    @Test
-	void testInvocarDesdeManoEnEtapaPrincipalUnaCriaturaAZonaDeCombate(){		
-		Integer puntos = 3;
-	
-		Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		nuevoTurno.pasarDeEtapa();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.invocarAZonaDeCombate(carta);
-
-		assert carta.zona instanceof ZonaCombate : "Error al pasar de zona la carta";
-	}
-
-    @Test
-	void testInvocarDesdeManoEnEtapaPrincipalUnArtefacto(){		
-		Integer puntos = 3;
-	
-		Tipo tipo = Tipo.Artefacto;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		nuevoTurno.pasarDeEtapa();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.invocarAZonaDeArtefacto(carta);
-
-		assert carta.zona instanceof ZonaArtefecto : "Error al pasar de zona la carta";
-	}
-
-    @Test
-	void testInvocarDesdeManoEnEtapaInicialUnArtefacto(){		
-		Integer puntos = 3;
-	
-		Tipo tipo = Tipo.Artefacto;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.invocarAZonaDeArtefacto(carta);
-
-		assert carta.zona instanceof ZonaMano : "Error al pasar de zona la carta";
-	}
-
-    @Test
-	void testInvocarDesdeZonaDeReservaEnEtapaPrincipalUnArtefacto(){		
-		Integer puntos = 3;
-	
-		Tipo tipo = Tipo.Artefacto;
-        String nombre = "Carta1";
-        Zona zona = new ZonaReserva();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-		
-		Turno nuevoTurno = new Turno(mazoModoUno.getModo(), mazoModoUno, puntos);
-        
-		nuevoTurno.iniciarTurno();
-		
-		nuevoTurno.pasarDeEtapa();
-		
-		Etapa etapaActual = nuevoTurno.etapaActual();
-		
-		etapaActual.invocarAZonaDeArtefacto(carta);
-
-		assert carta.zona instanceof ZonaReserva : "Error al pasar de zona la carta";
-	}
 }

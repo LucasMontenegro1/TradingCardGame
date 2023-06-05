@@ -13,7 +13,7 @@ public class EtapaDeAtaque implements Etapa {
 
     @Override
     public Etapa finalizar() {
-        return null;
+        return new EtapaFinal();
     }
     
     @Override

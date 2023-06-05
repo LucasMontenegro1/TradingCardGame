@@ -12,7 +12,6 @@ public class Mazo {
     public Mazo(HashMap<String, Integer> cartas, Modo modo) throws MazoInvalido {
         this.modo = modo;
         if (this.modo.verificarMazoValido(cartas)) {
-            System.out.println("No debería entrar acá");
             this.cartas = cartas;
         } else {
             throw new MazoInvalido("No se puede crear el mazo con las cartas seleccionadas");
