@@ -1,6 +1,7 @@
 package fiuba.tdd.tp.jugador;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
@@ -84,15 +85,47 @@ public class Jugador {
         }
     }
 
-    public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente {
+    public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente, CartaNoEncontrada {
         if (this.mazos.get(nombre) != null) {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
         }
+
+        if (this.cartas.size() == 0) {
+            throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
+        }
+
+        for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
+            String nombreCarta = carta.getKey();
+            Integer cantidadMazo = carta.getValue();
+
+            Integer cantidadAcual = this.cartas.get(nombreCarta);
+
+            if (cantidadAcual == cantidadMazo) {
+                this.cartas.remove(nombreCarta);
+            } else if (cantidadAcual > cantidadMazo) {
+                this.cartas.put(nombreCarta, cantidadAcual-cantidadMazo);
+            } else {
+                throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
+            }
+        }
+
 
         this.mazos.put(nombre, mazo);
     }
 
     public void eliminarMazo(String nombre) {
+        Mazo mazo = this.mazos.get(nombre);
+        if (mazo != null) {
+            for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
+                String nombreCarta = carta.getKey();
+                Integer cantidadMazo = carta.getValue();
+    
+                Integer cantidadAcual = this.cartas.get(nombreCarta) != null ? this.cartas.get(nombreCarta) : 0;
+    
+                this.cartas.put(nombreCarta, cantidadAcual+cantidadMazo);
+            }
+        }
+
         this.mazos.remove(nombre);
     }
 }
