@@ -8,9 +8,7 @@ public enum Tipo {
     Accion(new EtapaPrincipal()),
     Artefacto(new EtapaPrincipal()),
     Criatura(new EtapaDeAtaque()),
-    Reaccion(new EtapaPrincipal()),
-
-    Energia(new EtapaPrincipal());
+    Reaccion(new EtapaPrincipal());
 
     public Etapa etapa;
     Tipo(Etapa etapa){

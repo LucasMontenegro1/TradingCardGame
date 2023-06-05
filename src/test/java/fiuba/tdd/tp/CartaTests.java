@@ -18,97 +18,51 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartaTests {
     @Test
-    public void crearCarta() {
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
+    public void crearCarta() {    
+        Carta carta = new Carta(CartasDisponibles.ENERGIA);
 
-        Carta carta = new Carta(tipo, nombre, zona);
-
-        Assertions.assertTrue(carta.isTipo(tipo));
-        Assertions.assertEquals(nombre, carta.getNombre());
+        Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
+        Assertions.assertEquals("Energía", carta.getNombre());
     }
-
+    
     @Test
     public void crearCartaTipoCriatura() {
-        Tipo tipo = Tipo.Criatura;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
         Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
     }
 
+    
     @Test
     public void crearCartaTipoAccion() {
-        Tipo tipo = Tipo.Accion;
-        String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
         Assertions.assertTrue(carta.isTipo(Tipo.Accion));
     }
 
+    
     @Test
     public void crearCartaTipoReaccion() {
-        Tipo tipo = Tipo.Reaccion;
-        String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
+        Carta carta = new Carta(CartasDisponibles.BARRERAMAGICA);
         Assertions.assertTrue(carta.isTipo(Tipo.Reaccion));
     }
 
+    
     @Test
     public void crearCartaTipoArtefacto() {
-        Tipo tipo = Tipo.Artefacto;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
         Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
     }
 
     @Test
-    public void crearCartaTipoEnergia() {
-        Tipo tipo = Tipo.Energia;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(tipo, nombre, zona);
-        Assertions.assertTrue(carta.isTipo(Tipo.Energia));
-    }
-
-    @Test
     public void crearCartaConVariosTipos() {
-        Tipo tipo = Tipo.Criatura;
-        Tipo tipo2 = Tipo.Accion;
-        String nombre = "Carta1";
-        Zona zona = new ZonaMano();
-
-        Carta carta = new Carta(new ArrayList<>(Arrays.asList(tipo, tipo2)), nombre, zona);
-        Assertions.assertTrue(carta.isTipo(tipo));
-        Assertions.assertTrue(carta.isTipo(tipo2));
-    }
-    @Test
-    public void crearCartaNoCriaturaConAtributos() {
-        Tipo tipo = Tipo.Accion;
-        Atributo atributo = Atributo.Metal;
-        String nombre = "Carta1";
-        String descripcion = "Descripción de la carta";
-        Zona zona = new ZonaMano();
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            Carta carta = new Carta(new ArrayList<>(Arrays.asList(tipo)), nombre,
-                    new ArrayList<>(Arrays.asList(atributo)), zona);
-        });
+        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
+        Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
     }
 
+    
     @Test
     public void crearCartaAntimagia(){
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA,new ZonaMano());
+        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
         assertTrue(carta.getNombre() == CartasDisponibles.ANTIMAGIA.nombreCarta());
     }
 }

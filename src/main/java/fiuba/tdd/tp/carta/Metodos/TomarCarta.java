@@ -25,6 +25,6 @@ public class TomarCarta implements MetodoCarta {
         if (this.tipo == Tipo.Criatura){
             return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
         }
-        return tipo == Tipo.Energia && !(zona instanceof ZonaDescarte || zona instanceof ZonaMano);
+        return tipo == Tipo.Artefacto && !(zona instanceof ZonaDescarte || zona instanceof ZonaMano);
     }
 }
