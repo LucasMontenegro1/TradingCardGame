@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 public class Modo2 implements Modo{
 
     final Integer puntos = 0;
+    final Integer maxCartasRepetidas = 4;
+    final Integer cantCartasMazo = 60;
 
     @Override
     public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos) {
@@ -33,14 +35,14 @@ public class Modo2 implements Modo{
             cantCartas += cantidad;
         }
 
-        if (cantCartas != 60) {
+        if (cantCartas != cantCartasMazo) {
             return false;
         }
 
         for (Entry<String, Integer> carta : cartas.entrySet()) {
             String nombreCarta = carta.getKey();
             Integer cantidad = carta.getValue();
-            if (cantidad > 4 && nombreCarta != CartasDisponibles.ENERGIA.nombreCarta()) {
+            if (cantidad > maxCartasRepetidas && nombreCarta != CartasDisponibles.ENERGIA.nombreCarta()) {
                 return false;
             }
         }
