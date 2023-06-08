@@ -18,7 +18,9 @@ public class TomarCarta implements MetodoCarta {
     }
 
     @Override
-    public void ejecutar() {}
+    public void ejecutar() {
+        System.out.println("Tomando carta");
+    }
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona) {
