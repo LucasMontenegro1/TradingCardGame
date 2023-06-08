@@ -15,4 +15,6 @@ public interface Modo {
     public boolean agregarCarta(HashMap<String, Integer> cartas, String nombreCarta);
 
     public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta);
+
+    public Integer asignarPuntos();
 }
