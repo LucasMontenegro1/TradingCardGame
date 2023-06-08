@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.MetodoCarta;
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
 

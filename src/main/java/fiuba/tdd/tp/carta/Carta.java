@@ -3,6 +3,7 @@ package fiuba.tdd.tp.carta;
 import java.util.ArrayList;
 import java.util.List;
 
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 

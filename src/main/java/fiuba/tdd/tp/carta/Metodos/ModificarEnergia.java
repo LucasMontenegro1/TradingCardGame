@@ -1,7 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
 import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.carta.MetodoCarta;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.zona.Zona;
