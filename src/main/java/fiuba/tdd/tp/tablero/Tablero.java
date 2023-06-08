@@ -19,9 +19,9 @@ public class Tablero {
 
         for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
             String nombreCarta = carta.getKey();
-            Integer cantidadMazo = carta.getValue();
+            Integer cantidadCartas = carta.getValue();
 
-            for (int i = 0; i < cantidadMazo; i++) {
+            for (int i = 0; i < cantidadCartas; i++) {
                 this.cartas.add(new Carta(CartasDisponibles.valueOf(nombreCarta)));
             }
         }

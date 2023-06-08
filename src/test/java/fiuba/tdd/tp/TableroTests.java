@@ -24,16 +24,17 @@ public class TableroTests {
 
     @BeforeEach
     public void setUp() throws MazoInvalido {
-		HashMap<String, Integer> cartas = new HashMap<>();
+		HashMap<String, Integer> cartasModoUno = new HashMap<>();
+        HashMap<String, Integer> cartasModoDos = new HashMap<>();
         
         Modo modoUno = new Modo1();
 		Modo modoDos = new Modo2();
 
-		cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
-        mazoModoUno = new Mazo(cartas, modoUno);
+		cartasModoUno.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        mazoModoUno = new Mazo(cartasModoUno, modoUno);
 
-		cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 60);
-		mazoModoDos = new Mazo(cartas, modoDos);
+		cartasModoDos.put(CartasDisponibles.ENERGIA.nombreCarta(), 60);
+		mazoModoDos = new Mazo(cartasModoDos, modoDos);
     }
     
     @Test
@@ -49,7 +50,6 @@ public class TableroTests {
         assertEquals(40, tablero.cartas.size());        
     }
 
-    
     @Test
     void testTableroSeCreaCorrectamenteEnUnaPartidaModoDos() {
         Tablero tablero = new Tablero("jugador", mazoModoDos); 

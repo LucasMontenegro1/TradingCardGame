@@ -17,7 +17,7 @@ public class Atacar implements MetodoCarta {
 
     @Override
     public void ejecutar() {
-        System.out.println("Atacando");
+        
     }
 
     @Override
