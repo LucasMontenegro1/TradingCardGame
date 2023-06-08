@@ -69,4 +69,35 @@ public class TableroTests {
         assertEquals(0, tablero.puntos);        
     }
 
+    @Test
+    void testTableroDeJugadorDismuyePuntosDeVidaEnModoUno() {
+        Tablero tablero = new Tablero("jugador", mazoModoUno); 
+
+        tablero.disminuyePuntos(5); 
+
+        assertEquals(15, tablero.puntos);        
+    }
+    
+    @Test
+    void testTableroDeJugadorAumentaPuntosDeVidaEnModoUno(){
+    
+        Tablero tablero = new Tablero("jugador", mazoModoUno); 
+
+        tablero.aumentarPuntosDeVida(4);
+
+        assertEquals(24, tablero.puntos);        
+        
+    }
+    
+    @Test
+    void testTableroDeJugadorAumentaPuntosDeVidaEnModoDos() {
+    
+        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+
+        tablero.aumentarPuntosDeVida(4);
+
+        assertEquals(4, tablero.puntos);        
+        
+    }
+    
 }

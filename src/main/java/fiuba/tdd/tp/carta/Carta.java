@@ -12,6 +12,7 @@ public class Carta {
     List<Atributo> atributos;
 
     public Zona zona;
+    public ArrayList<MetodoCarta> efectos;
 
     public Carta(CartasDisponibles carta){
         this.tipos = carta.tipos();
