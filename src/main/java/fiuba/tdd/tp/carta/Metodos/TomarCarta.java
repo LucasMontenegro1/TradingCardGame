@@ -19,7 +19,6 @@ public class TomarCarta implements MetodoCarta {
 
     @Override
     public void ejecutar() {
-        System.out.println("Tomando carta");
     }
 
     @Override

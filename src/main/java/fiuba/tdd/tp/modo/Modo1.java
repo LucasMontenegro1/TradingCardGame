@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class Modo1 implements Modo {
+    
+    final Integer puntos = 20;
 
     @Override
     public Carta ejecutarEtapaInicial(Mazo  mazo, Integer puntos) {
@@ -58,5 +60,10 @@ public class Modo1 implements Modo {
         }
 
         return true;
+    }
+
+    @Override
+    public Integer asignarPuntos() {
+        return puntos;
     }
 }

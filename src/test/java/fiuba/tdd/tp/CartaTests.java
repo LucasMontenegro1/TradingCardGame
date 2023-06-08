@@ -1,19 +1,12 @@
 package fiuba.tdd.tp;
 
-import fiuba.tdd.tp.carta.Atributo;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Tipo;
-import fiuba.tdd.tp.zona.Zona;
-import fiuba.tdd.tp.zona.ZonaMano;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartaTests {
@@ -22,7 +15,7 @@ public class CartaTests {
         Carta carta = new Carta(CartasDisponibles.ENERGIA);
 
         Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
-        Assertions.assertEquals("Energía", carta.getNombre());
+        Assertions.assertEquals("ENERGIA", carta.getNombre());
     }
     
     @Test

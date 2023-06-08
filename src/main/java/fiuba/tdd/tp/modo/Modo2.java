@@ -1,6 +1,5 @@
 package fiuba.tdd.tp.modo;
 
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.mazo.Mazo;
@@ -9,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class Modo2 implements Modo{
+
+    final Integer puntos = 0;
+
     @Override
     public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos) {
         if (puntos > 6) {
@@ -54,6 +56,11 @@ public class Modo2 implements Modo{
     @Override
     public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta) {
         return false;
+    }
+
+    @Override
+    public Integer asignarPuntos() {
+        return puntos;
     }
 
 }
