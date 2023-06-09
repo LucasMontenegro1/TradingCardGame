@@ -54,7 +54,7 @@ public class Modo1 implements Modo {
         for (Entry<String, Integer> carta : cartas.entrySet()) {
             String nombreCarta = carta.getKey();
             Integer cantidad = carta.getValue();
-            if (cantidad > 3 && nombreCarta != CartasDisponibles.ENERGIA.nombreCarta()) {
+            if (cantidad > 3 && nombreCarta != CartasDisponibles.ENERGIA.nombre) {
                 return false;
             }
         }

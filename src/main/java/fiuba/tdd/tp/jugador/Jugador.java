@@ -52,8 +52,8 @@ public class Jugador {
     }
 
     public void comprarCarta(CartasDisponibles carta) throws DineroInsuficiente {
-        int precioCarta = carta.precioCarta();
-        String nombreCarta = carta.nombreCarta();
+        int precioCarta = carta.precio;
+        String nombreCarta = carta.nombre;
 
         if (this.cantdDinero < precioCarta) {
             throw new DineroInsuficiente("No puede realizar la compra, saldo insuficiente");
@@ -71,7 +71,7 @@ public class Jugador {
 
     public void eliminarCarta(CartasDisponibles carta) throws CartaNoEncontrada {
 
-        String nombreCarta = carta.nombreCarta();
+        String nombreCarta = carta.nombre;
 
         if (!this.cartas.containsKey(nombreCarta)) {
             throw new CartaNoEncontrada("Usted no tiene la carta");

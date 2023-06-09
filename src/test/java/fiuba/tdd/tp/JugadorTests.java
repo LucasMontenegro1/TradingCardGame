@@ -111,7 +111,7 @@ public class JugadorTests {
         jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
 
         assertEquals(jugador.getCartas().size(), 1);
-        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombreCarta()), 2);
+        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombre), 2);
         assertEquals(jugador.getCantdDinero(), 10);
     }
 
@@ -148,7 +148,7 @@ public class JugadorTests {
 
         jugador.eliminarCarta(CartasDisponibles.ALQUMISTA);
 
-        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombreCarta()), 2);
+        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombre), 2);
         assertEquals(jugador.getCantdDinero(), 40);
     }
 
@@ -172,7 +172,7 @@ public class JugadorTests {
         }
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -188,7 +188,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -212,7 +212,7 @@ public class JugadorTests {
         }
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -239,7 +239,7 @@ public class JugadorTests {
         }
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombreCarta(), 40);
+        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 

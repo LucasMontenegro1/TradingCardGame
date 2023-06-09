@@ -16,9 +16,9 @@ public class Carta {
     public ArrayList<MetodoCarta> efectos;
 
     public Carta(CartasDisponibles carta){
-        this.tipos = carta.tipos();
-        this.nombre = carta.nombreCarta();
-        this.atributos = carta.atributos();
+        this.tipos = carta.tipos;
+        this.nombre = carta.nombre;
+        this.atributos = carta.atributos;
     }
 
     public boolean isTipo(Tipo tipo) {

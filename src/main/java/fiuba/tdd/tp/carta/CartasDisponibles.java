@@ -22,7 +22,7 @@ import fiuba.tdd.tp.carta.Metodos.TransferirEnergia;
 public enum CartasDisponibles {
 
     ENERGIA("ENERGIA", 10, new ArrayList<Atributo>(),
-                                         new ArrayList<Tipo>(),
+                                         new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                                          new ArrayList<MetodoCarta>(){{add(new ModificarEnergia(Energia.Agua, 1, Tipo.Artefacto));}}
                                         ),
 
@@ -165,11 +165,11 @@ public enum CartasDisponibles {
                                             );   
 
     public String nombre;
-    private int precio;
-    private ArrayList<Integer> costo;
-    private ArrayList<Atributo> atributos;
-    private ArrayList<Tipo> tipos;
-    private ArrayList<MetodoCarta> metodos;
+    public int precio;
+    public ArrayList<Integer> costo;
+    public ArrayList<Atributo> atributos;
+    public ArrayList<Tipo> tipos;
+    public ArrayList<MetodoCarta> metodos;
 
     CartasDisponibles(String nombre, int precio, ArrayList<Atributo> atributos, ArrayList<Tipo> tipos, ArrayList<MetodoCarta> metodos) {
         this.nombre = nombre;
