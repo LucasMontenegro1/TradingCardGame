@@ -15,10 +15,18 @@ public class Tablero {
     public String usuario;
     public ArrayList<Carta> cartas = new ArrayList<>();
     public Integer puntos;
+    public HashMap<String, Integer> energia = new HashMap<String, Integer>();
+    
+    final String AGUA  = "AGUA";
+    final String FUEGO  = "FUEGO";
+    final String PLANTA  = "PLANTA";
 
     public Tablero(String nombreJugador, Mazo mazo) {
         this.usuario = nombreJugador;
         this.puntos = mazo.getModo().asignarPuntos();
+        this.energia.put(AGUA, 0);
+        this.energia.put(FUEGO, 0);
+        this.energia.put(PLANTA, 0);
 
         for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
             String nombreCarta = carta.getKey();
@@ -30,11 +38,11 @@ public class Tablero {
         }
     }
 
-    public void aumentarPuntosDeVida(Integer cantidad){
+    public void aumentarPuntos(Integer cantidad){
         this.puntos += cantidad;
     }
 
-    public void disminuyePuntos(Integer cantidad) {
+    public void disminuirPuntos(Integer cantidad) {
         this.puntos -= cantidad;
     }
 
@@ -57,5 +65,40 @@ public class Tablero {
         });
 
         return cartasUsables;
+    }
+
+    private void modificarEnergiaEspecifica(String tipo, Integer cantidad) {
+        Integer energia = this.energia.get(tipo);
+        this.energia.put(tipo, energia+cantidad);
+    }
+
+    public void aumentarEnergias(int agua, int fuego, int planta) {
+        modificarEnergiaEspecifica(AGUA, agua);
+        modificarEnergiaEspecifica(FUEGO, fuego);
+        modificarEnergiaEspecifica(PLANTA, planta);    
+    }
+
+    public void disminuirEnergias(int agua, int fuego, int planta) {
+        if (this.energia.get(AGUA) > 0) {
+            modificarEnergiaEspecifica(AGUA, -agua);
+        }
+        if (this.energia.get(FUEGO) > 0) {
+            modificarEnergiaEspecifica(FUEGO, -fuego);
+        }
+        if (this.energia.get(PLANTA) > 0) {
+            modificarEnergiaEspecifica(PLANTA, -planta);    
+        }
+    }
+
+    public Integer energiaFuego() {
+        return this.energia.get(FUEGO);
+    }
+
+    public Integer energiaAgua() {
+        return this.energia.get(AGUA);
+    }
+
+    public Integer energiaPlanta() {
+        return this.energia.get(PLANTA);
     }
 }

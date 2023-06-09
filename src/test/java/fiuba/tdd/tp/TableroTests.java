@@ -73,7 +73,7 @@ public class TableroTests {
     void testTableroDeJugadorDismuyePuntosDeVidaEnModoUno() {
         Tablero tablero = new Tablero("jugador", mazoModoUno); 
 
-        tablero.disminuyePuntos(5); 
+        tablero.disminuirPuntos(5); 
 
         assertEquals(15, tablero.puntos);        
     }
@@ -83,10 +83,9 @@ public class TableroTests {
     
         Tablero tablero = new Tablero("jugador", mazoModoUno); 
 
-        tablero.aumentarPuntosDeVida(4);
+        tablero.aumentarPuntos(4);
 
-        assertEquals(24, tablero.puntos);        
-        
+        assertEquals(24, tablero.puntos);         
     }
     
     @Test
@@ -94,10 +93,62 @@ public class TableroTests {
     
         Tablero tablero = new Tablero("jugador", mazoModoDos); 
 
-        tablero.aumentarPuntosDeVida(4);
+        tablero.aumentarPuntos(4);
 
-        assertEquals(4, tablero.puntos);        
-        
+        assertEquals(4, tablero.puntos);          
     }
     
+    @Test
+    void testAumentarEnergia() {
+        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+
+        tablero.aumentarEnergias(0,1,0);
+
+        assertEquals(1, tablero.energiaFuego());   
+    }
+
+    @Test
+    void testAumentarTodasLasEnergiasEnDos() {
+        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+
+        tablero.aumentarEnergias(1,1,1);
+        tablero.aumentarEnergias(1,1,1);
+
+        assertEquals(2, tablero.energiaAgua());   
+        assertEquals(2, tablero.energiaFuego());   
+        assertEquals(2, tablero.energiaPlanta());   
+    }
+
+    @Test
+    void testDisminuirEnergia() {
+        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+
+        tablero.aumentarEnergias(0,3,0);
+        tablero.disminuirEnergias(0,1,0);
+
+        assertEquals(2, tablero.energiaFuego());   
+    }
+
+    @Test
+    void testDismunirTodasLasEnergiasEnDos() {
+        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+
+        tablero.aumentarEnergias(1,1,1);
+        tablero.disminuirEnergias(1,1,1);
+
+        assertEquals(0, tablero.energiaAgua());   
+        assertEquals(0, tablero.energiaFuego());   
+        assertEquals(0, tablero.energiaPlanta());   
+    }
+
+    @Test
+    void testLaEnergiaNoPuedeSerNegativa() {
+        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+
+        tablero.disminuirEnergias(1,1,1);
+
+        assertEquals(0, tablero.energiaAgua());   
+        assertEquals(0, tablero.energiaFuego());   
+        assertEquals(0, tablero.energiaPlanta());    
+    }
 }
