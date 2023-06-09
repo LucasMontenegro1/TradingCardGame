@@ -21,23 +21,18 @@ import fiuba.tdd.tp.carta.Metodos.TransferirEnergia;
 
 public enum CartasDisponibles {
 
-    ENERGIA("ENERGIA", 10, new ArrayList<Atributo>(),
-                                         new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
-                                         new ArrayList<MetodoCarta>(){{add(new ModificarEnergia(Energia.Agua, 1, Tipo.Artefacto));}}
-                                        ),
-
-    AGUA("Energía agua", 10, new ArrayList<Atributo>(),
-                             new ArrayList<Tipo>(),
+    AGUA("AGUA", 10, new ArrayList<Atributo>(),
+                             new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                              new ArrayList<MetodoCarta>(){{add(new ModificarEnergia(Energia.Agua, 1, Tipo.Artefacto));}}
                             ),
                             
-    FUEGO("Energía fuego", 10, new ArrayList<Atributo>(),
-                            new ArrayList<Tipo>(),
+    FUEGO("FUEGO", 10, new ArrayList<Atributo>(),
+                            new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                             new ArrayList<MetodoCarta>(){{add(new ModificarEnergia(Energia.Fuego, 1, Tipo.Artefacto));}}
                            ),
 
-    PLANTA("Energía planta", 10, new ArrayList<Atributo>(),
-                           new ArrayList<Tipo>(),
+    PLANTA("PLANTA", 10, new ArrayList<Atributo>(),
+                           new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                            new ArrayList<MetodoCarta>(){{add(new ModificarEnergia(Energia.Planta, 1, Tipo.Artefacto));}}
                         ),
     
@@ -178,5 +173,4 @@ public enum CartasDisponibles {
         this.tipos = tipos;
         this.metodos = metodos;
     }
-
 }

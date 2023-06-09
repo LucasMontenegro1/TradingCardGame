@@ -48,7 +48,7 @@ public class MazoTests {
     void testCreacionMazoModoUnoValido() throws MazoInvalido {
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -61,7 +61,7 @@ public class MazoTests {
     void testCreacionMazoModoDosValido() throws MazoInvalido {
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 60);
+        cartas.put(CartasDisponibles.AGUA.nombre, 60);
         
         Modo modoMazo = new Modo2();
 
@@ -73,7 +73,7 @@ public class MazoTests {
     @Test
     void testAgregarCartaAMazoModoUno() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -87,7 +87,7 @@ public class MazoTests {
     @Test
     void testAgregarCartaAMazoModoUnoNoSePuede() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 60);
+        cartas.put(CartasDisponibles.AGUA.nombre, 60);
         
         Modo modoMazo = new Modo1();
 
@@ -103,7 +103,7 @@ public class MazoTests {
     @Test
     void testAgregarCartaAMazoModoDosNoEsPosible() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 60);
+        cartas.put(CartasDisponibles.AGUA.nombre, 60);
         
         Modo modoMazo = new Modo2();
 
@@ -119,13 +119,13 @@ public class MazoTests {
     @Test
     void testEliminarCartaAMazoModoUno() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 50);
+        cartas.put(CartasDisponibles.AGUA.nombre, 50);
         
         Modo modoMazo = new Modo1();
 
         Mazo mazo = new Mazo(cartas, modoMazo);
 
-        mazo.eliminarCarta(CartasDisponibles.ENERGIA.nombre); 
+        mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
 
         assertEquals(mazo.cantdCartas(), 49);
     }
@@ -133,14 +133,14 @@ public class MazoTests {
     @Test
     void testEliminarCartaAMazoModoUnoNoSePuede() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
         Mazo mazo = new Mazo(cartas, modoMazo);
 
         assertThrows(MazoInvalido.class, () -> {
-            mazo.eliminarCarta(CartasDisponibles.ENERGIA.nombre); 
+            mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
         });
 
         assertEquals(mazo.cantdCartas(), 40);
@@ -149,7 +149,7 @@ public class MazoTests {
     @Test
     void testNoSePuedeEliminarUnaCartaQueNoExiste() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 50);
+        cartas.put(CartasDisponibles.AGUA.nombre, 50);
         
         Modo modoMazo = new Modo1();
 
@@ -165,14 +165,14 @@ public class MazoTests {
     @Test
     void testEliminarCartaAMazoModoDos() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 60);
+        cartas.put(CartasDisponibles.AGUA.nombre, 60);
         
         Modo modoMazo = new Modo2();
 
         Mazo mazo = new Mazo(cartas, modoMazo);
 
         assertThrows(MazoInvalido.class, () -> {
-            mazo.eliminarCarta(CartasDisponibles.ENERGIA.nombre); 
+            mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
         }); 
 
         assertEquals(mazo.cantdCartas(), 60);

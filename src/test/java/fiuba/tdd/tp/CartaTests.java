@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CartaTests {
     @Test
     public void crearCarta() {    
-        Carta carta = new Carta(CartasDisponibles.ENERGIA);
+        Carta carta = new Carta(CartasDisponibles.AGUA);
 
         Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
-        Assertions.assertEquals("ENERGIA", carta.getNombre());
+        Assertions.assertEquals("AGUA", carta.getNombre());
     }
     
     @Test

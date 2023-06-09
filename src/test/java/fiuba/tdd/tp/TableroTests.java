@@ -30,10 +30,10 @@ public class TableroTests {
         Modo modoUno = new Modo1();
 		Modo modoDos = new Modo2();
 
-		cartasModoUno.put(CartasDisponibles.ENERGIA.nombre, 40);
+		cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
         mazoModoUno = new Mazo(cartasModoUno, modoUno);
 
-		cartasModoDos.put(CartasDisponibles.ENERGIA.nombre, 60);
+		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 60);
 		mazoModoDos = new Mazo(cartasModoDos, modoDos);
     }
     

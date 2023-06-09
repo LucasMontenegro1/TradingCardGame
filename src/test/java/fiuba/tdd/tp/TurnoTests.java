@@ -29,10 +29,10 @@ public class TurnoTests {
         Modo modoUno = new Modo1();
 		Modo modoDos = new Modo2();
 
-		cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+		cartas.put(CartasDisponibles.AGUA.nombre, 40);
         mazoModoUno = new Mazo(cartas, modoUno);
 
-		cartas.put(CartasDisponibles.ENERGIA.nombre, 60);
+		cartas.put(CartasDisponibles.AGUA.nombre, 60);
 		mazoModoDos = new Mazo(cartas, modoDos);
     }
 	

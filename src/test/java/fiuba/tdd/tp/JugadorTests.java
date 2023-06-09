@@ -168,11 +168,11 @@ public class JugadorTests {
         jugador.depositarDinero(1000);
 
         for (int i = 0; i < 40; i++) {
-            jugador.comprarCarta(CartasDisponibles.ENERGIA);
+            jugador.comprarCarta(CartasDisponibles.AGUA);
         }
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -188,7 +188,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -208,11 +208,11 @@ public class JugadorTests {
         jugador.depositarDinero(1000);
 
         for (int i = 0; i < 40; i++) {
-            jugador.comprarCarta(CartasDisponibles.ENERGIA);
+            jugador.comprarCarta(CartasDisponibles.AGUA);
         }
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
@@ -235,11 +235,11 @@ public class JugadorTests {
         jugador.depositarDinero(1000);
 
         for (int i = 0; i < 40; i++) {
-            jugador.comprarCarta(CartasDisponibles.ENERGIA);
+            jugador.comprarCarta(CartasDisponibles.AGUA);
         }
 
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ENERGIA.nombre, 40);
+        cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
         Modo modoMazo = new Modo1();
 
