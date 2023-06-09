@@ -56,6 +56,6 @@ public class CartaTests {
     @Test
     public void crearCartaAntimagia(){
         Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
-        assertTrue(carta.getNombre() == CartasDisponibles.ANTIMAGIA.nombreCarta());
+        assertTrue(carta.getNombre() == CartasDisponibles.ANTIMAGIA.nombre);
     }
 }

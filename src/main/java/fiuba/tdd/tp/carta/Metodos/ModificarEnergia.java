@@ -10,12 +10,9 @@ import fiuba.tdd.tp.zona.ZonaMano;
 
 public class ModificarEnergia implements MetodoCarta {
 
-    // la cantidad indica en cuantos puntos,aumenta o
-    // disminuye la cantidad de energía del jugador
+    private Tipo tipo;
     private int cantidad;
     private Energia tipoEnergia;
-
-    private Tipo tipo;
 
     public ModificarEnergia(Energia tipoEnergia, int cantidad, Tipo tipo){
         this.tipo = tipo;

@@ -1,6 +1,7 @@
 package fiuba.tdd.tp.carta.Metodos;
 
 import fiuba.tdd.tp.carta.Atributo;
+import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.zona.Zona;
@@ -11,11 +12,13 @@ public class DamagePorAtributo implements MetodoCarta {
     private boolean ambosJugadores;
     private int hp;
     private Atributo atributo;
+    private Tipo tipo;
 
-    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo){
+    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipo) {
         this.ambosJugadores = ambosJugadores;
         this.hp = hp;
         this.atributo = atributo;
+        this.tipo = tipo;
     }
 
     @Override

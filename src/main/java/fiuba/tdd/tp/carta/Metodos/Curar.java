@@ -8,11 +8,9 @@ import fiuba.tdd.tp.zona.ZonaMano;
 
 public class Curar implements MetodoCarta {
     private int hp;
-    private int max;
 
-    public Curar(int hp, int max){
+    public Curar(int hp){
         this.hp = hp;
-        this.max = max;
     }
 
     @Override

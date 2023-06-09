@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MetodoCartaTests {
 
     @Test
-    public void atacarYTomarCarta(){
+    public void atacarYTomarCarta() {
         MetodoCarta atacar = new Atacar(10);
         MetodoCarta tomarCarta = new TomarCarta(1, Tipo.Criatura);
 

@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.zona.Zona;
@@ -8,6 +9,7 @@ import fiuba.tdd.tp.zona.ZonaMano;
 public class DamagePorAccion implements MetodoCarta {
 
     private int hp;
+    public Tipo tipo = Tipo.Accion;
 
     public DamagePorAccion(int hp){
         this.hp = hp;
