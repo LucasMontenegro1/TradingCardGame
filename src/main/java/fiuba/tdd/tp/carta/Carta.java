@@ -11,14 +11,14 @@ public class Carta {
     String nombre;
     List<Tipo> tipos;
     List<Atributo> atributos;
-
     public Zona zona;
-    public ArrayList<MetodoCarta> efectos;
+    public ArrayList<MetodoCarta> metodos;
 
-    public Carta(CartasDisponibles carta){
+    public Carta(CartasDisponibles carta) {
         this.tipos = carta.tipos;
         this.nombre = carta.nombre;
         this.atributos = carta.atributos;
+        this.metodos = carta.metodos;
     }
 
     public boolean isTipo(Tipo tipo) {

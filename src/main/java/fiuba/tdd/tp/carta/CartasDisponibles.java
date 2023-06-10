@@ -1,7 +1,6 @@
 package fiuba.tdd.tp.carta;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fiuba.tdd.tp.carta.Metodos.Atacar;
 import fiuba.tdd.tp.carta.Metodos.Curar;
@@ -36,7 +35,7 @@ public enum CartasDisponibles {
                            new ArrayList<MetodoCarta>(){{add(new ModificarEnergia(Energia.Planta, 1, Tipo.Artefacto));}}
                         ),
     
-    ALQUMISTA("Alquimista", 20, new ArrayList<Atributo>(){{add(Atributo.Ciencia);}}, 
+    ALQUIMISTA("ALQUIMISTA", 20, new ArrayList<Atributo>(){{add(Atributo.Ciencia);}}, 
                                 new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Artefacto);}},
                                 new ArrayList<MetodoCarta>(){{
                                     add(new MetodoCartaCompuesto(new Atacar(1), new TomarCarta(1,Tipo.Criatura)));
@@ -45,7 +44,7 @@ public enum CartasDisponibles {
                                 }}
                             ),
 
-    ANTIMAGIA("Antimagia", 15, new ArrayList<Atributo>(), 
+    ANTIMAGIA("ANTIMAGIA", 15, new ArrayList<Atributo>(), 
                                              new ArrayList<Tipo>(){{add(Tipo.Artefacto);add(Tipo.Accion);}},
                                              new ArrayList<MetodoCarta>(){{
                                                 add(new DamagePorAtributo(1, false, Atributo.Magia, Tipo.Artefacto));
@@ -67,7 +66,7 @@ public enum CartasDisponibles {
                                              }}
                                         ),
         
-    DRENAR("Drenar", 15, new ArrayList<Atributo>(), 
+    DRENAR("DRENAR", 15, new ArrayList<Atributo>(), 
                                                 new ArrayList<Tipo>(){{add(Tipo.Accion);}},
                                                 new ArrayList<MetodoCarta>(){{
                                                     add(new Drenar());
@@ -131,7 +130,7 @@ public enum CartasDisponibles {
                                 }}
                             ),
 
-    SABOTEAR("Sabotear", 12,new ArrayList<Atributo>(),
+    SABOTEAR("SABOTEAR", 12,new ArrayList<Atributo>(),
                                             new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Reaccion);}},
                                             new ArrayList<MetodoCarta>(){{
                                                 

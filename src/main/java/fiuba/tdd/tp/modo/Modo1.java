@@ -15,7 +15,7 @@ public class Modo1 implements Modo {
     @Override
     public Carta ejecutarEtapaInicial(Mazo  mazo, Integer puntos) {
         // return mazo.tomarCarta();
-        return new Carta(CartasDisponibles.ALQUMISTA);
+        return new Carta(CartasDisponibles.ALQUIMISTA);
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Modo2 implements Modo{
         }
 
         // return mazo.tomar_carta();
-        return new Carta(CartasDisponibles.ALQUMISTA);
+        return new Carta(CartasDisponibles.ALQUIMISTA);
     }
 
     @Override

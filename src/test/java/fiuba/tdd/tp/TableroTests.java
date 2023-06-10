@@ -2,6 +2,7 @@ package fiuba.tdd.tp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Tipo;
+import fiuba.tdd.tp.carta.Metodos.Atacar;
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
+import fiuba.tdd.tp.carta.Metodos.MetodoCartaCompuesto;
+import fiuba.tdd.tp.carta.Metodos.ModificarEnergia;
+import fiuba.tdd.tp.carta.Metodos.TomarCarta;
+import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
@@ -102,7 +111,7 @@ public class TableroTests {
     void testAumentarEnergia() {
         Tablero tablero = new Tablero("jugador", mazoModoDos); 
 
-        tablero.aumentarEnergias(0,1,0);
+        tablero.aumentarEnergia(Energia.Fuego,1);
 
         assertEquals(1, tablero.energiaFuego());   
     }
@@ -111,8 +120,9 @@ public class TableroTests {
     void testAumentarTodasLasEnergiasEnDos() {
         Tablero tablero = new Tablero("jugador", mazoModoDos); 
 
-        tablero.aumentarEnergias(1,1,1);
-        tablero.aumentarEnergias(1,1,1);
+        tablero.aumentarEnergia(Energia.Agua,2);
+        tablero.aumentarEnergia(Energia.Fuego,2);
+        tablero.aumentarEnergia(Energia.Planta,2);
 
         assertEquals(2, tablero.energiaAgua());   
         assertEquals(2, tablero.energiaFuego());   
@@ -123,8 +133,8 @@ public class TableroTests {
     void testDisminuirEnergia() {
         Tablero tablero = new Tablero("jugador", mazoModoDos); 
 
-        tablero.aumentarEnergias(0,3,0);
-        tablero.disminuirEnergias(0,1,0);
+        tablero.aumentarEnergia(Energia.Fuego,3);
+        tablero.disminuirEnergia(Energia.Fuego,1);
 
         assertEquals(2, tablero.energiaFuego());   
     }
@@ -133,8 +143,13 @@ public class TableroTests {
     void testDismunirTodasLasEnergiasEnDos() {
         Tablero tablero = new Tablero("jugador", mazoModoDos); 
 
-        tablero.aumentarEnergias(1,1,1);
-        tablero.disminuirEnergias(1,1,1);
+        tablero.aumentarEnergia(Energia.Agua,1);
+        tablero.aumentarEnergia(Energia.Fuego,1);
+        tablero.aumentarEnergia(Energia.Planta,1);
+
+        tablero.disminuirEnergia(Energia.Agua,1);
+        tablero.disminuirEnergia(Energia.Fuego,1);
+        tablero.disminuirEnergia(Energia.Planta,1);
 
         assertEquals(0, tablero.energiaAgua());   
         assertEquals(0, tablero.energiaFuego());   
@@ -145,10 +160,48 @@ public class TableroTests {
     void testLaEnergiaNoPuedeSerNegativa() {
         Tablero tablero = new Tablero("jugador", mazoModoDos); 
 
-        tablero.disminuirEnergias(1,1,1);
+        tablero.disminuirEnergia(Energia.Agua,1);
+        tablero.disminuirEnergia(Energia.Fuego,1);
+        tablero.disminuirEnergia(Energia.Planta,1);
 
         assertEquals(0, tablero.energiaAgua());   
         assertEquals(0, tablero.energiaFuego());   
         assertEquals(0, tablero.energiaPlanta());    
     }
+
+    @Test
+    void testTableroDevuelveLasCartasUsablesCorrectamente() throws MazoInvalido {
+        HashMap<String, Integer> cartasModoUno = new HashMap<>();        
+        Modo modoUno = new Modo1();
+    
+        cartasModoUno.put(CartasDisponibles.AGUA.nombre, 30);
+        cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.ANTIMAGIA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.SABOTEAR.nombre, 3);
+
+        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+
+        Tablero tablero = new Tablero("jugador", mazo);
+
+        HashMap<String, ArrayList<MetodoCarta>> resultadoEsperado = new HashMap<String, ArrayList<MetodoCarta>>();
+        
+        ArrayList<MetodoCarta> listaMetodos = new ArrayList<>();
+        MetodoCarta metodoUno = new MetodoCartaCompuesto(new Atacar(1), new TomarCarta(1,Tipo.Criatura));
+        MetodoCarta metodoDos = new MetodoCartaCompuesto(new Atacar(1), new ModificarEnergia(Energia.Fuego, 1, Tipo.Criatura));
+
+        listaMetodos.add(metodoUno);
+        listaMetodos.add(metodoDos);
+        listaMetodos.add(metodoUno);
+        listaMetodos.add(metodoDos);
+        listaMetodos.add(metodoUno);
+        listaMetodos.add(metodoDos);
+
+        resultadoEsperado.put("Alquimista", listaMetodos);
+
+        HashMap<String, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque());
+
+        assertEquals(true, resultadoObtenido.containsKey("Alqumista"));
+    }
+    
 }

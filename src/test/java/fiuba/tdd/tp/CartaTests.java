@@ -20,7 +20,7 @@ public class CartaTests {
     
     @Test
     public void crearCartaTipoCriatura() {
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
     }
 
@@ -41,13 +41,13 @@ public class CartaTests {
     
     @Test
     public void crearCartaTipoArtefacto() {
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
     }
 
     @Test
     public void crearCartaConVariosTipos() {
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
         Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
     }

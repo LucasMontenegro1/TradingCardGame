@@ -97,7 +97,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
         jugador.depositarDinero(50);
         
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA); 
 
         assertEquals(jugador.getCartas().size(), 1);
     }
@@ -107,11 +107,11 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
         jugador.depositarDinero(50);
         
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA); 
 
         assertEquals(jugador.getCartas().size(), 1);
-        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombre), 2);
+        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUIMISTA.nombre), 2);
         assertEquals(jugador.getCantdDinero(), 10);
     }
 
@@ -120,7 +120,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
         jugador.depositarDinero(50);
 
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA); 
 
         assertEquals(jugador.getCantdDinero(), 30);
     }
@@ -130,7 +130,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
 
         assertThrows(DineroInsuficiente.class, () -> {
-            jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
+            jugador.comprarCarta(CartasDisponibles.ALQUIMISTA); 
         });
 
         assertEquals(jugador.getCantdDinero(), 0);
@@ -142,13 +142,13 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
         jugador.depositarDinero(100);
         
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA); 
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA);
-        jugador.comprarCarta(CartasDisponibles.ALQUMISTA);  
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA); 
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);  
 
-        jugador.eliminarCarta(CartasDisponibles.ALQUMISTA);
+        jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA);
 
-        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUMISTA.nombre), 2);
+        assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUIMISTA.nombre), 2);
         assertEquals(jugador.getCantdDinero(), 40);
     }
 
@@ -157,7 +157,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
 
         assertThrows(CartaNoEncontrada.class, () -> {
-            jugador.eliminarCarta(CartasDisponibles.ALQUMISTA);
+            jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA);
         });
     }
 

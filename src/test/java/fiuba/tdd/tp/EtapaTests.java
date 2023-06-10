@@ -77,7 +77,7 @@ public class EtapaTests {
 	
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
 
         carta.zona = new ZonaReserva();
 
@@ -93,7 +93,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
 
         carta.zona = new ZonaMano();
 
@@ -111,7 +111,7 @@ public class EtapaTests {
 
         Integer puntos = 15;
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
 
         carta.zona = new ZonaMano();
 		
@@ -174,7 +174,7 @@ public class EtapaTests {
 	
 		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaReserva();
 
@@ -190,7 +190,7 @@ public class EtapaTests {
 		
 		Integer puntos = 4;
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 
@@ -208,7 +208,7 @@ public class EtapaTests {
 
         Integer puntos = 4;
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 		
@@ -260,7 +260,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaPrincipalSePuedenMoverCartas(){
     
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaReserva();
 
@@ -276,7 +276,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeCombate(){
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 
@@ -292,7 +292,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeReserva(){
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 
@@ -342,7 +342,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaDeAtaqueNoSePuedenMoverCartas(){
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaReserva();
 
@@ -358,7 +358,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeCombate(){
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 
@@ -375,7 +375,7 @@ public class EtapaTests {
     void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeReserva(){
     
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 
@@ -416,7 +416,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedenMoverCartas(){
 
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaReserva();
 
@@ -432,7 +432,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedeInvocarUnaCriaturaAZonaDeCombate(){
         
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 
@@ -448,7 +448,7 @@ public class EtapaTests {
     @Test
     void testEnLaEtapaFinalNoSePuedeInvocarUnaCriaturaAZonaDeReserva(){
     
-        Carta carta = new Carta(CartasDisponibles.ALQUMISTA);
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaMano();
 

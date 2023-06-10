@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
@@ -15,7 +16,7 @@ public class Tablero {
     public String usuario;
     public ArrayList<Carta> cartas = new ArrayList<>();
     public Integer puntos;
-    public HashMap<String, Integer> energia = new HashMap<String, Integer>();
+    public HashMap<Energia, Integer> energia = new HashMap<Energia, Integer>();
     
     final String AGUA  = "AGUA";
     final String FUEGO  = "FUEGO";
@@ -24,9 +25,9 @@ public class Tablero {
     public Tablero(String nombreJugador, Mazo mazo) {
         this.usuario = nombreJugador;
         this.puntos = mazo.getModo().asignarPuntos();
-        this.energia.put(AGUA, 0);
-        this.energia.put(FUEGO, 0);
-        this.energia.put(PLANTA, 0);
+        this.energia.put(Energia.Agua, 0);
+        this.energia.put(Energia.Fuego, 0);
+        this.energia.put(Energia.Planta, 0);
 
         for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
             String nombreCarta = carta.getKey();
@@ -51,13 +52,13 @@ public class Tablero {
         HashMap<String, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
 
         this.cartas.forEach(carta -> {
-            carta.efectos.forEach(efecto -> {
+            carta.metodos.forEach(efecto -> {
                 if (efecto.esAplicableA(etapa, carta.zona)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta.getNombre());
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
                     }
-                        
+                    //TODO: ver caso de tener cartas repetidas 
                     efectosCarta.add(efecto);
                     cartasUsables.put(carta.getNombre(), efectosCarta);
                 }
@@ -67,38 +68,30 @@ public class Tablero {
         return cartasUsables;
     }
 
-    private void modificarEnergiaEspecifica(String tipo, Integer cantidad) {
-        Integer energia = this.energia.get(tipo);
-        this.energia.put(tipo, energia+cantidad);
+    private void modificarEnergiaEspecifica(Energia energia, Integer cantidad) {
+        Integer cantidadEnergia = this.energia.get(energia);
+        this.energia.put(energia, cantidadEnergia+cantidad);
     }
 
-    public void aumentarEnergias(int agua, int fuego, int planta) {
-        modificarEnergiaEspecifica(AGUA, agua);
-        modificarEnergiaEspecifica(FUEGO, fuego);
-        modificarEnergiaEspecifica(PLANTA, planta);    
+    public void aumentarEnergia(Energia energia, Integer cantidad) {
+        modificarEnergiaEspecifica(energia, cantidad);    
     }
 
-    public void disminuirEnergias(int agua, int fuego, int planta) {
-        if (this.energia.get(AGUA) > 0) {
-            modificarEnergiaEspecifica(AGUA, -agua);
-        }
-        if (this.energia.get(FUEGO) > 0) {
-            modificarEnergiaEspecifica(FUEGO, -fuego);
-        }
-        if (this.energia.get(PLANTA) > 0) {
-            modificarEnergiaEspecifica(PLANTA, -planta);    
+    public void disminuirEnergia(Energia energia, Integer cantidad) {
+        if (this.energia.get(energia) > 0) {
+            modificarEnergiaEspecifica(energia, -cantidad);
         }
     }
 
     public Integer energiaFuego() {
-        return this.energia.get(FUEGO);
+        return this.energia.get(Energia.Fuego);
     }
 
     public Integer energiaAgua() {
-        return this.energia.get(AGUA);
+        return this.energia.get(Energia.Agua);
     }
 
     public Integer energiaPlanta() {
-        return this.energia.get(PLANTA);
+        return this.energia.get(Energia.Planta);
     }
 }
