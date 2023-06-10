@@ -6,7 +6,8 @@ import java.util.Map.Entry;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.MetodoCarta;
+import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
 
@@ -15,10 +16,21 @@ public class Tablero {
     public String usuario;
     public ArrayList<Carta> cartas = new ArrayList<>();
     public Integer puntos;
+    public HashMap<Energia, Integer> energia = new HashMap<Energia, Integer>();
+    public Integer maxZonaCombate;
+    public Integer maxZonaReserva;
+    public Integer maxZonaArtefactos;
+    
+    final String AGUA  = "AGUA";
+    final String FUEGO  = "FUEGO";
+    final String PLANTA  = "PLANTA";
 
     public Tablero(String nombreJugador, Mazo mazo) {
         this.usuario = nombreJugador;
         this.puntos = mazo.getModo().asignarPuntos();
+        this.energia.put(Energia.Agua, 0);
+        this.energia.put(Energia.Fuego, 0);
+        this.energia.put(Energia.Planta, 0);
 
         for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
             String nombreCarta = carta.getKey();
@@ -30,32 +42,70 @@ public class Tablero {
         }
     }
 
-    public void aumentarPuntosDeVida(Integer cantidad){
+    public void aumentarPuntos(Integer cantidad){
         this.puntos += cantidad;
     }
 
-    public void disminuyePuntos(Integer cantidad) {
+    public void disminuirPuntos(Integer cantidad) {
         this.puntos -= cantidad;
     }
 
-    public HashMap<String, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
+    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
         
-        HashMap<String, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
+        HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
 
         this.cartas.forEach(carta -> {
-            carta.efectos.forEach(efecto -> {
-                if (efecto.esAplicableA(etapa, carta.zona)) {
-                    ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta.getNombre());
+            carta.metodos.forEach(efecto -> {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona)) {
+                    ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
-                    }
-                        
+                    } 
                     efectosCarta.add(efecto);
-                    cartasUsables.put(carta.getNombre(), efectosCarta);
+                    cartasUsables.put(carta, efectosCarta);
                 }
             });
         });
 
         return cartasUsables;
+    } 
+
+    public ArrayList<Carta> cartasAtacables() { //TODO
+        return cartas;
+    }
+
+    public Carta eliminarCarta() { // TODO
+        return null;
+    }
+
+    public void agregarCarta(Carta carta) { // TODO
+
+    }
+    
+    private void modificarEnergiaEspecifica(Energia energia, Integer cantidad) {
+        Integer cantidadEnergia = this.energia.get(energia);
+        this.energia.put(energia, cantidadEnergia+cantidad);
+    }
+
+    public void aumentarEnergia(Energia energia, Integer cantidad) {
+        modificarEnergiaEspecifica(energia, cantidad);    
+    }
+
+    public void disminuirEnergia(Energia energia, Integer cantidad) {
+        if (this.energia.get(energia) > 0) {
+            modificarEnergiaEspecifica(energia, -cantidad);
+        }
+    }
+
+    public Integer energiaFuego() {
+        return this.energia.get(Energia.Fuego);
+    }
+
+    public Integer energiaAgua() {
+        return this.energia.get(Energia.Agua);
+    }
+
+    public Integer energiaPlanta() {
+        return this.energia.get(Energia.Planta);
     }
 }

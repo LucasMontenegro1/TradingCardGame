@@ -3,6 +3,7 @@ package fiuba.tdd.tp.carta;
 import java.util.ArrayList;
 import java.util.List;
 
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 
@@ -10,25 +11,22 @@ public class Carta {
     String nombre;
     List<Tipo> tipos;
     List<Atributo> atributos;
-
     public Zona zona;
-    public ArrayList<MetodoCarta> efectos;
+    public ArrayList<MetodoCarta> metodos;
 
-    public Carta(CartasDisponibles carta){
-        this.tipos = carta.tipos();
-        this.nombre = carta.nombreCarta();
-        this.atributos = carta.atributos();
+    public Carta(CartasDisponibles carta) {
+        this.tipos = carta.tipos;
+        this.nombre = carta.nombre;
+        this.atributos = carta.atributos;
+        this.metodos = carta.metodos;
+        this.zona = null;
     }
 
-    public boolean isTipo(Tipo tipo) {
+    public boolean esTipo(Tipo tipo) {
         return this.tipos.contains(tipo);
     }
 
-    public boolean hasAtributo(Atributo atributo) {
-        return this.atributos.contains(atributo);
-    }
-
-    public String getNombre() {
+    public String nombreCarta() {
         return nombre;
     }
 
@@ -37,7 +35,9 @@ public class Carta {
     }
     
     public void moverACombate() {
-        this.zona = this.zona.moverACombate();
+        if (this.nombre != "BARRERAMAGICA") {
+            this.zona = this.zona.moverACombate();
+        }
     }
     
     public void moverAReserva(){

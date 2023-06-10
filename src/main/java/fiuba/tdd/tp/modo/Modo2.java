@@ -2,6 +2,7 @@ package fiuba.tdd.tp.modo;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.mazo.Mazo;
 
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class Modo2 implements Modo{
         }
 
         // return mazo.tomar_carta();
-        return new Carta(CartasDisponibles.ALQUMISTA);
+        return new Carta(CartasDisponibles.ALQUIMISTA);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class Modo2 implements Modo{
         for (Entry<String, Integer> carta : cartas.entrySet()) {
             String nombreCarta = carta.getKey();
             Integer cantidad = carta.getValue();
-            if (cantidad > maxCartasRepetidas && nombreCarta != CartasDisponibles.ENERGIA.nombreCarta()) {
+            if (cantidad > maxCartasRepetidas && !Energia.esEnergia(nombreCarta)) {
                 return false;
             }
         }

@@ -6,24 +6,12 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
-import fiuba.tdd.tp.zona.ZonaMano;
 
-public class DamagePorAccion implements MetodoCarta {
+public class Sabotear implements MetodoCarta {
 
-    private int hp;
-    public Tipo tipo = Tipo.Accion;
-
-    public DamagePorAccion(int hp){
-        this.hp = hp;
-    }
-
-    @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
-        return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
-    }
+    Tipo tipo = Tipo.Reaccion;
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
@@ -31,4 +19,11 @@ public class DamagePorAccion implements MetodoCarta {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
     }
+
+    @Override
+    public boolean esAplicableA(Etapa etapa, Zona zona) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'esAplicableA'");
+    }
+    
 }
