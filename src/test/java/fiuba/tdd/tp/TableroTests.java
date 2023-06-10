@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -164,6 +165,35 @@ public class TableroTests {
         assertEquals(0, tablero.energiaAgua());   
         assertEquals(0, tablero.energiaFuego());   
         assertEquals(0, tablero.energiaPlanta());    
+    }
+
+    @Test
+    void testAgregarCartaAlTablero(){
+
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        Tablero tablero = new Tablero("Jugador", mazoModoDos);
+
+        Integer cantInicialDeCartas = tablero.cartas.size();
+
+        tablero.agregarCarta(carta);
+
+        assertEquals(cantInicialDeCartas + 1 ,tablero.cartas.size());
+    }
+
+    @Test
+    void testEliminarCartaAlTablero(){
+
+        Tablero tablero = new Tablero("Jugador", mazoModoDos);
+
+        Integer cantInicialDeCartas = tablero.cartas.size();
+
+        Random random = new Random();
+        Carta cartaAEliminar = tablero.cartas.get(random.nextInt(tablero.cartas.size()));
+
+        tablero.eliminarCarta(cartaAEliminar);
+
+        assertEquals(cantInicialDeCartas - 1 ,tablero.cartas.size());
     }
 
     @Test

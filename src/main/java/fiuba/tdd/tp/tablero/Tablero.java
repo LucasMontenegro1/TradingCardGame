@@ -1,8 +1,10 @@
 package fiuba.tdd.tp.tablero;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
@@ -10,6 +12,7 @@ import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.zona.Zona;
 
 public class Tablero {
     
@@ -70,18 +73,31 @@ public class Tablero {
         return cartasUsables;
     } 
 
+    public ArrayList<Carta> cartasEnZona(Zona zona){
+        
+        ArrayList<Carta> cartas = new ArrayList<>();
+
+        this.cartas.forEach(carta -> {
+            if (carta.zona == zona){
+                cartas.add(carta);
+            }}
+        );
+
+        return cartas;
+    }
+
     public ArrayList<Carta> cartasAtacables() { //TODO
         return cartas;
     }
 
-    public Carta eliminarCarta() { // TODO
-        return null;
+    public void eliminarCarta(Carta carta) {
+        this.cartas.remove(carta);
     }
 
-    public void agregarCarta(Carta carta) { // TODO
-
+    public void agregarCarta(Carta carta) { 
+        this.cartas.add(carta);
     }
-    
+
     private void modificarEnergiaEspecifica(Energia energia, Integer cantidad) {
         Integer cantidadEnergia = this.energia.get(energia);
         this.energia.put(energia, cantidadEnergia+cantidad);
