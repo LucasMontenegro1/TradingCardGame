@@ -15,6 +15,10 @@ public class Modo1 implements Modo {
     final Integer minCartasMazo = 40;
     final Integer maxCartasRepetidas = 3;
 
+    final Integer maxZonaReserva = 0;
+    final Integer maxZonaCombate = 5;
+    final Integer maxZonaArtefactos = 5;
+
     @Override
     public Carta ejecutarEtapaInicial(Mazo  mazo, Integer puntos) {
         // return mazo.tomarCarta();
@@ -70,4 +74,19 @@ public class Modo1 implements Modo {
     public Integer asignarPuntos() {
         return puntos;
     }
+
+    @Override
+    public Integer getMaxZonaCombate() {
+        return maxZonaCombate;
+    }
+
+    @Override
+    public Integer getMaxZonaReserva() {
+        return maxZonaReserva;
+    }
+
+    @Override
+    public Integer getMaxZonaArtefactos() {return maxZonaArtefactos;}
+
+
 }

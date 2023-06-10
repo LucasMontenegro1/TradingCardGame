@@ -17,4 +17,10 @@ public interface Modo {
     public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta);
 
     public Integer asignarPuntos();
+
+    public Integer getMaxZonaCombate();
+
+    public Integer getMaxZonaReserva();
+
+    public Integer getMaxZonaArtefactos();
 }

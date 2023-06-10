@@ -10,6 +10,7 @@ import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.modo.Modo;
 
 public class Tablero {
     
@@ -26,11 +27,15 @@ public class Tablero {
     final String PLANTA  = "PLANTA";
 
     public Tablero(String nombreJugador, Mazo mazo) {
+        Modo modo = mazo.getModo();
         this.usuario = nombreJugador;
-        this.puntos = mazo.getModo().asignarPuntos();
+        this.puntos = modo.asignarPuntos();
         this.energia.put(Energia.Agua, 0);
         this.energia.put(Energia.Fuego, 0);
         this.energia.put(Energia.Planta, 0);
+        this.maxZonaReserva = modo.getMaxZonaReserva();
+        this.maxZonaArtefactos = modo.getMaxZonaArtefactos();
+        this.maxZonaCombate = modo.getMaxZonaCombate();
 
         for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
             String nombreCarta = carta.getKey();
