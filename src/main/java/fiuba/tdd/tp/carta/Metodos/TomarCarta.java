@@ -13,20 +13,19 @@ import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaCombate;
-import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class TomarCarta implements MetodoCarta {
+public class TomarCarta extends MetodoCarta {
 
     private int cantidad;
-    private Tipo tipo;
+    public Tipo tipo;
     public TomarCarta(int cantidad, Tipo  tipo){
         this.cantidad = cantidad;
         this.tipo = tipo;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         if (this.tipo == Tipo.Criatura){
             return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
         }

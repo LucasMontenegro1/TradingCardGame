@@ -11,7 +11,7 @@ import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaCombate;
 
-public class Atacar implements MetodoCarta {
+public class Atacar extends MetodoCarta {
 
     private int hp;
     public Tipo tipo = Tipo.Criatura;
@@ -21,7 +21,7 @@ public class Atacar implements MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaDeAtaque && zona instanceof ZonaCombate;
     }
 

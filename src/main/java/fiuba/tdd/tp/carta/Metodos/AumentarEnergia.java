@@ -13,9 +13,9 @@ import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class AumentarEnergia implements MetodoCarta {
+public class AumentarEnergia extends MetodoCarta {
 
-    private Tipo tipo;
+    public Tipo tipo;
     private int cantidad;
     private Energia tipoEnergia;
 
@@ -26,7 +26,7 @@ public class AumentarEnergia implements MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         if (this.tipo == Tipo.Criatura){
             return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
         }

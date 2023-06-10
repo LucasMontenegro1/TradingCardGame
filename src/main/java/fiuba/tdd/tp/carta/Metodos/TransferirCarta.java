@@ -11,9 +11,9 @@ import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class TransferirCarta implements MetodoCarta {
+public class TransferirCarta extends MetodoCarta {
 
-    Tipo tipo = Tipo.Accion;
+    public Tipo tipo = Tipo.Accion;
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
@@ -25,7 +25,7 @@ public class TransferirCarta implements MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
     

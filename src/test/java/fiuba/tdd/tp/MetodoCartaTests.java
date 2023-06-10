@@ -1,12 +1,6 @@
 package fiuba.tdd.tp;
 
-import fiuba.tdd.tp.carta.Metodos.Atacar;
-import fiuba.tdd.tp.carta.Metodos.MetodoCartaCompuesto;
-import fiuba.tdd.tp.carta.Metodos.Sacrificio;
-import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.carta.Metodos.TomarCarta;
-import fiuba.tdd.tp.carta.Metodos.TransferirCarta;
-import fiuba.tdd.tp.carta.Metodos.TransferirEnergia;
+import fiuba.tdd.tp.carta.Metodos.*;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
@@ -21,7 +15,6 @@ import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
-import fiuba.tdd.tp.zona.ZonaReserva;
 
 import org.junit.jupiter.api.Test;
 
@@ -61,14 +54,14 @@ public class MetodoCartaTests {
         MetodoCarta efecto = new MetodoCartaCompuesto(atacar, tomarCarta);
        
         // efecto.ejecutar(null, null, null, null, null);
-        assertTrue(efecto.esAplicableA(new EtapaDeAtaque(), new ZonaCombate()));
+        assertTrue(efecto.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null));
     }
 
     @Test
     public void testTransferirEnergiaCriterioDeAplicacion(){
         MetodoCarta transferirEnergia =  new TransferirEnergia();
 
-        assertTrue(transferirEnergia.esAplicableA(new EtapaPrincipal(), new ZonaCombate()));
+        assertTrue(transferirEnergia.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null));
     }
 
     @Test 
@@ -95,7 +88,7 @@ public class MetodoCartaTests {
     public void testTransferirCartaCriterioDeAplicacion(){
         MetodoCarta transferirCarta = new TransferirCarta();
 
-        assertTrue(transferirCarta.esAplicableA(new EtapaPrincipal(), new ZonaMano()));
+        assertTrue(transferirCarta.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null));
     }
 
     @Test 
@@ -123,7 +116,7 @@ public class MetodoCartaTests {
     public void testSacrificioCriterioDeAplicacion(){
         MetodoCarta sacrificio = new Sacrificio();
 
-        assertTrue(sacrificio.esAplicableA(new EtapaPrincipal(), new ZonaMano()));
+        assertTrue(sacrificio.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null));
     }
 
     @Test 
@@ -136,14 +129,14 @@ public class MetodoCartaTests {
     public void testTomarCartaCriaturaCriterioDeAplicacion(){
         MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Criatura);
 
-        assertTrue(tomarCarta.esAplicableA(new EtapaDeAtaque(), new ZonaCombate()));
+        assertTrue(tomarCarta.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null));
     }
 
     @Test
     public void testTomarCartaArtefactoCriterioDeAplicacion(){
         MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Artefacto);
 
-        assertTrue(tomarCarta.esAplicableA(new EtapaPrincipal(), new ZonaCombate()));
+        assertTrue(tomarCarta.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null));
     }
 
     @Test 
@@ -163,5 +156,11 @@ public class MetodoCartaTests {
 
         assertEquals(cantCartasInicial - cantidad, enJuego.cartasEnZona(null).size());
     }
-
+    @Test
+    public void CartaConYsinTipo() {
+        MetodoCarta metodo = new Drenar();
+        assertEquals(null,metodo.tipo);
+        Atacar metodo2 = new Atacar(0);
+        assertEquals(Tipo.Criatura,metodo2.tipo);
+    }
 }

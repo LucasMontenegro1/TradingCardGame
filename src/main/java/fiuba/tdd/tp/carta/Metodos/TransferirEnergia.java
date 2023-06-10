@@ -12,12 +12,12 @@ import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaReserva;
 
-public class TransferirEnergia implements MetodoCarta {
+public class TransferirEnergia extends MetodoCarta {
 
-    Tipo tipo = Tipo.Criatura;
+    public Tipo tipo = Tipo.Criatura;
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && (zona instanceof ZonaCombate || zona instanceof ZonaReserva);
     }
 

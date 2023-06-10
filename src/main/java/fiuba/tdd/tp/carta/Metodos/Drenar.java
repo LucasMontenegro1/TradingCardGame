@@ -8,10 +8,10 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class Drenar implements MetodoCarta {
+public class Drenar extends MetodoCarta {
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return false;
     }
 

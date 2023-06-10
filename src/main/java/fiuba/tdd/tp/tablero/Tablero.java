@@ -1,11 +1,9 @@
 package fiuba.tdd.tp.tablero;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Random;
-
+import java.util.Deque;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
@@ -13,6 +11,7 @@ import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.zona.Zona;
+import java.util.ArrayDeque;
 
 public class Tablero {
     
@@ -56,10 +55,10 @@ public class Tablero {
     public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
         
         HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
-
+        Deque<MetodoCarta> pila = new ArrayDeque<>();
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona,pila)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();

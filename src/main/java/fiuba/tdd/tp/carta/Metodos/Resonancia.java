@@ -10,12 +10,12 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class Resonancia  implements MetodoCarta {
+public class Resonancia  extends MetodoCarta {
 
     public Tipo tipo = Tipo.Reaccion;
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'esAplicableA'");
     }

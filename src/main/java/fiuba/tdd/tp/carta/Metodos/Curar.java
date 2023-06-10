@@ -11,7 +11,7 @@ import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class Curar implements MetodoCarta {
+public class Curar extends MetodoCarta {
     private int hp;
 
     public Curar(int hp){
@@ -19,7 +19,7 @@ public class Curar implements MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && !(zona instanceof ZonaDescarte || zona instanceof ZonaMano);
     }
 

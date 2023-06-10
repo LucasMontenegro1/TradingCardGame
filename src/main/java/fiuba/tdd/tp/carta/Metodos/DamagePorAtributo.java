@@ -13,11 +13,11 @@ import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class DamagePorAtributo implements MetodoCarta {
+public class DamagePorAtributo extends MetodoCarta {
     private boolean ambosJugadores;
     private int hp;
     private Atributo atributo;
-    private Tipo tipo;
+    public Tipo tipo;
 
     public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipo) {
         this.ambosJugadores = ambosJugadores;
@@ -27,7 +27,7 @@ public class DamagePorAtributo implements MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         if (ambosJugadores){
             return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
         }

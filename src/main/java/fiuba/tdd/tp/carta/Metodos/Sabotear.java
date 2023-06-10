@@ -9,9 +9,9 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class Sabotear implements MetodoCarta {
+public class Sabotear extends MetodoCarta {
 
-    Tipo tipo = Tipo.Reaccion;
+    public Tipo tipo = Tipo.Reaccion;
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
@@ -21,7 +21,7 @@ public class Sabotear implements MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'esAplicableA'");
     }

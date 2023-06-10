@@ -9,12 +9,12 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class Impedir implements MetodoCarta {
+public class Impedir extends MetodoCarta {
 
-    Tipo tipo = Tipo.Reaccion;
+    public Tipo tipo = Tipo.Reaccion;
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return false;
     }
 

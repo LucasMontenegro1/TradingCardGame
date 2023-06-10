@@ -8,7 +8,7 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class MetodoCartaCompuesto implements MetodoCarta {
+public class MetodoCartaCompuesto extends MetodoCarta {
 
     private MetodoCarta metodoUno;
     private MetodoCarta metodoDos;
@@ -19,8 +19,8 @@ public class MetodoCartaCompuesto implements MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
-        return this.metodoUno.esAplicableA(etapa, zona) && this.metodoDos.esAplicableA(etapa, zona);
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+        return this.metodoUno.esAplicableA(etapa, zona,pilaMetodos) && this.metodoDos.esAplicableA(etapa, zona,pilaMetodos);
     }
 
     @Override
