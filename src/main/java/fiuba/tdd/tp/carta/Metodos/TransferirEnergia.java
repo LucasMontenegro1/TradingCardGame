@@ -6,8 +6,11 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
+import fiuba.tdd.tp.zona.ZonaCombate;
+import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class TransferirEnergia implements MetodoCarta {
 
@@ -15,15 +18,16 @@ public class TransferirEnergia implements MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esAplicableA'");
+        return etapa instanceof EtapaPrincipal && (zona instanceof ZonaCombate || zona instanceof ZonaReserva);
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
             Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+        
+        contrincante.disminuirEnergia(energia, 1);
+        enJuego.aumentarEnergia(energia, 1);
+        
     }
     
 }
