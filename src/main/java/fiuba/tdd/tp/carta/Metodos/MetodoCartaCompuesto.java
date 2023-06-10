@@ -1,6 +1,11 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.Deque;
+
+import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
 public class MetodoCartaCompuesto implements MetodoCarta {
@@ -19,8 +24,8 @@ public class MetodoCartaCompuesto implements MetodoCarta {
     }
 
     @Override
-    public void ejecutar() {
-        this.metodoUno.ejecutar();
-        this.metodoDos.ejecutar();
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo, Carta carta, Energia energia) {
+        this.metodoUno.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, carta, energia);
+        this.metodoDos.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, carta, energia);
     }
 }

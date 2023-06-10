@@ -11,51 +11,51 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartaTests {
     @Test
-    public void crearCarta() {    
+    void testCrearCarta() {    
         Carta carta = new Carta(CartasDisponibles.AGUA);
 
-        Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
-        Assertions.assertEquals("AGUA", carta.getNombre());
+        Assertions.assertTrue(carta.esTipo(Tipo.Artefacto));
+        Assertions.assertEquals("AGUA", carta.nombreCarta());
     }
     
     @Test
-    public void crearCartaTipoCriatura() {
+    void testCrearCartaTipoCriatura() {
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-        Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
+        Assertions.assertTrue(carta.esTipo(Tipo.Criatura));
     }
 
     
     @Test
-    public void crearCartaTipoAccion() {
+    void testCrearCartaTipoAccion() {
         Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
-        Assertions.assertTrue(carta.isTipo(Tipo.Accion));
+        Assertions.assertTrue(carta.esTipo(Tipo.Accion));
     }
 
     
     @Test
-    public void crearCartaTipoReaccion() {
+    void testCrearCartaTipoReaccion() {
         Carta carta = new Carta(CartasDisponibles.BARRERAMAGICA);
-        Assertions.assertTrue(carta.isTipo(Tipo.Reaccion));
+        Assertions.assertTrue(carta.esTipo(Tipo.Reaccion));
     }
 
     
     @Test
-    public void crearCartaTipoArtefacto() {
+    void testCrearCartaTipoArtefacto() {
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-        Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
+        Assertions.assertTrue(carta.esTipo(Tipo.Artefacto));
     }
 
     @Test
-    public void crearCartaConVariosTipos() {
+    void testCrearCartaConVariosTipos() {
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-        Assertions.assertTrue(carta.isTipo(Tipo.Criatura));
-        Assertions.assertTrue(carta.isTipo(Tipo.Artefacto));
+        Assertions.assertTrue(carta.esTipo(Tipo.Criatura));
+        Assertions.assertTrue(carta.esTipo(Tipo.Artefacto));
     }
 
     
     @Test
-    public void crearCartaAntimagia(){
+    void testCrearCartaAntimagia(){
         Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
-        assertTrue(carta.getNombre() == CartasDisponibles.ANTIMAGIA.nombre);
+        assertTrue(carta.nombreCarta() == CartasDisponibles.ANTIMAGIA.nombre);
     }
 }

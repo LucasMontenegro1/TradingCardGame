@@ -19,17 +19,14 @@ public class Carta {
         this.nombre = carta.nombre;
         this.atributos = carta.atributos;
         this.metodos = carta.metodos;
+        this.zona = null;
     }
 
-    public boolean isTipo(Tipo tipo) {
+    public boolean esTipo(Tipo tipo) {
         return this.tipos.contains(tipo);
     }
 
-    public boolean hasAtributo(Atributo atributo) {
-        return this.atributos.contains(atributo);
-    }
-
-    public String getNombre() {
+    public String nombreCarta() {
         return nombre;
     }
 
@@ -38,7 +35,9 @@ public class Carta {
     }
     
     public void moverACombate() {
-        this.zona = this.zona.moverACombate();
+        if (this.nombre != "BARRERAMAGICA") {
+            this.zona = this.zona.moverACombate();
+        }
     }
     
     public void moverAReserva(){

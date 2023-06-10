@@ -14,12 +14,7 @@ import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.carta.Tipo;
-import fiuba.tdd.tp.carta.Metodos.Atacar;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.carta.Metodos.MetodoCartaCompuesto;
-import fiuba.tdd.tp.carta.Metodos.ModificarEnergia;
-import fiuba.tdd.tp.carta.Metodos.TomarCarta;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
@@ -172,7 +167,7 @@ public class TableroTests {
     }
 
     @Test
-    void testTableroDevuelveLasCartasUsablesCorrectamente() throws MazoInvalido {
+    void testTableroDevuelveLasCartasUsablesEnEtapaDeAtaqueCorrectamente() throws MazoInvalido {
         HashMap<String, Integer> cartasModoUno = new HashMap<>();        
         Modo modoUno = new Modo1();
     
@@ -191,7 +186,7 @@ public class TableroTests {
         Set<Carta> cartasUsables = resultadoObtenido.keySet();
 
         for (Carta carta : cartasUsables) {
-            assertEquals(carta.getNombre(), "ALQUIMISTA");
+            assertEquals(carta.nombreCarta(), "ALQUIMISTA");
         }
  
     }

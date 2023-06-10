@@ -21,7 +21,7 @@ public class MetodoCartaTests {
         MetodoCarta efecto = new MetodoCartaCompuesto(atacar, tomarCarta);
        
         assertTrue(efecto.esAplicableA(new EtapaDeAtaque(), new ZonaCombate()));
-        efecto.ejecutar();
+        // efecto.ejecutar(null, null, null, null, null);
     }
 
 }

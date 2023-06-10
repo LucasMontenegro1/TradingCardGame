@@ -30,7 +30,7 @@ public class JugadorTests {
     @Test
     void testNombreDelJugador() {
         Jugador jugador = new Jugador("Juan", "1234");
-        assertEquals(jugador.getNombre(), "Juan");
+        assertEquals(jugador.nombreCarta(), "Juan");
     }
 
     @Test

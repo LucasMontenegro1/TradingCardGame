@@ -17,6 +17,9 @@ public class Tablero {
     public ArrayList<Carta> cartas = new ArrayList<>();
     public Integer puntos;
     public HashMap<Energia, Integer> energia = new HashMap<Energia, Integer>();
+    public Integer maxZonaCombate;
+    public Integer maxZonaReserva;
+    public Integer maxZonaArtefactos;
     
     final String AGUA  = "AGUA";
     final String FUEGO  = "FUEGO";
@@ -53,7 +56,7 @@ public class Tablero {
 
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (efecto.esAplicableA(etapa, carta.zona)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
@@ -65,8 +68,20 @@ public class Tablero {
         });
 
         return cartasUsables;
+    } 
+
+    public ArrayList<Carta> cartasAtacables() { //TODO
+        return cartas;
     }
 
+    public Carta eliminarCarta() { // TODO
+        return null;
+    }
+
+    public void agregarCarta(Carta carta) { // TODO
+
+    }
+    
     private void modificarEnergiaEspecifica(Energia energia, Integer cantidad) {
         Integer cantidadEnergia = this.energia.get(energia);
         this.energia.put(energia, cantidadEnergia+cantidad);
