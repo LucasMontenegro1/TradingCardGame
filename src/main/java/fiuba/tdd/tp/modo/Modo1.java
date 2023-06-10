@@ -11,6 +11,9 @@ import java.util.Map.Entry;
 public class Modo1 implements Modo {
     
     final Integer puntos = 20;
+    final Integer maxCartasMazo = 60;
+    final Integer minCartasMazo = 40;
+    final Integer maxCartasRepetidas = 3;
 
     @Override
     public Carta ejecutarEtapaInicial(Mazo  mazo, Integer puntos) {
@@ -36,11 +39,11 @@ public class Modo1 implements Modo {
         Integer cantCartas = cantidadCartas(cartas);
         Integer cantCarta = cartas.get(nombreCarta) != null ? cartas.get(nombreCarta) : 0;
 
-        return !(cantCartas == 60 || cantCarta == 3);
+        return !(cantCartas == maxCartasMazo || cantCarta == maxCartasRepetidas);
     }
 
     public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta) {
-        return cantidadCartas(cartas) != 40 && cartas.get(nombreCarta) != null;
+        return cantidadCartas(cartas) != minCartasMazo && cartas.get(nombreCarta) != null;
     }
 
     @Override
@@ -48,7 +51,7 @@ public class Modo1 implements Modo {
         
         Integer cantCartas = cantidadCartas(cartas);
 
-        if (cantCartas > 60 || 40 > cantCartas) {
+        if (cantCartas > maxCartasMazo || minCartasMazo > cantCartas) {
             return false;
         }
 
