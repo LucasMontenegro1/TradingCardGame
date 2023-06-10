@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
@@ -184,24 +186,14 @@ public class TableroTests {
 
         Tablero tablero = new Tablero("jugador", mazo);
 
-        HashMap<String, ArrayList<MetodoCarta>> resultadoEsperado = new HashMap<String, ArrayList<MetodoCarta>>();
-        
-        ArrayList<MetodoCarta> listaMetodos = new ArrayList<>();
-        MetodoCarta metodoUno = new MetodoCartaCompuesto(new Atacar(1), new TomarCarta(1,Tipo.Criatura));
-        MetodoCarta metodoDos = new MetodoCartaCompuesto(new Atacar(1), new ModificarEnergia(Energia.Fuego, 1, Tipo.Criatura));
+        HashMap<Carta, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque());
 
-        listaMetodos.add(metodoUno);
-        listaMetodos.add(metodoDos);
-        listaMetodos.add(metodoUno);
-        listaMetodos.add(metodoDos);
-        listaMetodos.add(metodoUno);
-        listaMetodos.add(metodoDos);
+        Set<Carta> cartasUsables = resultadoObtenido.keySet();
 
-        resultadoEsperado.put("Alquimista", listaMetodos);
-
-        HashMap<String, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque());
-
-        assertEquals(true, resultadoObtenido.containsKey("Alqumista"));
+        for (Carta carta : cartasUsables) {
+            assertEquals(carta.getNombre(), "ALQUIMISTA");
+        }
+ 
     }
     
 }

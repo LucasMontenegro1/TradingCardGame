@@ -47,20 +47,19 @@ public class Tablero {
         this.puntos -= cantidad;
     }
 
-    public HashMap<String, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
+    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
         
-        HashMap<String, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
+        HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
 
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
                 if (efecto.esAplicableA(etapa, carta.zona)) {
-                    ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta.getNombre());
+                    ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
-                    }
-                    //TODO: ver caso de tener cartas repetidas 
+                    } 
                     efectosCarta.add(efecto);
-                    cartasUsables.put(carta.getNombre(), efectosCarta);
+                    cartasUsables.put(carta, efectosCarta);
                 }
             });
         });
