@@ -25,7 +25,7 @@ public class Reducir extends MetodoCarta {
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
             Carta carta, Energia energia) {
         
-        carta.aumentarHP(1);
+        carta.hp += 1;
     }
     
 }
