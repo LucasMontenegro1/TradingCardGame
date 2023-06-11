@@ -197,4 +197,25 @@ public class MetodoCartaTests {
         assertEquals(metodos.pop(), resonancia);
         assertEquals(metodos.pop(), resonancia);
     }
+
+    @Test
+    public void testMetodoReduccionHPEsAplicable() {
+        MetodoCarta impedir = new Reducir();
+
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), new ArrayDeque<MetodoCarta>());
+
+        assertEquals(esAplicable, true);
+    }
+
+    @Test
+    public void testMetodoReduccionDeHPFuncionaCorrectamente() {
+        
+        Carta barreraMagica = new Carta(CartasDisponibles.BARRERAMAGICA);
+
+        MetodoCarta reduccion = new Reducir();
+
+        reduccion.ejecutar(null, null, null, null, barreraMagica, null); 
+
+        assertEquals(barreraMagica.hp, 11);
+    }
 }

@@ -12,8 +12,10 @@ public class Carta {
     public ArrayList<Atributo> atributos;
     public Zona zona;
     public ArrayList<MetodoCarta> metodos;
+    public Integer hp;
 
     public Carta(CartasDisponibles carta) {
+        this.hp = 10;
         this.tipos = carta.tipos;
         this.nombre = carta.nombre;
         this.atributos = carta.atributos;
@@ -49,5 +51,9 @@ public class Carta {
 
     public void descartar(){
         this.zona = this.zona.descartar();
+    }
+
+    public void aumentarHP(Integer cantidad) {
+        this.hp += cantidad;
     }
 }
