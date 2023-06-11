@@ -52,6 +52,15 @@ public class Jugador {
         this.cantdDinero -= cantidad;
     }
 
+    private void agregarCarta(String nombreCarta) {
+        if (this.cartas.containsKey(nombreCarta)) {
+            int cantidad = this.cartas.get(nombreCarta);
+            this.cartas.put(nombreCarta, cantidad+1);
+        } else {
+            this.cartas.put(nombreCarta, 1);
+        }
+    }
+
     public void comprarCarta(CartasDisponibles carta) throws DineroInsuficiente {
         int precioCarta = carta.precio;
         String nombreCarta = carta.nombre;
@@ -62,13 +71,9 @@ public class Jugador {
 
         this.extraerDinero(precioCarta);
         
-        if (this.cartas.containsKey(nombreCarta)) {
-            int cantidad = this.cartas.get(nombreCarta);
-            this.cartas.put(nombreCarta, cantidad+1);
-        } else {
-            this.cartas.put(nombreCarta, 1);
-        }
+        agregarCarta(nombreCarta);
     }
+
 
     public void eliminarCarta(String nombreCarta) throws CartaNoEncontrada {
 
@@ -89,7 +94,7 @@ public class Jugador {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
         }
 
-        if (this.cartas.size() == 0) {
+        if (this.cartas.isEmpty()) {
             throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
         }
 
@@ -156,5 +161,7 @@ public class Jugador {
         if (cartasDeseadas.isEmpty()) {
             this.intercambios.remove(cartaDispuesta);
         }
+
+        agregarCarta(cartaDispuesta);
     }
 }
