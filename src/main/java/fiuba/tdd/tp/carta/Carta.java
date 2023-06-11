@@ -13,11 +13,13 @@ public class Carta {
     public Zona zona;
     public ArrayList<MetodoCarta> metodos;
     public Integer hp;
+    public Integer maxHP;
 
     public Carta(CartasDisponibles carta) {
-        this.hp = 10;
-        this.tipos = carta.tipos;
         this.nombre = carta.nombre;
+        this.hp = carta.hp;
+        this.maxHP = carta.hp;
+        this.tipos = carta.tipos;
         this.atributos = carta.atributos;
         this.metodos = carta.metodos;
         this.zona = null;
@@ -54,6 +56,14 @@ public class Carta {
     }
 
     public void aumentarHP(Integer cantidad) {
-        this.hp += cantidad;
+        if (this.hp != null && (this.hp + cantidad) < this.maxHP && this.hp > 0) {
+            this.hp += cantidad;
+        }
+    }
+
+    public void disminuirHP(Integer cantidad) {
+        if (this.hp != null) {
+            this.hp = Math.max(this.hp - cantidad, 0);
+        }
     }
 }
