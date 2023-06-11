@@ -3,6 +3,7 @@ package fiuba.tdd.tp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -146,7 +147,7 @@ public class JugadorTests {
         jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
         jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);  
 
-        jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA);
+        jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre);
 
         assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUIMISTA.nombre), 2);
         assertEquals(jugador.getCantdDinero(), 40);
@@ -157,7 +158,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
 
         assertThrows(CartaNoEncontrada.class, () -> {
-            jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA);
+            jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre);
         });
     }
 
@@ -250,5 +251,75 @@ public class JugadorTests {
 
         assertEquals(jugador.getMazos().size(), 0);
         assertEquals(jugador.getCartas().size(), 1);
+    }
+
+    @Test
+    void testJugadorAgregaUnIntercambio() throws DineroInsuficiente, CartaNoEncontrada {
+        Jugador jugador = new Jugador("Jugador", "1234");
+        jugador.depositarDinero(100);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+
+        jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+
+        HashMap<String, ArrayList<String>> intercambios = jugador.intercambiosAbiertos();
+        ArrayList<String> intercambiosAlquimista = intercambios.get(CartasDisponibles.ALQUIMISTA.nombre);
+
+        assertEquals(intercambios.size(), 1);
+        assertEquals(intercambiosAlquimista.size(), 2);
+    }
+
+    @Test
+    void testJugadorAgregaUnIntercambioConCartaNoDisponible() throws DineroInsuficiente {
+        Jugador jugador = new Jugador("Jugador", "1234");
+    
+        assertThrows(CartaNoEncontrada.class, () -> {
+            jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        });
+    }
+
+    @Test
+    void testJugadorEliminaUnIntercambio() throws DineroInsuficiente, CartaNoEncontrada {
+        Jugador jugador = new Jugador("Jugador", "1234");
+        jugador.depositarDinero(100);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+
+        jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        jugador.eliminarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+
+        HashMap<String, ArrayList<String>> intercambios = jugador.intercambiosAbiertos();
+
+        assertEquals(intercambios.size(), 0);
+    }
+
+    @Test
+    void testJugadorEliminaUnaCartaDeseadaDeUnIntercambio() throws DineroInsuficiente, CartaNoEncontrada {
+        Jugador jugador = new Jugador("Jugador", "1234");
+        jugador.depositarDinero(100);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+
+        jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        jugador.eliminarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+
+        HashMap<String, ArrayList<String>> intercambios = jugador.intercambiosAbiertos();
+        ArrayList<String> intercambiosAlquimista = intercambios.get(CartasDisponibles.ALQUIMISTA.nombre);
+
+        assertEquals(intercambios.size(), 1);
+        assertEquals(intercambiosAlquimista.size(), 1);
+    }
+
+    @Test
+    void testJugadorNoPuedeOfrecerLaMismaCartaEnDosVeces() throws DineroInsuficiente, CartaNoEncontrada {
+        Jugador jugador = new Jugador("Jugador", "1234");
+        jugador.depositarDinero(100);
+        jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
+
+        jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        assertThrows(CartaNoEncontrada.class, () -> {
+            jugador.realizarIntercambio(CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        });
     }
 }

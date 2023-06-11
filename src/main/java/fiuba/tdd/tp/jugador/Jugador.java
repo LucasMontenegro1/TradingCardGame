@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.jugador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -16,7 +17,7 @@ public class Jugador {
     private int cantdDinero;
     private HashMap<String, Integer> cartas = new HashMap<>();
     private HashMap<String, Mazo> mazos = new HashMap<>();
-
+    private HashMap<String, ArrayList<String>> intercambios = new HashMap<>();
 
     public Jugador(String nombreJugador, String contra) {
         this.nombre = nombreJugador;
@@ -69,9 +70,7 @@ public class Jugador {
         }
     }
 
-    public void eliminarCarta(CartasDisponibles carta) throws CartaNoEncontrada {
-
-        String nombreCarta = carta.nombre;
+    public void eliminarCarta(String nombreCarta) throws CartaNoEncontrada {
 
         if (!this.cartas.containsKey(nombreCarta)) {
             throw new CartaNoEncontrada("Usted no tiene la carta");
@@ -109,7 +108,6 @@ public class Jugador {
             }
         }
 
-
         this.mazos.put(nombre, mazo);
     }
 
@@ -127,5 +125,36 @@ public class Jugador {
         }
 
         this.mazos.remove(nombre);
+    }
+
+    public void realizarIntercambio(String cartaDispuesta, String cartaDeseada) throws CartaNoEncontrada {
+        if (!this.cartas.containsKey(cartaDispuesta)) {
+            throw new CartaNoEncontrada("No puede realizar el intercambio si no posee la carta");
+        }
+
+        this.eliminarCarta(cartaDispuesta);
+
+        ArrayList<String> cartasDeseadas = this.intercambios.get(cartaDispuesta);
+        if (cartasDeseadas == null) {
+            cartasDeseadas = new ArrayList<>();
+            this.intercambios.put(cartaDispuesta, cartasDeseadas);
+        }
+        cartasDeseadas.add(cartaDeseada);
+    }
+
+    public HashMap<String, ArrayList<String>> intercambiosAbiertos() {
+        return this.intercambios;
+    }
+
+    public void eliminarIntercambio(String cartaDispuesta, String cartaDeseada) {
+        ArrayList<String> cartasDeseadas = this.intercambios.get(cartaDispuesta);
+        if (cartasDeseadas == null) {
+            return; 
+        }
+
+        cartasDeseadas.remove(cartaDeseada);
+        if (cartasDeseadas.isEmpty()) {
+            this.intercambios.remove(cartaDispuesta);
+        }
     }
 }
