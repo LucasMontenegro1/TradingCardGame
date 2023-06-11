@@ -2,11 +2,13 @@ package fiuba.tdd.tp.tablero;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Deque;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
@@ -85,8 +87,27 @@ public class Tablero {
         return cartas;
     }
 
-    public ArrayList<Carta> cartasAtacables() { //TODO
-        return cartas;
+    public ArrayList<Carta> cartasAtacables() { 
+
+        LinkedHashMap<String, ArrayList<Carta>> cartasAtacables = new LinkedHashMap<>();
+        cartasAtacables.put("ZonaCombate", new ArrayList<Carta>());
+        cartasAtacables.put("ZonaReserva", new ArrayList<Carta>());
+        cartasAtacables.put("ZonaArtefacto", new ArrayList<Carta>());
+
+        for (Carta carta : this.cartas) {
+            if (carta.tipos.contains(Tipo.Criatura) && carta.hp != null && carta.zona != null) {
+                ArrayList<Carta> cartasZona = cartasAtacables.get(carta.zona.getClass().getSimpleName());
+                cartasZona.add(carta);
+            }
+        }
+
+        for (ArrayList<Carta> cartasZona : cartasAtacables.values()) {
+            if (!cartasZona.isEmpty()) {
+                return cartasZona;
+            }
+        }
+
+        return null;
     }
 
     public void eliminarCarta(Carta carta) {
