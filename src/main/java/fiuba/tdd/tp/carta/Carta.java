@@ -56,8 +56,9 @@ public class Carta {
     }
 
     public void aumentarHP(Integer cantidad) {
-        if (this.hp != null && (this.hp + cantidad) < this.maxHP && this.hp > 0) {
-            this.hp += cantidad;
+        if (this.hp != null && this.hp > 0) {
+            this.hp = Math.min(cantidad + this.hp, this.maxHP);
+        
         }
     }
 

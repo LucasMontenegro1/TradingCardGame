@@ -36,7 +36,7 @@ public class AumentarEnergia extends MetodoCarta {
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
             Carta carta, Energia energia) {
-        enJuego.aumentarEnergia(this.tipoEnergia, this.cantidad); // Este caso solo sirve para el caso de cartas de energia
+        enJuego.aumentarEnergia(this.tipoEnergia, this.cantidad);
     }
 
 }

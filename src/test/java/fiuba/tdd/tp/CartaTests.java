@@ -88,7 +88,16 @@ public class CartaTests {
     }
 
     @Test
-    void testCartaNoPuedeAumentarMasSuHP() {
+    void testCartaNoPuedeAumentarSuHPMasAllaDeSuMaximo() {
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        alquimista.disminuirHP(1);
+        alquimista.aumentarHP(2);
+        assertEquals(alquimista.hp, 3);
+    }
+
+    @Test
+    void testCartaNoPuedeAumentarMasSuHPCuandoEstaEnSuMaximo() {
         Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
 
         assertEquals(alquimista.hp, 3);
