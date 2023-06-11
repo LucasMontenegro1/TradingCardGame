@@ -20,7 +20,7 @@ public class AumentarEnergia extends MetodoCarta {
     private Energia tipoEnergia;
 
     public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipo) {
-        this.tipo = tipo;
+        super.tipo = tipo;
         this.cantidad = cantidad;
         this.tipoEnergia = tipoEnergia;
     }

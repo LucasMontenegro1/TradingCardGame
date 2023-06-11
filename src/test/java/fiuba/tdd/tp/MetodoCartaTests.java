@@ -21,9 +21,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.awt.*;
+import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -162,5 +161,16 @@ public class MetodoCartaTests {
         assertEquals(null,metodo.tipo);
         Atacar metodo2 = new Atacar(0);
         assertEquals(Tipo.Criatura,metodo2.tipo);
+    }
+
+    @Test
+    public void replicaSeUsaEnArtefacto(){
+        MetodoCarta energia = new AumentarEnergia(Energia.Fuego,1,Tipo.Artefacto);
+        MetodoCarta replica = new Replica();
+        Deque<MetodoCarta> stack = new ArrayDeque<>();
+        stack.add(energia);
+        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(),stack);
+        assertTrue(result);
+
     }
 }

@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -20,8 +21,13 @@ public class Sacrificar extends MetodoCarta {
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
             Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+        ArrayList<Carta> cartas = enJuego.cartas;
+        cartas.forEach((cartaUso -> {
+            if(carta.nombreCarta() == cartaUso.nombreCarta()){
+                //costo = cartaUso.getCostoInvocacion()
+            }
+        }));
+        /// sumar 3 veces el costo de invocacion
     }
 
 }
