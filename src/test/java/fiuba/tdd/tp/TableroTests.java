@@ -22,6 +22,7 @@ import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.zona.ZonaCombate;
 
 @SpringBootTest
 public class TableroTests {
@@ -218,7 +219,31 @@ public class TableroTests {
         for (Carta carta : cartasUsables) {
             assertEquals(carta.nombreCarta(), "ALQUIMISTA");
         }
- 
     }
+
+    @Test
+    void testTableroDevuelveLasCartasAtacables() throws MazoInvalido {
+        HashMap<String, Integer> cartasModoUno = new HashMap<>();        
+        Modo modoUno = new Modo1();
     
+        cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
+        cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
+    
+        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+
+        Tablero tablero = new Tablero("jugador", mazo);
+
+        ArrayList<Carta> cartas = tablero.cartasEnZona(null);
+        for (Carta carta : cartas) {
+            carta.cambiarZona();
+            carta.moverACombate();
+        }
+
+        ArrayList<Carta> resultadoObtenido = tablero.cartasAtacables();
+
+        for (Carta carta : resultadoObtenido) {
+            assertEquals(carta.nombreCarta(), "ALQUIMISTA");
+        }
+    }    
 }

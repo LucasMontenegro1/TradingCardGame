@@ -24,22 +24,22 @@ import fiuba.tdd.tp.carta.Metodos.TransferirEnergia;
 
 public enum CartasDisponibles {
 
-    AGUA("AGUA", 10, new ArrayList<Atributo>(),
+    AGUA("AGUA", null,10, new ArrayList<Atributo>(),
                              new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                              new ArrayList<MetodoCarta>(){{add(new AumentarEnergia(Energia.Agua, 1, Tipo.Artefacto));}}
                             ),
                             
-    FUEGO("FUEGO", 10, new ArrayList<Atributo>(),
+    FUEGO("FUEGO", null, 10, new ArrayList<Atributo>(),
                             new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                             new ArrayList<MetodoCarta>(){{add(new AumentarEnergia(Energia.Fuego, 1, Tipo.Artefacto));}}
                            ),
 
-    PLANTA("PLANTA", 10, new ArrayList<Atributo>(),
+    PLANTA("PLANTA", null, 10, new ArrayList<Atributo>(),
                            new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                            new ArrayList<MetodoCarta>(){{add(new AumentarEnergia(Energia.Planta, 1, Tipo.Artefacto));}}
                         ),
     
-    ALQUIMISTA("ALQUIMISTA", 20, new ArrayList<Atributo>(){{add(Atributo.Ciencia);}}, 
+    ALQUIMISTA("ALQUIMISTA", 3, 20, new ArrayList<Atributo>(){{add(Atributo.Ciencia);}}, 
                                 new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Artefacto);}},
                                 new ArrayList<MetodoCarta>(){{
                                     add(new MetodoCartaCompuesto(new Atacar(1), new TomarCarta(1,Tipo.Criatura)));
@@ -48,7 +48,7 @@ public enum CartasDisponibles {
                                 }}
                             ),
 
-    ANTIMAGIA("ANTIMAGIA", 15, new ArrayList<Atributo>(), 
+    ANTIMAGIA("ANTIMAGIA", null, 15, new ArrayList<Atributo>(), 
                                              new ArrayList<Tipo>(){{add(Tipo.Artefacto);add(Tipo.Accion);}},
                                              new ArrayList<MetodoCarta>(){{
                                                 add(new DamagePorAtributo(1, false, Atributo.Magia, Tipo.Artefacto));
@@ -59,14 +59,14 @@ public enum CartasDisponibles {
                                              }}
                                         ),
 
-    BARRERAMAGICA("BARRERAMAGICA", 12,  new ArrayList<>(){{add(Atributo.Magia);}},
+    BARRERAMAGICA("BARRERAMAGICA", 10, 12,  new ArrayList<>(){{add(Atributo.Magia);}},
                                                       new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Reaccion);}},
                                                       new ArrayList<MetodoCarta>(){{
                                                         add(new Reducir());
                                                       }}
                                                 ),
     
-    CORROSION("CORROSION", 12, new ArrayList<Atributo>(),
+    CORROSION("CORROSION", null, 12, new ArrayList<Atributo>(),
                                              new ArrayList<Tipo>(){{add(Tipo.Accion);}},
                                              new ArrayList<MetodoCarta>(){{
                                                 add(new MetodoCartaCompuesto(
@@ -76,7 +76,7 @@ public enum CartasDisponibles {
                                              }}
                                         ),
         
-    DRENAR("DRENAR", 15, new ArrayList<Atributo>(), 
+    DRENAR("DRENAR", null, 15, new ArrayList<Atributo>(), 
                                                 new ArrayList<Tipo>(){{add(Tipo.Accion);}},
                                                 new ArrayList<MetodoCarta>(){{
                                                     add(new MetodoCartaCompuesto(
@@ -86,7 +86,7 @@ public enum CartasDisponibles {
                                                 }}
                                         ),
 
-    ESPADAMAGICA("ESPADAMAGICA", 12, new ArrayList<Atributo>(){{add(Atributo.Metal); add(Atributo.Magia);}},
+    ESPADAMAGICA("ESPADAMAGICA", 3, 12, new ArrayList<Atributo>(){{add(Atributo.Metal); add(Atributo.Magia);}},
                                                     new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Accion);}},
                                                     new ArrayList<MetodoCarta>(){{
                                                         add(new Atacar(3));
@@ -97,21 +97,21 @@ public enum CartasDisponibles {
                                                     }}
                                                 ),
                                                 
-    GOBLIN("GOBLIN", 12,  new ArrayList<Atributo>(),
+    GOBLIN("GOBLIN", 5, 12,  new ArrayList<Atributo>(),
                                         new ArrayList<Tipo>(){{add(Tipo.Criatura);}},
                                         new ArrayList<MetodoCarta>(){{
                                             add(new MetodoCartaCompuesto(new Atacar(1), new TransferirEnergia())); 
                                         }}
                                     ),
 
-    HOSPITAL("HOSPITAL", 12,  new ArrayList<Atributo>(),
+    HOSPITAL("HOSPITAL", null, 12,  new ArrayList<Atributo>(),
                                             new ArrayList<Tipo>(){{add(Tipo.Artefacto);}},
                                             new ArrayList<MetodoCarta>(){{
                                                 add(new Curar(2)); 
                                             }}
                                         ),
 
-    IMPEDIR("IMPEDIR", 12,  new ArrayList<Atributo>(),
+    IMPEDIR("IMPEDIR", null, 12,  new ArrayList<Atributo>(),
                                             new ArrayList<Tipo>(){{add(Tipo.Reaccion);}},
                                             new ArrayList<MetodoCarta>(){{
                                                 add(new MetodoCartaCompuesto(
@@ -121,50 +121,50 @@ public enum CartasDisponibles {
                                             }}
                                         ),
     
-    INVENTOR("INVENTOR", 12,  new ArrayList<Atributo>(),
+    INVENTOR("INVENTOR", 2, 12,  new ArrayList<Atributo>(),
                                         new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Reaccion);}},
                                         new ArrayList<MetodoCarta>(){{
                                             add(new MetodoCartaCompuesto(new Replica(), new DescartarDeMano()));
                                         }}
                                     ),
     
-    ORCO("ORCO", 12,  new ArrayList<Atributo>(),
+    ORCO("ORCO", 5, 12,  new ArrayList<Atributo>(),
                                     new ArrayList<Tipo>(){{add(Tipo.Criatura);}},
                                     new ArrayList<MetodoCarta>(){{
                                         add(new Atacar(3));
                                     }}
                                 ),
     
-    RECICLAR("RECICLAR", 12,  new ArrayList<Atributo>(),
+    RECICLAR("RECICLAR", null, 12,  new ArrayList<Atributo>(),
                                             new ArrayList<Tipo>(){{add(Tipo.Accion);}},
                                             new ArrayList<MetodoCarta>(){{
                                                 add(new MetodoCartaCompuesto(new TomarCarta(3, Tipo.Accion), new Descartar(Tipo.Accion)));
                                             }}
                                         ),
 
-    RESONANCIA("RESONANCIA", 12,  new ArrayList<Atributo>(),
+    RESONANCIA("RESONANCIA", null, 12,  new ArrayList<Atributo>(),
                                 new ArrayList<Tipo>(){{add(Tipo.Accion); add(Tipo.Reaccion);}},
                                 new ArrayList<MetodoCarta>(){{
                                     add(new Descartar(Tipo.Accion));
-                                    add(new Resonancia());
+                                    add(new Resonancia(Tipo.Reaccion));
                                 }}
                             ),
 
-    SABOTEAR("SABOTEAR", 12,new ArrayList<Atributo>(),
+    SABOTEAR("SABOTEAR", 3, 12, new ArrayList<Atributo>(),
                                             new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Reaccion);}},
                                             new ArrayList<MetodoCarta>(){{
                                                 add(new MetodoCartaCompuesto(new Sabotear(), new DescartarDeMano()));
                                             }}
                                         ),
 
-    SACRIFICIO("SACRIFICIO", 12,  new ArrayList<Atributo>(),
+    SACRIFICIO("SACRIFICIO", null, 12,  new ArrayList<Atributo>(),
                                                 new ArrayList<Tipo>(){{add(Tipo.Accion);}},
                                                 new ArrayList<MetodoCarta>(){{
                                                     add(new MetodoCartaCompuesto(new Sacrificio(), new Descartar(Tipo.Accion)));
                                                 }}
                                         ),
 
-    TALADROMAGICO("TALADROMAGICO", 12,   new ArrayList<Atributo>(){{add(Atributo.Metal); add(Atributo.Magia);}},
+    TALADROMAGICO("TALADROMAGICO", 3, 12,   new ArrayList<Atributo>(){{add(Atributo.Metal); add(Atributo.Magia);}},
                                                     new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Reaccion);}},
                                                     new ArrayList<MetodoCarta>(){{
                                                         add(new Atacar(5));
@@ -172,7 +172,7 @@ public enum CartasDisponibles {
                                                     }}
                                                 ),
 
-    TRAICION("TRAICION", 12,new ArrayList<Atributo>(),
+    TRAICION("TRAICION", null, 12, new ArrayList<Atributo>(),
                                                 new ArrayList<Tipo>(){{add(Tipo.Accion);}},
                                                 new ArrayList<MetodoCarta>(){{
                                                     add(new MetodoCartaCompuesto(new TransferirCarta(), new Descartar(Tipo.Accion)));
@@ -180,14 +180,16 @@ public enum CartasDisponibles {
                                             );   
 
     public String nombre;
-    public int precio;
+    public Integer hp;
+    public Integer precio;
     public ArrayList<Integer> costo;
     public ArrayList<Atributo> atributos;
     public ArrayList<Tipo> tipos;
     public ArrayList<MetodoCarta> metodos;
 
-    CartasDisponibles(String nombre, int precio, ArrayList<Atributo> atributos, ArrayList<Tipo> tipos, ArrayList<MetodoCarta> metodos) {
+    CartasDisponibles(String nombre, Integer hp, Integer precio, ArrayList<Atributo> atributos, ArrayList<Tipo> tipos, ArrayList<MetodoCarta> metodos) {
         this.nombre = nombre;
+        this.hp = hp;
         this.precio = precio;
         this.atributos = atributos;
         this.tipos = tipos;

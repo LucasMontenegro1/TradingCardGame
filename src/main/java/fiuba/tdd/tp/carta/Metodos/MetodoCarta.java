@@ -10,7 +10,7 @@ import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
 public abstract class  MetodoCarta {
-    public Tipo tipo;
+    protected Tipo tipo;
     public abstract void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo, Carta carta, Energia energia);
     public abstract boolean esAplicableA(final Etapa etapa, final Zona zona, Deque<MetodoCarta> pilaMetodos);
 }

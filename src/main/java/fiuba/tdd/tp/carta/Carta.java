@@ -1,22 +1,26 @@
 package fiuba.tdd.tp.carta;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
+import fiuba.tdd.tp.zona.ZonaMano;
 
 public class Carta {
-    String nombre;
-    List<Tipo> tipos;
-    List<Atributo> atributos;
+    public String nombre;
+    public ArrayList<Tipo> tipos;
+    public ArrayList<Atributo> atributos;
     public Zona zona;
     public ArrayList<MetodoCarta> metodos;
+    public Integer hp;
+    public Integer maxHP;
 
     public Carta(CartasDisponibles carta) {
-        this.tipos = carta.tipos;
         this.nombre = carta.nombre;
+        this.hp = carta.hp;
+        this.maxHP = carta.hp;
+        this.tipos = carta.tipos;
         this.atributos = carta.atributos;
         this.metodos = carta.metodos;
         this.zona = null;
@@ -31,7 +35,11 @@ public class Carta {
     }
 
     public void cambiarZona() {
-        this.zona = this.zona.cambiarZona();
+        if (this.zona == null) {
+            this.zona = new ZonaMano();
+        } else {
+            this.zona = this.zona.cambiarZona();
+        }
     }
     
     public void moverACombate() {
@@ -50,5 +58,18 @@ public class Carta {
 
     public void descartar(){
         this.zona = this.zona.descartar();
+    }
+
+    public void aumentarHP(Integer cantidad) {
+        if (this.hp != null && this.hp > 0) {
+            this.hp = Math.min(cantidad + this.hp, this.maxHP);
+        
+        }
+    }
+
+    public void disminuirHP(Integer cantidad) {
+        if (this.hp != null) {
+            this.hp = Math.max(this.hp - cantidad, 0);
+        }
     }
 }

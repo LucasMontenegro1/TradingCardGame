@@ -26,6 +26,6 @@ public class Curar extends MetodoCarta {
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
             Carta carta, Energia energia) {
-        // TODO: Agregar vida maxima a la carta
+        carta.aumentarHP(this.hp);
     }
 }

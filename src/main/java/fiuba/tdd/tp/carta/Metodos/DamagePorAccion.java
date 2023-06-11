@@ -28,7 +28,6 @@ public class DamagePorAccion extends MetodoCarta {
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
             Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+        carta.disminuirHP(this.hp);
     }
 }

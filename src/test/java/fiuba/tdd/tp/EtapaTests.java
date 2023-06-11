@@ -17,7 +17,7 @@ import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
-import fiuba.tdd.tp.zona.ZonaArtefecto;
+import fiuba.tdd.tp.zona.ZonaArtefacto;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
 import fiuba.tdd.tp.zona.ZonaReserva;
@@ -318,7 +318,7 @@ public class EtapaTests {
 
         etapaPrincipal.invocarAZonaDeArtefacto(carta);
 
-        assert carta.zona instanceof ZonaArtefecto;
+        assert carta.zona instanceof ZonaArtefacto;
     }
 
     // Etapa de ataque

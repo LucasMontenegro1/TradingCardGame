@@ -21,8 +21,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.Deque;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -45,6 +48,7 @@ public class MetodoCartaTests {
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 60);
 		mazoModoDos = new Mazo(cartasModoDos, modoDos);
     }
+
     @Test
     public void atacarYTomarCarta() {
         MetodoCarta atacar = new Atacar(10);
@@ -155,12 +159,64 @@ public class MetodoCartaTests {
 
         assertEquals(cantCartasInicial - cantidad, enJuego.cartasEnZona(null).size());
     }
+
     @Test
-    public void CartaConYsinTipo() {
-        MetodoCarta metodo = new Drenar();
-        assertEquals(null,metodo.tipo);
-        Atacar metodo2 = new Atacar(0);
-        assertEquals(Tipo.Criatura,metodo2.tipo);
+    public void testMetodoImpedirEsAplicableLuegoDeActivarUnaReaccion() {
+        MetodoCarta impedir = new Impedir();
+
+        Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
+        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion);
+
+        metodos.push(resonancia);
+
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), metodos);
+
+        assertEquals(metodos.size(), 1);
+        assertEquals(esAplicable, true);
+    }
+
+    @Test
+    public void testMetodoImpedirSeEjecutaCorrectamente() {
+
+        MetodoCarta impedir = new Impedir();
+
+        Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
+        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion);
+
+        metodos.push(resonancia);
+        metodos.push(resonancia);
+        metodos.push(resonancia);
+        metodos.push(resonancia);
+        metodos.push(resonancia);
+
+        impedir.ejecutar(null, null, metodos, null, null, null);
+
+        assertEquals(metodos.size(), 4);
+        assertEquals(metodos.pop(), resonancia);
+        assertEquals(metodos.pop(), resonancia);
+        assertEquals(metodos.pop(), resonancia);
+        assertEquals(metodos.pop(), resonancia);
+    }
+
+    @Test
+    public void testMetodoReduccionHPEsAplicable() {
+        MetodoCarta impedir = new Reducir();
+
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), new ArrayDeque<MetodoCarta>());
+
+        assertEquals(esAplicable, true);
+    }
+
+    @Test
+    public void testMetodoReduccionDeHPFuncionaCorrectamente() {
+        
+        Carta barreraMagica = new Carta(CartasDisponibles.BARRERAMAGICA);
+
+        MetodoCarta reduccion = new Reducir();
+
+        reduccion.ejecutar(null, null, null, null, barreraMagica, null); 
+
+        assertEquals(barreraMagica.hp, 11);
     }
 
     @Test
