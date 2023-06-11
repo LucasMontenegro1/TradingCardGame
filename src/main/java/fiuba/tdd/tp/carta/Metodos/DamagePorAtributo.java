@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Atributo;
@@ -10,6 +11,7 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
+import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
@@ -36,10 +38,19 @@ public class DamagePorAtributo extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
-    }
+                         Carta carta, Energia energia) {
+        if (this.ambosJugadores) {
+            for (Carta unaCarta : enJuego.cartas) {
+                if (unaCarta.esTipo(this.tipo) && !(unaCarta.zona instanceof ZonaMano && unaCarta.zona instanceof ZonaDescarte)) {
+                    unaCarta.disminuirHP(this.hp);
+                }
+            }
+        }
+        for (Carta unaCarta : contrincante.cartas) {
+            if (unaCarta.esTipo(this.tipo) && !(unaCarta.zona instanceof ZonaMano && unaCarta.zona instanceof ZonaDescarte)) {
+                unaCarta.disminuirHP(this.hp);
+            }
+        }
 
-   
+    }
 }
