@@ -10,9 +10,11 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class Resonancia  extends MetodoCarta {
+public class Resonancia extends MetodoCarta {
 
-    public Tipo tipo = Tipo.Reaccion;
+    public Resonancia(Tipo tipoCarta) {
+        tipo = tipoCarta;
+    }
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {

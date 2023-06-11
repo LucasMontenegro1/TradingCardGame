@@ -146,7 +146,7 @@ public enum CartasDisponibles {
                                 new ArrayList<Tipo>(){{add(Tipo.Accion); add(Tipo.Reaccion);}},
                                 new ArrayList<MetodoCarta>(){{
                                     add(new Descartar(Tipo.Accion));
-                                    add(new Resonancia());
+                                    add(new Resonancia(Tipo.Reaccion));
                                 }}
                             ),
 
