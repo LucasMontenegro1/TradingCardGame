@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
+import fiuba.tdd.tp.zona.ZonaMano;
 
 public class Carta {
     public String nombre;
@@ -34,7 +35,11 @@ public class Carta {
     }
 
     public void cambiarZona() {
-        this.zona = this.zona.cambiarZona();
+        if (this.zona == null) {
+            this.zona = new ZonaMano();
+        } else {
+            this.zona = this.zona.cambiarZona();
+        }
     }
     
     public void moverACombate() {
