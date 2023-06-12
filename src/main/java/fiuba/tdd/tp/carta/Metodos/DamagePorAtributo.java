@@ -47,7 +47,7 @@ public class DamagePorAtributo extends MetodoCarta {
 
     private void disminuirHPCartas(Tablero unTablero) {
         for (Carta unaCarta : unTablero.cartas) {
-            if (unaCarta.esTipo(this.tipo) && !(unaCarta.zona instanceof ZonaMano && unaCarta.zona instanceof ZonaDescarte)) {
+            if (unaCarta.esTipo(this.tipo) && (unaCarta.esAtributo(this.atributo)) && !(unaCarta.zona instanceof ZonaMano || unaCarta.zona instanceof ZonaDescarte)) {
                 unaCarta.disminuirHP(this.hp);
             }
         }

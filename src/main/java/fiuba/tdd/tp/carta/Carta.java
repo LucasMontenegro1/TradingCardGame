@@ -36,6 +36,10 @@ public class Carta {
         return nombre;
     }
 
+    public boolean esAtributo(Atributo atributo) {
+        return this.atributos.contains(atributo);
+    }
+
     public void cambiarZona() {
         if (this.zona == null) {
             this.zona = new ZonaMano();
