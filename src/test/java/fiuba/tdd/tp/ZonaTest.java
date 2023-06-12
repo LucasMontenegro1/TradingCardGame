@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import fiuba.tdd.tp.zona.Zona;
-import fiuba.tdd.tp.zona.ZonaArtefecto;
+import fiuba.tdd.tp.zona.ZonaArtefacto;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
@@ -17,31 +17,31 @@ public class ZonaTest {
 
     @Test
     public void testZonaDeArtefactoCambiarZona() {
-        Zona zona = new ZonaArtefecto();
-        assertEquals(zona.cambiarZona().getClass(), ZonaArtefecto.class);
+        Zona zona = new ZonaArtefacto();
+        assertEquals(zona.cambiarZona().getClass(), ZonaArtefacto.class);
     }
 
     @Test
     public void testZonaDeArtefactoMoverACombate() {
-        Zona zona = new ZonaArtefecto();
-        assertEquals(zona.moverACombate().getClass(), ZonaArtefecto.class);
+        Zona zona = new ZonaArtefacto();
+        assertEquals(zona.moverACombate().getClass(), ZonaArtefacto.class);
     }
 
     @Test
     public void testZonaDeArtefactoMoverAReserva() {
-        Zona zona = new ZonaArtefecto();
-        assertEquals(zona.moverAReserva().getClass(), ZonaArtefecto.class);
+        Zona zona = new ZonaArtefacto();
+        assertEquals(zona.moverAReserva().getClass(), ZonaArtefacto.class);
     }
 
     @Test
     public void testZonaDeArtefactoInvocar() {
-        Zona zona = new ZonaArtefecto();
-        assertEquals(zona.invocar().getClass(), ZonaArtefecto.class);
+        Zona zona = new ZonaArtefacto();
+        assertEquals(zona.invocar().getClass(), ZonaArtefacto.class);
     }
 
     @Test
     public void testZonaDeArtefactoDescartar() {
-        Zona zona = new ZonaArtefecto();
+        Zona zona = new ZonaArtefacto();
         assertEquals(zona.descartar().getClass(), ZonaDescarte.class);
     }
 
@@ -132,7 +132,7 @@ public class ZonaTest {
     @Test
     public void testZonaManoInvocar() {
         Zona zona = new ZonaMano();
-        assertEquals(zona.invocar().getClass(), ZonaArtefecto.class);
+        assertEquals(zona.invocar().getClass(), ZonaArtefacto.class);
     }
 
     @Test

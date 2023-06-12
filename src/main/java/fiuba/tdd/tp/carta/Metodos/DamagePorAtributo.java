@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Atributo;
@@ -13,21 +14,22 @@ import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class DamagePorAtributo implements MetodoCarta {
+public class DamagePorAtributo extends MetodoCarta {
+
     private boolean ambosJugadores;
     private int hp;
     private Atributo atributo;
-    private Tipo tipo;
 
-    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipo) {
+    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
+        tipo = tipoCarta;
+        costo = costoDeUso;
         this.ambosJugadores = ambosJugadores;
         this.hp = hp;
         this.atributo = atributo;
-        this.tipo = tipo;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         if (ambosJugadores){
             return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
         }
@@ -35,11 +37,21 @@ public class DamagePorAtributo implements MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        
+        if (this.ambosJugadores) {
+            disminuirHPCartas(enJuego);
+        }
+        disminuirHPCartas(contrincante);
+
     }
 
-   
+    private void disminuirHPCartas(Tablero unTablero) {
+        for (Carta unaCarta : unTablero.cartas) {
+            if (unaCarta.esTipo(this.tipo) && (unaCarta.esAtributo(this.atributo)) && !(unaCarta.zona instanceof ZonaMano || unaCarta.zona instanceof ZonaDescarte)) {
+                unaCarta.disminuirHP(this.hp);
+            }
+        }
+    }
 }

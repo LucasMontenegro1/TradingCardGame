@@ -7,6 +7,9 @@ import fiuba.tdd.tp.carta.Tipo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CartaTests {
@@ -51,11 +54,78 @@ public class CartaTests {
         Assertions.assertTrue(carta.esTipo(Tipo.Criatura));
         Assertions.assertTrue(carta.esTipo(Tipo.Artefacto));
     }
-
     
     @Test
-    void testCrearCartaAntimagia(){
+    void testCrearCartaAntimagia() {
         Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
         assertTrue(carta.nombreCarta() == CartasDisponibles.ANTIMAGIA.nombre);
+    }
+
+    @Test
+    void testCartaDisminuirHP() {
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        alquimista.disminuirHP(2);
+
+        assertEquals(alquimista.hp, 1);
+    }
+
+    @Test
+    void testCartaDisminuirHPMasDelHPDeLaCarta() {
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        alquimista.disminuirHP(4);
+
+        assertEquals(alquimista.hp, 0);
+    }
+
+    @Test
+    void testCartaAumentarHP() {
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        alquimista.disminuirHP(2);
+        alquimista.aumentarHP(1);
+
+        assertEquals(alquimista.hp, 2);
+    }
+
+    @Test
+    void testCartaNoPuedeAumentarSuHPMasAllaDeSuMaximo() {
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        alquimista.disminuirHP(1);
+        alquimista.aumentarHP(2);
+        assertEquals(alquimista.hp, 3);
+    }
+
+    @Test
+    void testCartaNoPuedeAumentarMasSuHPCuandoEstaEnSuMaximo() {
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        assertEquals(alquimista.hp, 3);
+        alquimista.aumentarHP(2);
+        assertEquals(alquimista.hp, 3);
+    }
+
+    @Test
+    void testAlquimistaConCostoDeInvocacion(){
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+        ArrayList<Integer> esperado = new ArrayList<>();
+        esperado.add(1);
+        esperado.add(1);
+        esperado.add(0);
+
+        assertEquals(esperado,alquimista.getCostoDeInvocacion());
+    }
+
+    @Test
+    void testCostoDeCualquierTipo(){
+        Carta antimagia = new Carta(CartasDisponibles.ANTIMAGIA);
+        ArrayList<Integer> esperado = new ArrayList<>();
+        esperado.add(null);
+        esperado.add(null);
+        esperado.add(null);
+
+        assertEquals(esperado,antimagia.getCostoDeInvocacion());
     }
 }

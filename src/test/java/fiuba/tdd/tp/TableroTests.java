@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,7 @@ import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.zona.ZonaCombate;
 
 @SpringBootTest
 public class TableroTests {
@@ -167,6 +169,35 @@ public class TableroTests {
     }
 
     @Test
+    void testAgregarCartaAlTablero(){
+
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        Tablero tablero = new Tablero("Jugador", mazoModoDos);
+
+        Integer cantInicialDeCartas = tablero.cartas.size();
+
+        tablero.agregarCarta(carta);
+
+        assertEquals(cantInicialDeCartas + 1 ,tablero.cartas.size());
+    }
+
+    @Test
+    void testEliminarCartaAlTablero(){
+
+        Tablero tablero = new Tablero("Jugador", mazoModoDos);
+
+        Integer cantInicialDeCartas = tablero.cartas.size();
+
+        Random random = new Random();
+        Carta cartaAEliminar = tablero.cartas.get(random.nextInt(tablero.cartas.size()));
+
+        tablero.eliminarCarta(cartaAEliminar);
+
+        assertEquals(cantInicialDeCartas - 1 ,tablero.cartas.size());
+    }
+
+    @Test
     void testTableroDevuelveLasCartasUsablesEnEtapaDeAtaqueCorrectamente() throws MazoInvalido {
         HashMap<String, Integer> cartasModoUno = new HashMap<>();        
         Modo modoUno = new Modo1();
@@ -188,9 +219,33 @@ public class TableroTests {
         for (Carta carta : cartasUsables) {
             assertEquals(carta.nombreCarta(), "ALQUIMISTA");
         }
- 
     }
 
+    @Test
+    void testTableroDevuelveLasCartasAtacables() throws MazoInvalido {
+        HashMap<String, Integer> cartasModoUno = new HashMap<>();        
+        Modo modoUno = new Modo1();
+    
+        cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
+        cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
+    
+        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+
+        Tablero tablero = new Tablero("jugador", mazo);
+
+        ArrayList<Carta> cartas = tablero.cartasEnZona(null);
+        for (Carta carta : cartas) {
+            carta.cambiarZona();
+            carta.moverACombate();
+        }
+
+        ArrayList<Carta> resultadoObtenido = tablero.cartasAtacables();
+
+        for (Carta carta : resultadoObtenido) {
+            assertEquals(carta.nombreCarta(), "ALQUIMISTA");
+        }
+    }    
 
     @Test
     void testTableroConCantidadesMaximasDeZonaCorrectasEnModoUno() throws MazoInvalido {
@@ -233,5 +288,4 @@ public class TableroTests {
         assertEquals(tablero.maxZonaReserva, 5);
 
     }
-    
 }

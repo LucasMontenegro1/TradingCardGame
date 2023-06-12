@@ -2,14 +2,18 @@ package fiuba.tdd.tp.tablero;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
-
+import java.util.Deque;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.zona.Zona;
+import java.util.ArrayDeque;
 import fiuba.tdd.tp.modo.Modo;
 
 public class Tablero {
@@ -58,10 +62,10 @@ public class Tablero {
     public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
         
         HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
-
+        Deque<MetodoCarta> pila = new ArrayDeque<>();
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona,pila)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
@@ -75,18 +79,50 @@ public class Tablero {
         return cartasUsables;
     } 
 
-    public ArrayList<Carta> cartasAtacables() { //TODO
+    public ArrayList<Carta> cartasEnZona(Zona zona){
+        
+        ArrayList<Carta> cartas = new ArrayList<>();
+
+        this.cartas.forEach(carta -> {
+            if (carta.zona == zona){
+                cartas.add(carta);
+            }}
+        );
+
         return cartas;
     }
 
-    public Carta eliminarCarta() { // TODO
+    public ArrayList<Carta> cartasAtacables() { 
+
+        LinkedHashMap<String, ArrayList<Carta>> cartasAtacables = new LinkedHashMap<>();
+        cartasAtacables.put("ZonaCombate", new ArrayList<Carta>());
+        cartasAtacables.put("ZonaReserva", new ArrayList<Carta>());
+        cartasAtacables.put("ZonaArtefacto", new ArrayList<Carta>());
+
+        for (Carta carta : this.cartas) {
+            if (carta.tipos.contains(Tipo.Criatura) && carta.hp != null && carta.zona != null) {
+                ArrayList<Carta> cartasZona = cartasAtacables.get(carta.zona.getClass().getSimpleName());
+                cartasZona.add(carta);
+            }
+        }
+
+        for (ArrayList<Carta> cartasZona : cartasAtacables.values()) {
+            if (!cartasZona.isEmpty()) {
+                return cartasZona;
+            }
+        }
+
         return null;
     }
 
-    public void agregarCarta(Carta carta) { // TODO
-
+    public void eliminarCarta(Carta carta) {
+        this.cartas.remove(carta);
     }
-    
+
+    public void agregarCarta(Carta carta) { 
+        this.cartas.add(carta);
+    }
+
     private void modificarEnergiaEspecifica(Energia energia, Integer cantidad) {
         Integer cantidadEnergia = this.energia.get(energia);
         this.energia.put(energia, cantidadEnergia+cantidad);

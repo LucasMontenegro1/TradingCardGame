@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -13,20 +14,20 @@ import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
-public class AumentarEnergia implements MetodoCarta {
+public class AumentarEnergia extends MetodoCarta {
 
-    private Tipo tipo;
     private int cantidad;
     private Energia tipoEnergia;
 
-    public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipo) {
-        this.tipo = tipo;
+    public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
+        tipo = tipoCarta;
+        costo = costoDeUso;
         this.cantidad = cantidad;
         this.tipoEnergia = tipoEnergia;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         if (this.tipo == Tipo.Criatura){
             return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
         }
@@ -34,9 +35,9 @@ public class AumentarEnergia implements MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        enJuego.aumentarEnergia(this.tipoEnergia, this.cantidad); // Este caso solo sirve para el caso de cartas de energia
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        enJuego.aumentarEnergia(this.tipoEnergia, this.cantidad);
     }
 
 }

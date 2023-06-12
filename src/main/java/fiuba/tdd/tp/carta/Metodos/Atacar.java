@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -11,25 +12,25 @@ import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaCombate;
 
-public class Atacar implements MetodoCarta {
+public class Atacar extends MetodoCarta {
 
     private int hp;
-    public Tipo tipo = Tipo.Criatura;
-
-    public Atacar(int hp){
+    
+    public Atacar(int hp, ArrayList<Integer> costoDeUso) {
+        tipo = Tipo.Criatura;
+        costo = costoDeUso;
         this.hp = hp;
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaDeAtaque && zona instanceof ZonaCombate;
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        cartaObjetivo.disminuirHP(this.hp);
     }
 
 }

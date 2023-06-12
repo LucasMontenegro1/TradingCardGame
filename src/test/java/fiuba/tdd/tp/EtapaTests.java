@@ -16,11 +16,10 @@ import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
+import fiuba.tdd.tp.zona.ZonaArtefacto;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
 import fiuba.tdd.tp.zona.ZonaReserva;
-import fiuba.tdd.tp.zona.ZonaArtefecto;
-
 
 @SpringBootTest
 public class EtapaTests {
@@ -317,7 +316,7 @@ public class EtapaTests {
 
         etapaPrincipal.invocarAZonaDeArtefacto(carta);
 
-        assert carta.zona instanceof ZonaArtefecto;
+        assert carta.zona instanceof ZonaArtefacto;
     }
 
     // Etapa de ataque

@@ -1,27 +1,35 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
-public class Impedir implements MetodoCarta {
+public class Impedir extends MetodoCarta {
 
-    Tipo tipo = Tipo.Reaccion;
+    public Impedir(ArrayList<Integer> costoDeUso) {
+        tipo = Tipo.Reaccion;
+        costo = costoDeUso;
+    }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona) {
-        return false;
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+        
+        MetodoCarta ultimoMetodo = pilaMetodos.peekLast();
+
+        return ultimoMetodo.tipo == Tipo.Reaccion && zona != null && !(etapa instanceof EtapaInicial);
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+
+            pilaMetodos.pop();
     }
 }
