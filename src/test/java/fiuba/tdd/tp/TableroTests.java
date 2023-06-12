@@ -246,4 +246,46 @@ public class TableroTests {
             assertEquals(carta.nombreCarta(), "ALQUIMISTA");
         }
     }    
+
+    @Test
+    void testTableroConCantidadesMaximasDeZonaCorrectasEnModoUno() throws MazoInvalido {
+        HashMap<String, Integer> cartasModoUno = new HashMap<>();
+        Modo modoUno = new Modo1();
+
+        cartasModoUno.put(CartasDisponibles.AGUA.nombre, 30);
+        cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.ANTIMAGIA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.SABOTEAR.nombre, 3);
+
+        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+
+        Tablero tablero = new Tablero("jugador", mazo);
+
+        assertEquals(tablero.maxZonaArtefactos, 5);
+        assertEquals(tablero.maxZonaCombate, 5);
+        assertEquals(tablero.maxZonaReserva, 0);
+
+    }
+
+    @Test
+    void testTableroConCantidadesMaximasDeZonaCorrectasEnModoDos() throws MazoInvalido {
+        HashMap<String, Integer> cartasModoUno = new HashMap<>();
+        Modo modoDos = new Modo2();
+
+        cartasModoUno.put(CartasDisponibles.AGUA.nombre, 50);
+        cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.ANTIMAGIA.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
+        cartasModoUno.put(CartasDisponibles.SABOTEAR.nombre, 1);
+
+        Mazo mazo = new Mazo(cartasModoUno, modoDos);
+
+        Tablero tablero = new Tablero("jugador", mazo);
+
+        assertEquals(tablero.maxZonaArtefactos, 3);
+        assertEquals(tablero.maxZonaCombate, 1);
+        assertEquals(tablero.maxZonaReserva, 5);
+
+    }
 }

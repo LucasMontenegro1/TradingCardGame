@@ -1,8 +1,10 @@
 package fiuba.tdd.tp.turno;
 
+import java.util.ArrayList;
+
+import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaInicial;
-import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 
 public class Turno {
@@ -13,8 +15,8 @@ public class Turno {
         return this.etapa;
     }
     
-    public Turno (Modo modo, Mazo mazo, Integer puntos){
-        this.etapa = new EtapaInicial(modo,mazo,puntos);    
+    public Turno (Modo modo, ArrayList<Carta> cartas, Integer puntos){
+        this.etapa = new EtapaInicial(modo,cartas,puntos);    
     }
     
     public void iniciarTurno(){

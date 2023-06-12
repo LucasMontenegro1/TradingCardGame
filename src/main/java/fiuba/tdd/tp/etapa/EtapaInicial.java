@@ -1,31 +1,32 @@
 package fiuba.tdd.tp.etapa;
 
+import java.util.ArrayList;
+
 import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 
 public class EtapaInicial implements Etapa {
 
     private Modo modoPartida;
-    private Mazo mazoJugador;
+    private ArrayList<Carta> cartasJugador;
     private Integer puntosPartida;
-    private Carta cartaAsignada;
+    private boolean asginacion;
 
-    public EtapaInicial(Modo modo, Mazo mazo, Integer puntos){
+    public EtapaInicial(Modo modo, ArrayList<Carta> cartas, Integer puntos){
         this.modoPartida = modo;
-        this.mazoJugador = mazo;
+        this.cartasJugador = cartas;
         this.puntosPartida = puntos;
     }
 
     @Override
     public void iniciar() {
-        this.cartaAsignada = this.modoPartida.ejecutarEtapaInicial(mazoJugador, puntosPartida);
+        this.asginacion = this.modoPartida.ejecutarEtapaInicial(cartasJugador, puntosPartida);
     }
 
     @Override
     public Etapa finalizar() {
 
-        if (this.cartaAsignada == null){
+        if (!this.asginacion){
             return new EtapaFinal();
         }
         return new EtapaPrincipal();

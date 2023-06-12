@@ -1,27 +1,37 @@
 package fiuba.tdd.tp.modo;
 
 import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.zona.ZonaMano;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Random;
 
 public class Modo2 implements Modo{
 
+    final Integer maxPuntosVictoria = 6;
     final Integer puntos = 0;
     final Integer maxCartasRepetidas = 4;
     final Integer cantCartasMazo = 60;
 
-    @Override
-    public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos) {
-        if (puntos > 6) {
-            return null;
-        }
+    final Integer maxZonaReserva = 5;
+    final Integer maxZonaCombate = 1;
+    final Integer maxZonaArtefactos = 3;
 
-        // return mazo.tomar_carta();
-        return new Carta(CartasDisponibles.ALQUIMISTA);
+    @Override
+    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
+        if (puntos > maxPuntosVictoria) {
+            return false;
+        }
+        else if (cartas.size() > 0){
+            Random random = new Random();
+            Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
+            cartaAleatoria.zona = new ZonaMano();
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -65,5 +75,18 @@ public class Modo2 implements Modo{
     public Integer asignarPuntos() {
         return puntos;
     }
+
+    @Override
+    public Integer getMaxZonaCombate() {
+        return maxZonaCombate;
+    }
+
+    @Override
+    public Integer getMaxZonaReserva() {
+        return maxZonaReserva;
+    }
+
+    @Override
+    public Integer getMaxZonaArtefactos() {return maxZonaArtefactos;}
 
 }

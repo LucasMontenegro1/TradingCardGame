@@ -1,12 +1,12 @@
 package fiuba.tdd.tp.modo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.mazo.Mazo;
 
 public interface Modo {
-    public Carta ejecutarEtapaInicial(Mazo mazo, Integer puntos);
+    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos);
 
     public void iniciarPartida();
 
@@ -17,4 +17,10 @@ public interface Modo {
     public boolean removerCarta(HashMap<String, Integer> cartas, String nombreCarta);
 
     public Integer asignarPuntos();
+
+    public Integer getMaxZonaCombate();
+
+    public Integer getMaxZonaReserva();
+
+    public Integer getMaxZonaArtefactos();
 }
