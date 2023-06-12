@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -14,8 +15,9 @@ import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Descartar extends MetodoCarta {
 
-    public Descartar(Tipo tipoCarta) {
+    public Descartar(Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
         tipo = tipoCarta;
+        costo = costoDeUso;
     }
 
     @Override

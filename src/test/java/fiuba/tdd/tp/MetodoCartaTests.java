@@ -34,6 +34,7 @@ public class MetodoCartaTests {
 
     private Mazo mazoModoUno;
 	private Mazo mazoModoDos;
+    private ArrayList<Integer> costo;
 
     @BeforeEach
     public void setUp() throws MazoInvalido {
@@ -48,12 +49,17 @@ public class MetodoCartaTests {
 
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 60);
 		mazoModoDos = new Mazo(cartasModoDos, modoDos);
+
+        costo = new ArrayList<>();
+        costo.add(0);
+        costo.add(0);
+        costo.add(0);
     }
 
     @Test
     public void atacarYTomarCarta() {
-        MetodoCarta atacar = new Atacar(10);
-        MetodoCarta tomarCarta = new TomarCarta(1, Tipo.Criatura);
+        MetodoCarta atacar = new Atacar(10, costo);
+        MetodoCarta tomarCarta = new TomarCarta(1, Tipo.Criatura, costo);
 
         MetodoCarta efecto = new MetodoCartaCompuesto(atacar, tomarCarta);
        
@@ -63,14 +69,14 @@ public class MetodoCartaTests {
 
     @Test
     public void testTransferirEnergiaCriterioDeAplicacion(){
-        MetodoCarta transferirEnergia =  new TransferirEnergia();
+        MetodoCarta transferirEnergia =  new TransferirEnergia(costo);
 
         assertTrue(transferirEnergia.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null));
     }
 
     @Test 
     public void testTransferenciaDeEnergia(){
-        MetodoCarta transferirEnergia =  new TransferirEnergia();
+        MetodoCarta transferirEnergia =  new TransferirEnergia(costo);
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
 
@@ -90,7 +96,7 @@ public class MetodoCartaTests {
 
     @Test
     public void testTransferirCartaCriterioDeAplicacion(){
-        MetodoCarta transferirCarta = new TransferirCarta();
+        MetodoCarta transferirCarta = new TransferirCarta(costo);
 
         assertTrue(transferirCarta.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null));
     }
@@ -101,7 +107,7 @@ public class MetodoCartaTests {
 
         Tablero contrincante = new Tablero("Jugador 2", mazoModoDos);
 
-        MetodoCarta transfeririCarta = new TransferirCarta();
+        MetodoCarta transfeririCarta = new TransferirCarta(costo);
 
         Integer cantInicialEnJuego = enJuego.cartas.size();
 
@@ -118,7 +124,7 @@ public class MetodoCartaTests {
 
     @Test
     public void testSacrificioCriterioDeAplicacion(){
-        MetodoCarta sacrificio = new Sacrificio();
+        MetodoCarta sacrificio = new Sacrificio(costo);
 
         assertTrue(sacrificio.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null));
     }
@@ -131,14 +137,14 @@ public class MetodoCartaTests {
 
     @Test
     public void testTomarCartaCriaturaCriterioDeAplicacion(){
-        MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Criatura);
+        MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Criatura, costo);
 
         assertTrue(tomarCarta.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null));
     }
 
     @Test
     public void testTomarCartaArtefactoCriterioDeAplicacion(){
-        MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Artefacto);
+        MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Artefacto, costo);
 
         assertTrue(tomarCarta.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null));
     }
@@ -148,7 +154,7 @@ public class MetodoCartaTests {
 
         Integer cantidad = 4;
 
-        MetodoCarta tomarCarta = new TomarCarta(cantidad, Tipo.Artefacto);
+        MetodoCarta tomarCarta = new TomarCarta(cantidad, Tipo.Artefacto, costo);
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoDos);
 
@@ -163,10 +169,10 @@ public class MetodoCartaTests {
 
     @Test
     public void testMetodoImpedirEsAplicableLuegoDeActivarUnaReaccion() {
-        MetodoCarta impedir = new Impedir();
+        MetodoCarta impedir = new Impedir(costo);
 
         Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
-        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion);
+        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
 
         metodos.push(resonancia);
 
@@ -179,10 +185,10 @@ public class MetodoCartaTests {
     @Test
     public void testMetodoImpedirSeEjecutaCorrectamente() {
 
-        MetodoCarta impedir = new Impedir();
+        MetodoCarta impedir = new Impedir(costo);
 
         Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
-        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion);
+        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
 
         metodos.push(resonancia);
         metodos.push(resonancia);
@@ -201,7 +207,7 @@ public class MetodoCartaTests {
 
     @Test
     public void testMetodoReduccionHPEsAplicable() {
-        MetodoCarta impedir = new Reducir();
+        MetodoCarta impedir = new Reducir(costo);
 
         Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), new ArrayDeque<MetodoCarta>());
 
@@ -213,7 +219,7 @@ public class MetodoCartaTests {
         
         Carta barreraMagica = new Carta(CartasDisponibles.BARRERAMAGICA);
 
-        MetodoCarta reduccion = new Reducir();
+        MetodoCarta reduccion = new Reducir(costo);
 
         reduccion.ejecutar(null, null, null, null, null, barreraMagica, null); 
 
@@ -222,8 +228,8 @@ public class MetodoCartaTests {
 
     @Test
     public void replicaSeUsaEnArtefacto(){
-        MetodoCarta energia = new AumentarEnergia(Energia.Fuego,1,Tipo.Artefacto);
-        MetodoCarta replica = new Replica();
+        MetodoCarta energia = new AumentarEnergia(Energia.Fuego,1,Tipo.Artefacto, costo);
+        MetodoCarta replica = new Replica(costo);
         Deque<MetodoCarta> stack = new ArrayDeque<>();
         stack.add(energia);
         boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(),stack);
@@ -248,7 +254,7 @@ public class MetodoCartaTests {
             }
         }
         assertEquals(espadaMagica.hp,3);
-        MetodoCarta damagePorAtributo = new DamagePorAtributo(1,false,Atributo.Metal,Tipo.Criatura);
+        MetodoCarta damagePorAtributo = new DamagePorAtributo(1,false,Atributo.Metal,Tipo.Criatura, costo);
         damagePorAtributo.ejecutar(null, tableroEnemigo,null, null, null, null, null);
         assertEquals(espadaMagica.hp,2);
     }

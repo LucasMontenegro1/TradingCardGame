@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -18,8 +19,9 @@ public class AumentarEnergia extends MetodoCarta {
     private int cantidad;
     private Energia tipoEnergia;
 
-    public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipoCarta) {
+    public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
         tipo = tipoCarta;
+        costo = costoDeUso;
         this.cantidad = cantidad;
         this.tipoEnergia = tipoEnergia;
     }

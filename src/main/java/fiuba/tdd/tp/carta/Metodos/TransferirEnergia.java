@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -14,8 +15,9 @@ import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class TransferirEnergia extends MetodoCarta {
 
-    public TransferirEnergia() {
+    public TransferirEnergia(ArrayList<Integer> costoDeUso) {
         tipo = Tipo.Criatura;
+        costo = costoDeUso;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Atributo;
@@ -19,11 +20,12 @@ public class DamagePorAtributo extends MetodoCarta {
     private int hp;
     private Atributo atributo;
 
-    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipoCarta) {
+    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
+        tipo = tipoCarta;
+        costo = costoDeUso;
         this.ambosJugadores = ambosJugadores;
         this.hp = hp;
         this.atributo = atributo;
-        tipo = tipoCarta;
     }
 
     @Override

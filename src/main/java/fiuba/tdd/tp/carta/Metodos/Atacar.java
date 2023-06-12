@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -15,9 +16,10 @@ public class Atacar extends MetodoCarta {
 
     private int hp;
     
-    public Atacar(int hp){
-        this.hp = hp;
+    public Atacar(int hp, ArrayList<Integer> costoDeUso) {
         tipo = Tipo.Criatura;
+        costo = costoDeUso;
+        this.hp = hp;
     }
     
     @Override

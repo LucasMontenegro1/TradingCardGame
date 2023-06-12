@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -16,9 +17,10 @@ public class Curar extends MetodoCarta {
     
     private int hp;
 
-    public Curar(int hp){
-        this.hp = hp;
+    public Curar(int hp, ArrayList<Integer> costoDeUso){
         tipo = Tipo.Artefacto;
+        costo = costoDeUso;
+        this.hp = hp;
     }
 
     @Override

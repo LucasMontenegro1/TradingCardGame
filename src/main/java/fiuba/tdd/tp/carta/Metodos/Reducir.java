@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -12,8 +13,9 @@ import fiuba.tdd.tp.zona.Zona;
 
 public class Reducir extends MetodoCarta {
 
-    public Reducir() {
+    public Reducir(ArrayList<Integer> costoDeUso) {
         tipo = Tipo.Reaccion;
+        costo = costoDeUso;
     }
 
     @Override

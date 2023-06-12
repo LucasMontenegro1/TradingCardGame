@@ -19,9 +19,10 @@ public class TomarCarta extends MetodoCarta {
 
     private int cantidad;
 
-    public TomarCarta(int cantidad, Tipo  tipoCarta){
-        this.cantidad = cantidad;
+    public TomarCarta(int cantidad, Tipo  tipoCarta, ArrayList<Integer> costoDeUso){
         tipo = tipoCarta;
+        costo = costoDeUso;
+        this.cantidad = cantidad;
     }
 
     @Override
