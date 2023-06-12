@@ -23,4 +23,6 @@ public interface Modo {
     public Integer getMaxZonaReserva();
 
     public Integer getMaxZonaArtefactos();
+
+	public boolean partidaEnProceso(Integer puntos);
 }

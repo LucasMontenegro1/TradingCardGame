@@ -22,6 +22,8 @@ public class Modo1 implements Modo {
     final Integer maxZonaArtefactos = 5;
     
     final Integer cantCartasIniciales = 5;
+
+    final Integer puntosFinDePartida = 0;
     
     private void cartaAlAzar(ArrayList<Carta> cartas) {
         Random random = new Random();
@@ -81,6 +83,11 @@ public class Modo1 implements Modo {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean partidaEnProceso(Integer puntos) {
+        return puntos > puntosFinDePartida;
     }
 
     @Override

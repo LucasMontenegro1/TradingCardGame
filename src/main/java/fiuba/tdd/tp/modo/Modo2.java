@@ -22,6 +22,8 @@ public class Modo2 implements Modo{
 
     final Integer cantCartasIniciales = 5;
 
+    final Integer puntosFinDePartida = 6;
+
     @Override
     public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
         if (puntos > maxPuntosVictoria) {
@@ -61,6 +63,11 @@ public class Modo2 implements Modo{
         }
 
         return true;
+    }
+
+    @Override
+    public boolean partidaEnProceso(Integer puntos) {
+        return puntos <= puntosFinDePartida;
     }
 
     @Override
