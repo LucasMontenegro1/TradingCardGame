@@ -63,7 +63,6 @@ public class MetodoCartaTests {
 
         MetodoCarta efecto = new MetodoCartaCompuesto(atacar, tomarCarta);
        
-        // efecto.ejecutar(null, null, null, null, null);
         assertTrue(efecto.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null));
     }
 
@@ -137,7 +136,7 @@ public class MetodoCartaTests {
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
 
-        sacrificio.ejecutar(enJuego, null, null, null, null, carta, null);
+        sacrificio.ejecutar(enJuego, null, null, null, carta, null, null);
 
         assertEquals(3, enJuego.energiaFuego());
         assertEquals(3, enJuego.energiaPlanta());
