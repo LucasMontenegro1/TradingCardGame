@@ -13,6 +13,7 @@ import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
+import fiuba.tdd.tp.partida.Ejecucion;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
@@ -196,22 +197,24 @@ public class MetodoCartaTests {
 
         MetodoCarta impedir = new Impedir(costo);
 
-        Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
+        Ejecucion unaEjecucion = new Ejecucion(impedir, null, null, null, null, null, null, null);
+
+        Deque<Ejecucion> metodos = new ArrayDeque<Ejecucion>();
         MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
 
-        metodos.push(resonancia);
-        metodos.push(resonancia);
-        metodos.push(resonancia);
-        metodos.push(resonancia);
-        metodos.push(resonancia);
+        metodos.push(unaEjecucion);
+        metodos.push(unaEjecucion);
+        metodos.push(unaEjecucion);
+        metodos.push(unaEjecucion);
+        metodos.push(unaEjecucion);
 
         impedir.ejecutar(null, null, metodos, null, null, null, null);
 
         assertEquals(metodos.size(), 4);
-        assertEquals(metodos.pop(), resonancia);
-        assertEquals(metodos.pop(), resonancia);
-        assertEquals(metodos.pop(), resonancia);
-        assertEquals(metodos.pop(), resonancia);
+        assertEquals(metodos.pop(), unaEjecucion);
+        assertEquals(metodos.pop(), unaEjecucion);
+        assertEquals(metodos.pop(), unaEjecucion);
+        assertEquals(metodos.pop(), unaEjecucion);
     }
 
     @Test
