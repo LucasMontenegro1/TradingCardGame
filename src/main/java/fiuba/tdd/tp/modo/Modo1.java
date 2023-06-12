@@ -2,6 +2,7 @@ package fiuba.tdd.tp.modo;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.ZonaMano;
 
 import java.util.ArrayList;
@@ -19,22 +20,27 @@ public class Modo1 implements Modo {
     final Integer maxZonaReserva = 0;
     final Integer maxZonaCombate = 5;
     final Integer maxZonaArtefactos = 5;
+    
+    final Integer cantCartasIniciales = 5;
+    
+    private void cartaAlAzar(ArrayList<Carta> cartas) {
+        Random random = new Random();
+        Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
+        cartaAleatoria.zona = new ZonaMano();
+    }
 
     @Override
     public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
         if (cartas.size() > 0){
-            Random random = new Random();
-            Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
-            cartaAleatoria.zona = new ZonaMano();
+            cartaAlAzar(cartas);
             return true;
        }
        return false;
-        
     }
 
     @Override
-    public void iniciarPartida() {
-
+    public Integer getCantCartasIniciales() {
+        return cantCartasIniciales;
     }
 
     private Integer cantidadCartas(HashMap<String, Integer> cartas) {
@@ -93,7 +99,7 @@ public class Modo1 implements Modo {
     }
 
     @Override
-    public Integer getMaxZonaArtefactos() {return maxZonaArtefactos;}
-
-
+    public Integer getMaxZonaArtefactos() {
+        return maxZonaArtefactos;
+    }
 }

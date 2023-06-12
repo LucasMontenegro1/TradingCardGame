@@ -79,12 +79,14 @@ public class Tablero {
         return cartasUsables;
     } 
 
-    public ArrayList<Carta> cartasEnZona(Zona zona){
+    public ArrayList<Carta> cartasEnZona(String zona){
         
         ArrayList<Carta> cartas = new ArrayList<>();
 
         this.cartas.forEach(carta -> {
-            if (carta.zona == zona){
+            if (carta.zona == null && zona == null) {
+                cartas.add(carta);
+            } else if (carta.zona != null && carta.zona.getClass().getSimpleName() == zona) {
                 cartas.add(carta);
             }}
         );

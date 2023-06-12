@@ -270,16 +270,16 @@ public class TableroTests {
 
     @Test
     void testTableroConCantidadesMaximasDeZonaCorrectasEnModoDos() throws MazoInvalido {
-        HashMap<String, Integer> cartasModoUno = new HashMap<>();
+        HashMap<String, Integer> cartasModoDos = new HashMap<>();
         Modo modoDos = new Modo2();
 
-        cartasModoUno.put(CartasDisponibles.AGUA.nombre, 50);
-        cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
-        cartasModoUno.put(CartasDisponibles.ANTIMAGIA.nombre, 3);
-        cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
-        cartasModoUno.put(CartasDisponibles.SABOTEAR.nombre, 1);
+        cartasModoDos.put(CartasDisponibles.AGUA.nombre, 50);
+        cartasModoDos.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
+        cartasModoDos.put(CartasDisponibles.ANTIMAGIA.nombre, 3);
+        cartasModoDos.put(CartasDisponibles.DRENAR.nombre, 3);
+        cartasModoDos.put(CartasDisponibles.SABOTEAR.nombre, 1);
 
-        Mazo mazo = new Mazo(cartasModoUno, modoDos);
+        Mazo mazo = new Mazo(cartasModoDos, modoDos);
 
         Tablero tablero = new Tablero("jugador", mazo);
 

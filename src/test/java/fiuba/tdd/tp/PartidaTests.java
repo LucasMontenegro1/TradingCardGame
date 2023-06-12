@@ -1,5 +1,6 @@
 package fiuba.tdd.tp;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.HashMap;
@@ -16,6 +17,9 @@ import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
+import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.zona.Zona;
+import fiuba.tdd.tp.zona.ZonaMano;
 
 @SpringBootTest
 public class PartidaTests {
@@ -55,5 +59,16 @@ public class PartidaTests {
         });
     }
 
+    @Test 
+    public void testPartidaIniciaUnTurno() throws PartidaInvalida {
+        Partida partida = new Partida(modoUno, "jugador1", "jugador2", mazoModoUno, mazoModoUno);
+        
+        partida.iniciarPartida();
 
+        Tablero tableroJugador1 = partida.tableroJugador("jugador1");
+
+        Zona unaZona = new ZonaMano();
+        
+        assertEquals(tableroJugador1.cartasEnZona(unaZona.getClass().getSimpleName()).size(), 6);
+    }
 }

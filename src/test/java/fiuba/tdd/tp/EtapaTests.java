@@ -10,7 +10,6 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaFinal;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.modo.Modo;
@@ -49,7 +48,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 
-        Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
 
         assert etapaIncial instanceof EtapaInicial;
         
@@ -60,9 +59,9 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
         
-        Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         Etapa siguienteEtapa = etapaIncial.finalizar();
 
@@ -74,12 +73,12 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 	
-		Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         carta.zona = new ZonaReserva();
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.moverCarta(carta);
 
@@ -95,9 +94,9 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 
-        Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.invocarAZonaDeCombate(carta);
 
@@ -113,9 +112,9 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.invocarAZonaDeReserva(carta);
 
@@ -131,9 +130,9 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.invocarAZonaDeArtefacto(carta);
 
@@ -145,7 +144,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 
-        Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
         assert etapaIncial instanceof EtapaInicial;
         
@@ -156,13 +155,13 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
         
-        Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         Etapa siguienteEtapa = etapaIncial.finalizar();
 
-        assert siguienteEtapa instanceof EtapaFinal;
+        assert siguienteEtapa  == null;
     }
 
     @Test
@@ -170,13 +169,13 @@ public class EtapaTests {
 		
 		Integer puntos = 4;
 	
-		Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
         carta.zona = new ZonaReserva();
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.moverCarta(carta);
 
@@ -192,9 +191,9 @@ public class EtapaTests {
         
         carta.zona = new ZonaMano();
 
-        Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.invocarAZonaDeCombate(carta);
 
@@ -210,9 +209,9 @@ public class EtapaTests {
         
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.invocarAZonaDeReserva(carta);
 
@@ -228,9 +227,9 @@ public class EtapaTests {
         
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
-        etapaIncial.iniciar();
+        etapaIncial.iniciar(this.cartas);
 
         etapaIncial.invocarAZonaDeArtefacto(carta);
 
@@ -264,7 +263,7 @@ public class EtapaTests {
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
-        etapaPrincipal.iniciar();
+        etapaPrincipal.iniciar(this.cartas);
 
         etapaPrincipal.moverCarta(carta);
 
@@ -280,7 +279,7 @@ public class EtapaTests {
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
-        etapaPrincipal.iniciar();
+        etapaPrincipal.iniciar(this.cartas);
 
         etapaPrincipal.invocarAZonaDeCombate(carta);
 
@@ -296,7 +295,7 @@ public class EtapaTests {
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
-        etapaPrincipal.iniciar();
+        etapaPrincipal.iniciar(this.cartas);
 
         etapaPrincipal.invocarAZonaDeReserva(carta);
 
@@ -312,7 +311,7 @@ public class EtapaTests {
 
         Etapa etapaPrincipal = new EtapaPrincipal();
 
-        etapaPrincipal.iniciar();
+        etapaPrincipal.iniciar(this.cartas);
 
         etapaPrincipal.invocarAZonaDeArtefacto(carta);
 
@@ -334,7 +333,7 @@ public class EtapaTests {
 
         Etapa siguienteEtapa = etapaDeAtaque.finalizar();
 
-        assert siguienteEtapa instanceof EtapaFinal;
+        assert siguienteEtapa == null;
     }
 
     @Test
@@ -346,7 +345,7 @@ public class EtapaTests {
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
-        etapaDeAtaque.iniciar();
+        etapaDeAtaque.iniciar(this.cartas);
 
         etapaDeAtaque.moverCarta(carta);
 
@@ -362,7 +361,7 @@ public class EtapaTests {
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
-        etapaDeAtaque.iniciar();
+        etapaDeAtaque.iniciar(this.cartas);
 
         etapaDeAtaque.invocarAZonaDeCombate(carta);
 
@@ -379,7 +378,7 @@ public class EtapaTests {
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
-        etapaDeAtaque.iniciar();
+        etapaDeAtaque.iniciar(this.cartas);
 
         etapaDeAtaque.invocarAZonaDeReserva(carta);
 
@@ -395,84 +394,12 @@ public class EtapaTests {
 
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
-        etapaDeAtaque.iniciar();
+        etapaDeAtaque.iniciar(this.cartas);
 
         etapaDeAtaque.invocarAZonaDeArtefacto(carta);
 
         assert carta.zona instanceof ZonaMano;
     }
 
-    // Etapa final
-
-    @Test
-    void testCreacionDeUnaEtapaFinal(){
-        Etapa etapaFinal = new EtapaFinal();
-
-        assert etapaFinal instanceof EtapaFinal;
-    }
-
-    @Test
-    void testEnLaEtapaFinalNoSePuedenMoverCartas(){
-
-        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-        
-        carta.zona = new ZonaReserva();
-
-        Etapa etapaFinal = new EtapaFinal();
-
-        etapaFinal.iniciar();
-
-        etapaFinal.moverCarta(carta);
-
-        assert carta.zona instanceof ZonaReserva;
-    }
-
-    @Test
-    void testEnLaEtapaFinalNoSePuedeInvocarUnaCriaturaAZonaDeCombate(){
-        
-        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-        
-        carta.zona = new ZonaMano();
-
-        Etapa etapaFinal = new EtapaFinal();
-
-        etapaFinal.iniciar();
-
-        etapaFinal.invocarAZonaDeCombate(carta);
-
-        assert carta.zona instanceof ZonaMano;
-    }
-
-    @Test
-    void testEnLaEtapaFinalNoSePuedeInvocarUnaCriaturaAZonaDeReserva(){
     
-        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-        
-        carta.zona = new ZonaMano();
-
-        Etapa etapaFinal = new EtapaFinal();
-
-        etapaFinal.iniciar();
-
-        etapaFinal.invocarAZonaDeReserva(carta);
-
-        assert carta.zona instanceof ZonaMano;
-    }
-
-    @Test
-    void testEnLaEtapaFinalNoSePuedeInvocarUnArtefactoAZonaDeArtefactos(){
-        
-        Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
-        
-        carta.zona = new ZonaMano();
-
-        Etapa etapaFinal = new EtapaFinal();
-
-        etapaFinal.iniciar();
-
-        etapaFinal.invocarAZonaDeArtefacto(carta);
-
-        assert carta.zona instanceof ZonaMano;
-    }
-
 }

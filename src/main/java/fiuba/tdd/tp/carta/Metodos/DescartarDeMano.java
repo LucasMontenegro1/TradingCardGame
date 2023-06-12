@@ -7,7 +7,6 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaFinal;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
@@ -23,7 +22,7 @@ public class DescartarDeMano extends MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
-        return !(zona instanceof ZonaDescarte) && !(etapa instanceof EtapaInicial || etapa instanceof EtapaFinal);
+        return !(zona instanceof ZonaDescarte) && !(etapa instanceof EtapaInicial);
     }
     
     @Override

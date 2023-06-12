@@ -1,19 +1,21 @@
 package fiuba.tdd.tp.etapa;
 
+import java.util.ArrayList;
+
 import fiuba.tdd.tp.carta.Carta;
 
 public class EtapaDeAtaque implements Etapa {
-    public enum ZonasEtapaAtaque {
-        ZonaCombate
-    }
+
+    public ArrayList<Carta> cartasJugador;
 
     @Override
-    public void iniciar() {
+    public void iniciar(ArrayList<Carta> cartas) {
+        this.cartasJugador = cartas;
     }
 
     @Override
     public Etapa finalizar() {
-        return new EtapaFinal();
+        return null;
     }
     
     @Override

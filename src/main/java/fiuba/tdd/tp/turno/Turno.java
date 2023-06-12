@@ -15,16 +15,15 @@ public class Turno {
         return this.etapa;
     }
     
-    public Turno (Modo modo, ArrayList<Carta> cartas, Integer puntos){
-        this.etapa = new EtapaInicial(modo,cartas,puntos);    
+    public Turno (Modo modo, Integer puntos){
+        this.etapa = new EtapaInicial(modo, puntos);    
     }
     
-    public void iniciarTurno(){
-        this.etapa.iniciar();
+    public void iniciarTurno(ArrayList<Carta> cartas) {
+        this.etapa.iniciar(cartas);
     }
 
     public void pasarDeEtapa(){
         this.etapa = this.etapa.finalizar();
     }
-
 }

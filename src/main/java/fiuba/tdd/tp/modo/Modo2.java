@@ -20,6 +20,8 @@ public class Modo2 implements Modo{
     final Integer maxZonaCombate = 1;
     final Integer maxZonaArtefactos = 3;
 
+    final Integer cantCartasIniciales = 5;
+
     @Override
     public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
         if (puntos > maxPuntosVictoria) {
@@ -35,8 +37,8 @@ public class Modo2 implements Modo{
     }
 
     @Override
-    public void iniciarPartida() {
-
+    public Integer getCantCartasIniciales() {
+        return cantCartasIniciales;
     }
 
     @Override
@@ -87,6 +89,8 @@ public class Modo2 implements Modo{
     }
 
     @Override
-    public Integer getMaxZonaArtefactos() {return maxZonaArtefactos;}
+    public Integer getMaxZonaArtefactos() {
+        return maxZonaArtefactos;
+    }
 
 }

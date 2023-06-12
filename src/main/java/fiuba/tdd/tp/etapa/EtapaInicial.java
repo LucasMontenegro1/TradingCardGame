@@ -12,14 +12,14 @@ public class EtapaInicial implements Etapa {
     private Integer puntosPartida;
     private boolean asginacion;
 
-    public EtapaInicial(Modo modo, ArrayList<Carta> cartas, Integer puntos){
+    public EtapaInicial(Modo modo, Integer puntos){
         this.modoPartida = modo;
-        this.cartasJugador = cartas;
         this.puntosPartida = puntos;
     }
 
     @Override
-    public void iniciar() {
+    public void iniciar(ArrayList<Carta> cartas) {
+        this.cartasJugador = cartas;
         this.asginacion = this.modoPartida.ejecutarEtapaInicial(cartasJugador, puntosPartida);
     }
 
@@ -27,7 +27,7 @@ public class EtapaInicial implements Etapa {
     public Etapa finalizar() {
 
         if (!this.asginacion){
-            return new EtapaFinal();
+            return null;
         }
         return new EtapaPrincipal();
     }
