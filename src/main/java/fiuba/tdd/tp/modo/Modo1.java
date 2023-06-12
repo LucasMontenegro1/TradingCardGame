@@ -1,12 +1,13 @@
 package fiuba.tdd.tp.modo;
 
 import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.zona.ZonaMano;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Random;
 
 public class Modo1 implements Modo {
     
@@ -20,9 +21,15 @@ public class Modo1 implements Modo {
     final Integer maxZonaArtefactos = 5;
 
     @Override
-    public Carta ejecutarEtapaInicial(Mazo  mazo, Integer puntos) {
-        // return mazo.tomarCarta();
-        return new Carta(CartasDisponibles.ALQUIMISTA);
+    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
+        if (cartas.size() > 0){
+            Random random = new Random();
+            Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
+            cartaAleatoria.zona = new ZonaMano();
+            return true;
+       }
+       return false;
+        
     }
 
     @Override

@@ -1,5 +1,5 @@
 package fiuba.tdd.tp;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,36 +13,36 @@ import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.etapa.EtapaFinal;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
-import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
-import fiuba.tdd.tp.zona.ZonaArtefecto;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
 import fiuba.tdd.tp.zona.ZonaReserva;
+import fiuba.tdd.tp.zona.ZonaArtefecto;
 
 
 @SpringBootTest
 public class EtapaTests {
 
-    private Mazo mazoModoUno;
-	private Mazo mazoModoDos;
+    ArrayList<Carta> cartas = new ArrayList<>();
+	Modo modo1 = new Modo1();
+	Modo modo2 = new Modo2();
 
-    @BeforeEach
+	@BeforeEach
     public void setUp() throws MazoInvalido {
-		HashMap<String, Integer> cartas = new HashMap<>();
-        
-        Modo modoUno = new Modo1();
-		Modo modoDos = new Modo2();
-
-		cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartas, modoUno);
-
-		cartas.put(CartasDisponibles.AGUA.nombre, 60);
-		mazoModoDos = new Mazo(cartas, modoDos);
+		this.cartas.add(new Carta(CartasDisponibles.ALQUIMISTA));
+		this.cartas.add(new Carta(CartasDisponibles.ALQUIMISTA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.BARRERAMAGICA));
+		this.cartas.add(new Carta(CartasDisponibles.BARRERAMAGICA));
+		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
+		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
+		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
     }
-    
     // Etapa inicial
 
     @Test
@@ -50,7 +50,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 
-        Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
 
         assert etapaIncial instanceof EtapaInicial;
         
@@ -61,7 +61,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
         
-        Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -75,10 +75,9 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 	
-		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
-
         carta.zona = new ZonaReserva();
 
         etapaIncial.iniciar();
@@ -97,7 +96,7 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 
-        Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -115,7 +114,7 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -133,7 +132,7 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo1, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -147,7 +146,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
 
-        Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
 
         assert etapaIncial instanceof EtapaInicial;
         
@@ -158,7 +157,7 @@ public class EtapaTests {
 		
 		Integer puntos = 15;
         
-        Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -172,7 +171,7 @@ public class EtapaTests {
 		
 		Integer puntos = 4;
 	
-		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
@@ -194,7 +193,7 @@ public class EtapaTests {
         
         carta.zona = new ZonaMano();
 
-        Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -212,7 +211,7 @@ public class EtapaTests {
         
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
 
         etapaIncial.iniciar();
 
@@ -230,7 +229,7 @@ public class EtapaTests {
         
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+		Etapa etapaIncial = new EtapaInicial(this.modo2, this.cartas, puntos);
 
         etapaIncial.iniciar();
 

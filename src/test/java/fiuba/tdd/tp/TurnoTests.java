@@ -1,47 +1,52 @@
 package fiuba.tdd.tp;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.etapa.EtapaFinal;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
-import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.turno.Turno;
 
+@SpringBootTest
 public class TurnoTests {
 	
-	private Mazo mazoModoUno;
-	private Mazo mazoModoDos;
+	ArrayList<Carta> cartas = new ArrayList<>();
+	Modo modo1 = new Modo1();
+	Modo modo2 = new Modo2();
 
-    @BeforeEach
+	@BeforeEach
     public void setUp() throws MazoInvalido {
-		HashMap<String, Integer> cartas = new HashMap<>();
-        
-        Modo modoUno = new Modo1();
-		Modo modoDos = new Modo2();
-
-		cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartas, modoUno);
-
-		cartas.put(CartasDisponibles.AGUA.nombre, 60);
-		mazoModoDos = new Mazo(cartas, modoDos);
+		this.cartas.add(new Carta(CartasDisponibles.ALQUIMISTA));
+		this.cartas.add(new Carta(CartasDisponibles.ALQUIMISTA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
+		this.cartas.add(new Carta(CartasDisponibles.BARRERAMAGICA));
+		this.cartas.add(new Carta(CartasDisponibles.BARRERAMAGICA));
+		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
+		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
+		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
     }
+
 	
 	@Test
 	void testCreacionTurnoDeUnaPartidaModoUno() {
 		
 		Integer puntos = 15;
-	
-        Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+
+        Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
@@ -51,7 +56,7 @@ public class TurnoTests {
 			
 		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+        Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
@@ -61,7 +66,7 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
 	
-		Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+		Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
 
 		nuevoTurno.iniciarTurno();
 
@@ -75,7 +80,7 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
         
-		Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+		Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
 
 		nuevoTurno.iniciarTurno();
 
@@ -87,7 +92,7 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
 	
-        Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
@@ -97,7 +102,7 @@ public class TurnoTests {
 			
 		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
@@ -107,7 +112,7 @@ public class TurnoTests {
 		
 		Integer puntos = 4;
 	
-		Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+		Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
 
 		nuevoTurno.iniciarTurno();
 
@@ -121,7 +126,7 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
         
-		Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+		Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
 
 		nuevoTurno.iniciarTurno();
 
@@ -133,7 +138,7 @@ public class TurnoTests {
 		
 		Integer puntos = 4;
 
-        Turno nuevoTurno = new Turno(this.mazoModoUno.getModo(), this.mazoModoUno, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
 		
 		nuevoTurno.iniciarTurno();
 
@@ -157,7 +162,7 @@ public class TurnoTests {
 		
 		Integer puntos = 2;
 		
-        Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
 
 		nuevoTurno.iniciarTurno();
 		
@@ -181,7 +186,7 @@ public class TurnoTests {
     	
 		Integer puntos = 10;
 		
-		Turno nuevoTurno = new Turno(this.mazoModoDos.getModo(), this.mazoModoDos, puntos);
+		Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
 
 		nuevoTurno.iniciarTurno();
 		
