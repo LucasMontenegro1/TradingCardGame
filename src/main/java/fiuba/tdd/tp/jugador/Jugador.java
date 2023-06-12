@@ -52,7 +52,7 @@ public class Jugador {
         this.cantdDinero -= cantidad;
     }
 
-    private void agregarCarta(String nombreCarta) {
+    void agregarCarta(String nombreCarta) {
         if (this.cartas.containsKey(nombreCarta)) {
             int cantidad = this.cartas.get(nombreCarta);
             this.cartas.put(nombreCarta, cantidad+1);
@@ -132,36 +132,7 @@ public class Jugador {
         this.mazos.remove(nombre);
     }
 
-    public void realizarIntercambio(String cartaDispuesta, String cartaDeseada) throws CartaNoEncontrada {
-        if (!this.cartas.containsKey(cartaDispuesta)) {
-            throw new CartaNoEncontrada("No puede realizar el intercambio si no posee la carta");
-        }
-
-        this.eliminarCarta(cartaDispuesta);
-
-        ArrayList<String> cartasDeseadas = this.intercambios.get(cartaDispuesta);
-        if (cartasDeseadas == null) {
-            cartasDeseadas = new ArrayList<>();
-            this.intercambios.put(cartaDispuesta, cartasDeseadas);
-        }
-        cartasDeseadas.add(cartaDeseada);
-    }
-
     public HashMap<String, ArrayList<String>> intercambiosAbiertos() {
-        return this.intercambios;
-    }
-
-    public void eliminarIntercambio(String cartaDispuesta, String cartaDeseada) {
-        ArrayList<String> cartasDeseadas = this.intercambios.get(cartaDispuesta);
-        if (cartasDeseadas == null) {
-            return; 
-        }
-
-        cartasDeseadas.remove(cartaDeseada);
-        if (cartasDeseadas.isEmpty()) {
-            this.intercambios.remove(cartaDispuesta);
-        }
-
-        agregarCarta(cartaDispuesta);
+        return intercambios;
     }
 }
