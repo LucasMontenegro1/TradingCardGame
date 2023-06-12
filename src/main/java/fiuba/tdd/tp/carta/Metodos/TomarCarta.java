@@ -18,10 +18,10 @@ import fiuba.tdd.tp.zona.ZonaMano;
 public class TomarCarta extends MetodoCarta {
 
     private int cantidad;
-    public Tipo tipo;
-    public TomarCarta(int cantidad, Tipo  tipo){
+
+    public TomarCarta(int cantidad, Tipo  tipoCarta){
         this.cantidad = cantidad;
-        this.tipo = tipo;
+        tipo = tipoCarta;
     }
 
     @Override
@@ -33,19 +33,16 @@ public class TomarCarta extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
         
-                
-        for (int i = 0; i< this.cantidad; i++){
+        for (int i = 0; i < this.cantidad; i++){
             ArrayList<Carta> cartas = enJuego.cartasEnZona(null);
+            
             Random random = new Random();
-        
             Carta cartaTomada = cartas.get(random.nextInt(cartas.size()));
-
             cartaTomada.zona = new ZonaMano();
         }
-
     }
 
 }

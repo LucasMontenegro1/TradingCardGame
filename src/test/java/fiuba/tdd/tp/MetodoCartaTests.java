@@ -81,7 +81,7 @@ public class MetodoCartaTests {
 
         Integer aguaInicialContrincante = contrincante.energiaAgua();
         
-        transferirEnergia.ejecutar(enJuego, contrincante, null, null, null, Energia.Agua);
+        transferirEnergia.ejecutar(enJuego, contrincante, null, null, null, null, Energia.Agua);
         
         assertEquals(aguaInicialEnJuego + 1, enJuego.energiaAgua());
         assertEquals(aguaInicialContrincante - 1, contrincante.energiaAgua());
@@ -109,7 +109,7 @@ public class MetodoCartaTests {
         Random random = new Random();
         Carta carta = contrincante.cartas.get(random.nextInt(contrincante.cartas.size()));
 
-        transfeririCarta.ejecutar(enJuego, contrincante, null, null, carta, null);       
+        transfeririCarta.ejecutar(enJuego, contrincante, null, null, carta, null, null);       
 
         assertEquals(cantInicialEnJuego + 1, enJuego.cartas.size());
         assertEquals(cantInicialContrincante - 1, contrincante.cartas.size());
@@ -155,7 +155,7 @@ public class MetodoCartaTests {
         
         Integer cantCartasInicial = cartas.size();
 
-        tomarCarta.ejecutar(enJuego, null, null, null, null, null);
+        tomarCarta.ejecutar(enJuego, null, null, null, null, null, null);
 
         assertEquals(cantCartasInicial - cantidad, enJuego.cartasEnZona(null).size());
     }
@@ -189,7 +189,7 @@ public class MetodoCartaTests {
         metodos.push(resonancia);
         metodos.push(resonancia);
 
-        impedir.ejecutar(null, null, metodos, null, null, null);
+        impedir.ejecutar(null, null, metodos, null, null, null, null);
 
         assertEquals(metodos.size(), 4);
         assertEquals(metodos.pop(), resonancia);
@@ -214,7 +214,7 @@ public class MetodoCartaTests {
 
         MetodoCarta reduccion = new Reducir();
 
-        reduccion.ejecutar(null, null, null, null, barreraMagica, null); 
+        reduccion.ejecutar(null, null, null, null, null, barreraMagica, null); 
 
         assertEquals(barreraMagica.hp, 11);
     }

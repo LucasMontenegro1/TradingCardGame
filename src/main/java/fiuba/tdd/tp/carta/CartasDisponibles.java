@@ -8,6 +8,7 @@ import fiuba.tdd.tp.carta.Metodos.DamagePorAccion;
 import fiuba.tdd.tp.carta.Metodos.DamagePorAtributo;
 import fiuba.tdd.tp.carta.Metodos.Descartar;
 import fiuba.tdd.tp.carta.Metodos.DescartarDeMano;
+import fiuba.tdd.tp.carta.Metodos.Destruir;
 import fiuba.tdd.tp.carta.Metodos.Drenar;
 import fiuba.tdd.tp.carta.Metodos.Impedir;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
@@ -115,7 +116,7 @@ public enum CartasDisponibles {
                                             new ArrayList<Tipo>(){{add(Tipo.Reaccion);}},
                                             new ArrayList<MetodoCarta>(){{
                                                 add(new MetodoCartaCompuesto(
-                                                        new MetodoCartaCompuesto(new Impedir(), new Descartar(Tipo.Reaccion)),
+                                                        new MetodoCartaCompuesto(new Impedir(), new Destruir()), 
                                                         new Descartar(Tipo.Reaccion)
                                                     ));
                                             }}
@@ -145,15 +146,18 @@ public enum CartasDisponibles {
     RESONANCIA("RESONANCIA", null, 12,  new ArrayList<Atributo>(),
                                 new ArrayList<Tipo>(){{add(Tipo.Accion); add(Tipo.Reaccion);}},
                                 new ArrayList<MetodoCarta>(){{
-                                    add(new Descartar(Tipo.Accion));
-                                    add(new Resonancia(Tipo.Reaccion));
+                                    add(new MetodoCartaCompuesto(new Destruir(), new Descartar(Tipo.Accion)));
+                                    add(new MetodoCartaCompuesto(new Resonancia(Tipo.Reaccion), new Descartar(Tipo.Reaccion)));
                                 }}
                             ),
 
     SABOTEAR("SABOTEAR", 3, 12, new ArrayList<Atributo>(),
                                             new ArrayList<Tipo>(){{add(Tipo.Criatura); add(Tipo.Reaccion);}},
                                             new ArrayList<MetodoCarta>(){{
-                                                add(new MetodoCartaCompuesto(new Sabotear(), new DescartarDeMano()));
+                                                add(new MetodoCartaCompuesto(
+                                                        new MetodoCartaCompuesto(new Sabotear(), new Destruir()),
+                                                        new DescartarDeMano()
+                                                    ));
                                             }}
                                         ),
 

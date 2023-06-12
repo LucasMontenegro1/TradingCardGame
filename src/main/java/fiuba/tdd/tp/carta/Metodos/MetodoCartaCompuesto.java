@@ -24,8 +24,10 @@ public class MetodoCartaCompuesto extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo, Carta carta, Energia energia) {
-        this.metodoUno.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, carta, energia);
-        this.metodoDos.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, carta, energia);
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                                
+        this.metodoUno.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, cartaObjetivo, cartaActivada, energia);
+        this.metodoDos.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, cartaObjetivo, cartaActivada, energia);
     }
 }

@@ -13,20 +13,20 @@ import fiuba.tdd.tp.zona.ZonaMano;
 
 public class TransferirCarta extends MetodoCarta {
 
-    public Tipo tipo = Tipo.Accion;
-
-    @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-       
-        contrincante.eliminarCarta(carta);
-        enJuego.agregarCarta(carta);
-
+    public TransferirCarta() {
+        tipo = Tipo.Accion;
     }
-
+    
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
     
+    @Override
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+       
+        contrincante.eliminarCarta(cartaObjetivo);
+        enJuego.agregarCarta(cartaObjetivo);
+    }
 }

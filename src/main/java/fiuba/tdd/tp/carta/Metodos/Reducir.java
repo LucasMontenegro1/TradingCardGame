@@ -22,10 +22,10 @@ public class Reducir extends MetodoCarta {
     }
     
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
         
-        carta.hp += 1;
+        cartaActivada.hp += 1;
     }
     
 }

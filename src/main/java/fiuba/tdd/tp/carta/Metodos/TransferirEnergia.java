@@ -14,7 +14,9 @@ import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class TransferirEnergia extends MetodoCarta {
 
-    public Tipo tipo = Tipo.Criatura;
+    public TransferirEnergia() {
+        tipo = Tipo.Criatura;
+    }
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
@@ -22,12 +24,13 @@ public class TransferirEnergia extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
+   public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
         
-        contrincante.disminuirEnergia(energia, 1);
-        enJuego.aumentarEnergia(energia, 1);
-        
+        if (energia != null) {
+            contrincante.disminuirEnergia(energia, 1);
+            enJuego.aumentarEnergia(energia, 1);
+        }
     }
     
 }
