@@ -25,8 +25,8 @@ public class Impedir extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
 
             pilaMetodos.pop();
     }

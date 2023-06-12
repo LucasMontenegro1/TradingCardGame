@@ -13,18 +13,19 @@ import fiuba.tdd.tp.zona.ZonaMano;
 
 public class Sacrificio extends MetodoCarta {
 
-    public Tipo tipo = Tipo.Accion;
-
-    @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        
-       //TODO: faltan los cotos de invocacion
+    public Sacrificio() {
+        tipo = Tipo.Accion;
     }
-
+  
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
     
+    @Override
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        
+       //TODO: faltan los cotos de invocacion
+    }
 }

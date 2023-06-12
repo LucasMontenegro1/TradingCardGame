@@ -14,10 +14,10 @@ import fiuba.tdd.tp.zona.ZonaCombate;
 public class Atacar extends MetodoCarta {
 
     private int hp;
-    public Tipo tipo = Tipo.Criatura;
-
+    
     public Atacar(int hp){
         this.hp = hp;
+        tipo = Tipo.Criatura;
     }
     
     @Override
@@ -26,9 +26,9 @@ public class Atacar extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        carta.disminuirHP(this.hp);
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        cartaObjetivo.disminuirHP(this.hp);
     }
 
 }

@@ -12,7 +12,9 @@ import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Replica extends MetodoCarta {
 
-    public Tipo tipo = Tipo.Reaccion;
+    public Replica() {
+        tipo = Tipo.Reaccion;
+    }
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
@@ -22,8 +24,9 @@ public class Replica extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+            
             MetodoCarta metodo = pilaMetodos.peekLast();
             //logica para elegir
             pilaMetodos.add(metodo);

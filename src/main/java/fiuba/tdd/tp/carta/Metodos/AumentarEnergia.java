@@ -15,12 +15,11 @@ import fiuba.tdd.tp.zona.ZonaMano;
 
 public class AumentarEnergia extends MetodoCarta {
 
-    public Tipo tipo;
     private int cantidad;
     private Energia tipoEnergia;
 
-    public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipo) {
-        super.tipo = tipo;
+    public AumentarEnergia(Energia tipoEnergia, int cantidad, Tipo tipoCarta) {
+        tipo = tipoCarta;
         this.cantidad = cantidad;
         this.tipoEnergia = tipoEnergia;
     }
@@ -34,8 +33,8 @@ public class AumentarEnergia extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
         enJuego.aumentarEnergia(this.tipoEnergia, this.cantidad);
     }
 

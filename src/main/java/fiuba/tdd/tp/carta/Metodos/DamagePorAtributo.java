@@ -14,16 +14,16 @@ import fiuba.tdd.tp.zona.ZonaDescarte;
 import fiuba.tdd.tp.zona.ZonaMano;
 
 public class DamagePorAtributo extends MetodoCarta {
+
     private boolean ambosJugadores;
     private int hp;
     private Atributo atributo;
-    public Tipo tipo;
 
-    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipo) {
+    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipoCarta) {
         this.ambosJugadores = ambosJugadores;
         this.hp = hp;
         this.atributo = atributo;
-        this.tipo = tipo;
+        tipo = tipoCarta;
     }
 
     @Override
@@ -35,11 +35,21 @@ public class DamagePorAtributo extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        
+        if (this.ambosJugadores) {
+            disminuirHPCartas(enJuego);
+        }
+        disminuirHPCartas(contrincante);
+
     }
 
-   
+    private void disminuirHPCartas(Tablero unTablero) {
+        for (Carta unaCarta : unTablero.cartas) {
+            if (unaCarta.esTipo(this.tipo) && !(unaCarta.zona instanceof ZonaMano && unaCarta.zona instanceof ZonaDescarte)) {
+                unaCarta.disminuirHP(this.hp);
+            }
+        }
+    }
 }

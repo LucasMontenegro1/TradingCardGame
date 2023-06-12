@@ -14,10 +14,10 @@ import fiuba.tdd.tp.zona.ZonaMano;
 public class DamagePorAccion extends MetodoCarta {
 
     private int hp;
-    public Tipo tipo = Tipo.Accion;
 
     public DamagePorAccion(int hp){
         this.hp = hp;
+        tipo = Tipo.Accion;
     }
 
     @Override
@@ -26,8 +26,12 @@ public class DamagePorAccion extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, String jugadorObjetivo,
-            Carta carta, Energia energia) {
-        carta.disminuirHP(this.hp);
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+        
+        if (jugadorObjetivo != null) {
+            contrincante.disminuirPuntos(3);
+        }
+        cartaObjetivo.disminuirHP(this.hp);
     }
 }
