@@ -7,6 +7,8 @@ import fiuba.tdd.tp.carta.Tipo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -103,5 +105,27 @@ public class CartaTests {
         assertEquals(alquimista.hp, 3);
         alquimista.aumentarHP(2);
         assertEquals(alquimista.hp, 3);
+    }
+
+    @Test
+    void testAlquimistaConCostoDeInvocacion(){
+        Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
+        ArrayList<Integer> esperado = new ArrayList<>();
+        esperado.add(1);
+        esperado.add(1);
+        esperado.add(0);
+
+        assertEquals(esperado,alquimista.getCostoDeInvocacion());
+    }
+
+    @Test
+    void testCostoDeCualquierTipo(){
+        Carta antimagia = new Carta(CartasDisponibles.ANTIMAGIA);
+        ArrayList<Integer> esperado = new ArrayList<>();
+        esperado.add(null);
+        esperado.add(null);
+        esperado.add(null);
+
+        assertEquals(esperado,antimagia.getCostoDeInvocacion());
     }
 }

@@ -15,6 +15,7 @@ public class Carta {
     public ArrayList<MetodoCarta> metodos;
     public Integer hp;
     public Integer maxHP;
+    public ArrayList<Integer> costoDeInvocacion;
 
     public Carta(CartasDisponibles carta) {
         this.nombre = carta.nombre;
@@ -23,6 +24,7 @@ public class Carta {
         this.tipos = carta.tipos;
         this.atributos = carta.atributos;
         this.metodos = carta.metodos;
+        this.costoDeInvocacion = carta.costoDeInvocacion;
         this.zona = null;
     }
 
@@ -71,5 +73,9 @@ public class Carta {
         if (this.hp != null) {
             this.hp = Math.max(this.hp - cantidad, 0);
         }
+    }
+
+    public ArrayList<Integer> getCostoDeInvocacion(){
+        return this.costoDeInvocacion;
     }
 }
