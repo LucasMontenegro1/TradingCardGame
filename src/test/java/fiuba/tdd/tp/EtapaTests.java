@@ -20,8 +20,6 @@ import fiuba.tdd.tp.zona.ZonaArtefacto;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
 import fiuba.tdd.tp.zona.ZonaReserva;
-import fiuba.tdd.tp.zona.ZonaArtefecto;
-
 
 @SpringBootTest
 public class EtapaTests {
