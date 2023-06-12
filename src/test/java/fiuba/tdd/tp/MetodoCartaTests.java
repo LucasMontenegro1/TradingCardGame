@@ -131,7 +131,17 @@ public class MetodoCartaTests {
 
     @Test 
     public void testSacrificio(){
-        
+        MetodoCarta sacrificio = new Sacrificio(costo);
+
+        Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
+
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
+
+        sacrificio.ejecutar(enJuego, null, null, null, null, carta, null);
+
+        assertEquals(3, enJuego.energiaFuego());
+        assertEquals(3, enJuego.energiaPlanta());
+        assertEquals(0, enJuego.energiaAgua());
 
     }
 
