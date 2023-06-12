@@ -6,6 +6,7 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
+import fiuba.tdd.tp.carta.Atributo;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.mazo.Mazo;
@@ -228,5 +229,27 @@ public class MetodoCartaTests {
         boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(),stack);
         assertTrue(result);
 
+    }
+
+    @Test
+    public void damagePorAtributoSeUsaEnCriaturasConElAtributo() throws MazoInvalido {
+        HashMap<String, Integer> cartas = new HashMap<>();
+        Modo modo = new Modo1();
+        cartas.put(CartasDisponibles.ESPADAMAGICA.nombre, 1);
+        cartas.put(CartasDisponibles.AGUA.nombre, 50);
+        Mazo mazo = new Mazo(cartas, modo);
+
+        Tablero tableroEnemigo = new Tablero("Jugador", mazo);
+
+        Carta espadaMagica = null;
+        for (Carta carta : tableroEnemigo.cartas){
+            if (carta.nombreCarta() == "ESPADAMAGICA") {
+                espadaMagica = carta;
+            }
+        }
+        assertEquals(espadaMagica.hp,3);
+        MetodoCarta damagePorAtributo = new DamagePorAtributo(1,false,Atributo.Metal,Tipo.Criatura);
+        damagePorAtributo.ejecutar(null, tableroEnemigo,null, null, null, null, null);
+        assertEquals(espadaMagica.hp,2);
     }
 }
