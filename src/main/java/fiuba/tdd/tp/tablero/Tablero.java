@@ -11,7 +11,7 @@ import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.zona.Zona;
 import java.util.ArrayDeque;
 import fiuba.tdd.tp.modo.Modo;
@@ -30,8 +30,7 @@ public class Tablero {
     final String FUEGO  = "FUEGO";
     final String PLANTA  = "PLANTA";
 
-    public Tablero(String nombreJugador, Mazo mazo) {
-        Modo modo = mazo.getModo();
+    public Tablero(String nombreJugador, Mazo mazo, Modo modo) {
         this.usuario = nombreJugador;
         this.puntos = modo.asignarPuntos();
         this.energia.put(Energia.Agua, 0);

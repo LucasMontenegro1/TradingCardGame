@@ -14,9 +14,7 @@ import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.jugador.Jugador;
-import fiuba.tdd.tp.mazo.Mazo;
-import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.modo.Modo1;
+import fiuba.tdd.tp.jugador.Mazo;
 
 @SpringBootTest
 public class JugadorTests {
@@ -174,9 +172,7 @@ public class JugadorTests {
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 40);
         
-        Modo modoMazo = new Modo1();
-
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
         jugador.agregarMazo("Mazo modo uno", mazo);
 
@@ -189,10 +185,8 @@ public class JugadorTests {
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        
-        Modo modoMazo = new Modo1();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
         assertThrows(CartaNoEncontrada.class, () -> {
             jugador.agregarMazo("Mazo modo uno", mazo);
@@ -213,10 +207,8 @@ public class JugadorTests {
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        
-        Modo modoMazo = new Modo1();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
         jugador.agregarMazo("Mazo modo uno", mazo);
 
@@ -240,10 +232,8 @@ public class JugadorTests {
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        
-        Modo modoMazo = new Modo1();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
         jugador.agregarMazo("Mazo modo uno", mazo);
         jugador.eliminarMazo("Mazo modo uno");

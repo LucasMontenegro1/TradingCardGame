@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
@@ -24,8 +24,8 @@ import fiuba.tdd.tp.zona.ZonaMano;
 @SpringBootTest
 public class PartidaTests {
 
-    Modo modoUno;
-    Modo modoDos;
+    Modo modoUno = new Modo1();
+	Modo modoDos = new Modo2();
     Mazo mazoModoUno;
     Mazo mazoModoDos;
 
@@ -34,15 +34,12 @@ public class PartidaTests {
 		HashMap<String, Integer> cartasModoUno = new HashMap<>();
         HashMap<String, Integer> cartasModoDos = new HashMap<>();
         
-        modoUno = new Modo1();
-		modoDos = new Modo2();
-
 		cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartasModoUno, modoUno);
+        mazoModoUno = new Mazo(cartasModoUno);
 
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 56);
         cartasModoDos.put(CartasDisponibles.ALQUIMISTA.nombre, 4);
-		mazoModoDos = new Mazo(cartasModoDos, modoDos);
+		mazoModoDos = new Mazo(cartasModoDos);
     }
     
     @Test

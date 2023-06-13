@@ -8,7 +8,7 @@ import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.turno.Turno;
@@ -32,8 +32,8 @@ public class Partida {
         this.partidaEnJuego = true;
         this.ganador = null;
 		this.jugadorEnTurno = unJugador;
-        this.tablero1 = new Tablero(unJugador, unMazo);
-        this.tablero2 = new Tablero(otroJugador, otroMazo);
+        this.tablero1 = new Tablero(unJugador, unMazo, modoPartida);
+        this.tablero2 = new Tablero(otroJugador, otroMazo, modoPartida);
         this.turno = new Turno(modoPartida, this.tablero1.puntos);
     }
  

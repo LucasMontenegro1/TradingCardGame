@@ -8,7 +8,6 @@ import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.mazo.Mazo;
 
 public class Jugador {
 

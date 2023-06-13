@@ -23,8 +23,8 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
     @Test
     void cantStartMatchWithTooFewCards() {
         List<DriverCardName> deck = loopedCardNames(20);
-        Jugador blue = JugadorWithDeck(deck);
-        Jugador green = JugadorWithDeck(deck);
+        Jugador blue = accountWithDeck(deck);
+        Jugador green = accountWithDeck(deck);
         assertThrows(Throwable.class, () -> {
             testDriver.startMatch(HitpointLoss, blue, "main", green, "main");
         });
@@ -33,8 +33,8 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
     @Test
     void cantStartMatchWithTooManyCards() {
         List<DriverCardName> deck = loopedCardNames(100, Stream.of());
-        Jugador blue = JugadorWithDeck(deck);
-        Jugador green = JugadorWithDeck(deck);
+        Jugador blue = accountWithDeck(deck);
+        Jugador green = accountWithDeck(deck);
         assertThrows(Throwable.class, () -> {
             testDriver.startMatch(HitpointLoss, blue, "main", green, "main");
         });
@@ -171,8 +171,8 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
                 greenCreatures.stream()
         ));
 
-        Jugador blue = JugadorWithDeck(blueDeck);
-        Jugador green = JugadorWithDeck(greenDeck);
+        Jugador blue = accountWithDeck(blueDeck);
+        Jugador green = accountWithDeck(greenDeck);
         MatchDriver<Carta> match = testDriver.startMatch(CreatureSlayer, blue, "main", green, "main");
 
         match.forceDeckOrder(Blue, blueDeck);
@@ -213,7 +213,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(Optional.of(Blue), match.winner());
     }
 
-    private Jugador JugadorWithDeck(List<DriverCardName> cardList) {
+    private Jugador accountWithDeck(List<DriverCardName> cardList) {
         Jugador Jugador = testDriver.newAccount();
         testDriver.addCurrency(Jugador, Integer.MAX_VALUE);
         for (DriverCardName cardName: cardList) {
@@ -225,8 +225,8 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
 
     private MatchDriver<Carta> commonMatch(Stream<DriverCardName> prefix) {
         List<DriverCardName> deck = loopedCardNames(40, prefix);
-        Jugador blue = JugadorWithDeck(deck);
-        Jugador green = JugadorWithDeck(deck);
+        Jugador blue = accountWithDeck(deck);
+        Jugador green = accountWithDeck(deck);
         MatchDriver<Carta> match = testDriver.startMatch(HitpointLoss, blue, "main", green, "main");
 
         match.forceDeckOrder(Blue, deck);

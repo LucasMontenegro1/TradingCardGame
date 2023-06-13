@@ -9,7 +9,7 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.driver.*;
 import fiuba.tdd.tp.jugador.Jugador;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.partida.Partida;
@@ -75,7 +75,8 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public void buyCards(Jugador account, DriverCardName cardName, int amount) {
             CartasDisponibles carta = map.get(cardName);
-            for(int i = 0; i< amount; i++){
+
+            for(int i = 0; i < amount; i++) {
                 try {
                     account.comprarCarta(carta);
                 } catch (DineroInsuficiente e) {
@@ -87,46 +88,29 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public int countDeckCards(Jugador account, String deckName, DriverCardName cardName) {
             HashMap<String, Mazo> mazos = account.getMazos();
-            HashMap<String, Integer> cartas = mazos.get(deckName).cartas;
-            String nombre = map.get(cardName).nombre;
-            Integer cantidad = Objects.requireNonNullElse(cartas.get(nombre), 0);
-
-            return cantidad;
+            Mazo mazo = mazos.get(deckName);
+            
+            return mazo.cantCartaEspecifica(map.get(cardName).nombre);
         }
 
         @Override
         public void addDeckCards(Jugador account, String deckName, DriverCardName cardName, int amount) {
             String nombreCarta = map.get(cardName).nombre;
             
-            buyCards(account, DriverCardName.FireEnergy, 40);
-
             if (!account.getMazos().containsKey(deckName)) {
-                Mazo mazoModoUno = null;
-                HashMap<String, Integer> cartasModoUno = new HashMap<>();
-                Modo modoUno = new Modo1();
-                cartasModoUno.put(nombreCarta, amount);
-                cartasModoUno.put(CartasDisponibles.FUEGO.nombre, 40);
+                HashMap<String, Integer> cartas = new HashMap<>();
+                cartas.put(nombreCarta, amount);
                 
-                try {
-                    mazoModoUno = new Mazo(cartasModoUno, modoUno);
-                } catch (MazoInvalido e) {
-                    throw new RuntimeException(e);
-                }
+                Mazo mazo = new Mazo(cartas);
 
                 try {
-                    account.agregarMazo(deckName, mazoModoUno);
+                    account.agregarMazo(deckName, mazo);
                 } catch (MazoExistente | CartaNoEncontrada e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 Mazo mazo = account.getMazos().get(deckName);
-                try {
-                    for (int i = 0; i < amount; i++) {
-                        mazo.agregarCarta(nombreCarta);
-                    }
-                } catch (MazoInvalido e) {
-                    throw new RuntimeException(e);
-                }
+                mazo.agregarCarta(nombreCarta, amount);
             }
         }
 

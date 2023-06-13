@@ -17,7 +17,7 @@ import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
@@ -26,6 +26,8 @@ import fiuba.tdd.tp.tablero.Tablero;
 @SpringBootTest
 public class TableroTests {
 
+    Modo modoUno = new Modo1();
+    Modo modoDos = new Modo2();
     private Mazo mazoModoUno;
 	private Mazo mazoModoDos;
 
@@ -33,52 +35,49 @@ public class TableroTests {
     public void setUp() throws MazoInvalido {
 		HashMap<String, Integer> cartasModoUno = new HashMap<>();
         HashMap<String, Integer> cartasModoDos = new HashMap<>();
-        
-        Modo modoUno = new Modo1();
-		Modo modoDos = new Modo2();
 
 		cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartasModoUno, modoUno);
+        mazoModoUno = new Mazo(cartasModoUno);
 
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 60);
-		mazoModoDos = new Mazo(cartasModoDos, modoDos);
+		mazoModoDos = new Mazo(cartasModoDos);
     }
     
     @Test
     void testCreacionDeTablero() {
-        Tablero tablero = new Tablero("jugador", mazoModoUno); 
+        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno); 
         assert tablero instanceof Tablero;
     }
 
     @Test
     void testTableroSeCreaCorrectamenteEnUnaPartidaModoUno() {
-        Tablero tablero = new Tablero("jugador", mazoModoUno); 
+        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno); 
         assertEquals("jugador", tablero.usuario);
         assertEquals(40, tablero.cartas.size());        
     }
 
     @Test
     void testTableroSeCreaCorrectamenteEnUnaPartidaModoDos() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
         assertEquals("jugador", tablero.usuario);
         assertEquals(60, tablero.cartas.size());        
     }
 
     @Test
     void testTableroSeCreaCorrectamenteYTieneVeintePuntosDeVidaPorSerModoUno() {
-        Tablero tablero = new Tablero("jugador", mazoModoUno);
+        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno);
         assertEquals(20, tablero.puntos);   
     }
 
     @Test
     void testTableroSeCreaCorrectamenteYTieneCeroPuntosDeVidaPorSerModoDos() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
         assertEquals(0, tablero.puntos);        
     }
 
     @Test
     void testTableroDeJugadorDismuyePuntosDeVidaEnModoUno() {
-        Tablero tablero = new Tablero("jugador", mazoModoUno); 
+        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno); 
 
         tablero.disminuirPuntos(5); 
 
@@ -88,7 +87,7 @@ public class TableroTests {
     @Test
     void testTableroDeJugadorAumentaPuntosDeVidaEnModoUno(){
     
-        Tablero tablero = new Tablero("jugador", mazoModoUno); 
+        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno); 
 
         tablero.aumentarPuntos(4);
 
@@ -98,7 +97,7 @@ public class TableroTests {
     @Test
     void testTableroDeJugadorAumentaPuntosDeVidaEnModoDos() {
     
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
 
         tablero.aumentarPuntos(4);
 
@@ -107,7 +106,7 @@ public class TableroTests {
     
     @Test
     void testAumentarEnergia() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
 
         tablero.aumentarEnergia(Energia.Fuego,1);
 
@@ -116,7 +115,7 @@ public class TableroTests {
 
     @Test
     void testAumentarTodasLasEnergiasEnDos() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
 
         tablero.aumentarEnergia(Energia.Agua,2);
         tablero.aumentarEnergia(Energia.Fuego,2);
@@ -129,7 +128,7 @@ public class TableroTests {
 
     @Test
     void testDisminuirEnergia() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
 
         tablero.aumentarEnergia(Energia.Fuego,3);
         tablero.disminuirEnergia(Energia.Fuego,1);
@@ -139,7 +138,7 @@ public class TableroTests {
 
     @Test
     void testDismunirTodasLasEnergiasEnDos() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
 
         tablero.aumentarEnergia(Energia.Agua,1);
         tablero.aumentarEnergia(Energia.Fuego,1);
@@ -156,7 +155,7 @@ public class TableroTests {
 
     @Test
     void testLaEnergiaNoPuedeSerNegativa() {
-        Tablero tablero = new Tablero("jugador", mazoModoDos); 
+        Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
 
         tablero.disminuirEnergia(Energia.Agua,1);
         tablero.disminuirEnergia(Energia.Fuego,1);
@@ -172,7 +171,7 @@ public class TableroTests {
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
 
-        Tablero tablero = new Tablero("Jugador", mazoModoDos);
+        Tablero tablero = new Tablero("Jugador", mazoModoDos, modoDos);
 
         Integer cantInicialDeCartas = tablero.cartas.size();
 
@@ -184,7 +183,7 @@ public class TableroTests {
     @Test
     void testEliminarCartaAlTablero(){
 
-        Tablero tablero = new Tablero("Jugador", mazoModoDos);
+        Tablero tablero = new Tablero("Jugador", mazoModoDos, modoDos);
 
         Integer cantInicialDeCartas = tablero.cartas.size();
 
@@ -207,9 +206,9 @@ public class TableroTests {
         cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
         cartasModoUno.put(CartasDisponibles.SABOTEAR.nombre, 3);
 
-        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+        Mazo mazo = new Mazo(cartasModoUno);
 
-        Tablero tablero = new Tablero("jugador", mazo);
+        Tablero tablero = new Tablero("jugador", mazo, modoUno);
 
         HashMap<Carta, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque());
 
@@ -229,9 +228,9 @@ public class TableroTests {
         cartasModoUno.put(CartasDisponibles.ALQUIMISTA.nombre, 3);
         cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
     
-        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+        Mazo mazo = new Mazo(cartasModoUno);
 
-        Tablero tablero = new Tablero("jugador", mazo);
+        Tablero tablero = new Tablero("jugador", mazo, modoUno);
 
         ArrayList<Carta> cartas = tablero.cartasEnZona(null);
         for (Carta carta : cartas) {
@@ -257,9 +256,9 @@ public class TableroTests {
         cartasModoUno.put(CartasDisponibles.DRENAR.nombre, 3);
         cartasModoUno.put(CartasDisponibles.SABOTEAR.nombre, 3);
 
-        Mazo mazo = new Mazo(cartasModoUno, modoUno);
+        Mazo mazo = new Mazo(cartasModoUno);
 
-        Tablero tablero = new Tablero("jugador", mazo);
+        Tablero tablero = new Tablero("jugador", mazo, modoUno);
 
         assertEquals(tablero.maxZonaArtefactos, 5);
         assertEquals(tablero.maxZonaCombate, 5);
@@ -278,9 +277,9 @@ public class TableroTests {
         cartasModoDos.put(CartasDisponibles.DRENAR.nombre, 3);
         cartasModoDos.put(CartasDisponibles.SABOTEAR.nombre, 1);
 
-        Mazo mazo = new Mazo(cartasModoDos, modoDos);
+        Mazo mazo = new Mazo(cartasModoDos);
 
-        Tablero tablero = new Tablero("jugador", mazo);
+        Tablero tablero = new Tablero("jugador", mazo, modoDos);
 
         assertEquals(tablero.maxZonaArtefactos, 3);
         assertEquals(tablero.maxZonaCombate, 1);

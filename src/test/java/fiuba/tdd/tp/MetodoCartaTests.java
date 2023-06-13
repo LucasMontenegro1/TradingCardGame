@@ -9,7 +9,7 @@ import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Atributo;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
@@ -35,21 +35,20 @@ public class MetodoCartaTests {
 
     private Mazo mazoModoUno;
 	private Mazo mazoModoDos;
+    private Modo modoUno = new Modo1();
+    private Modo modoDos = new Modo2();
     private ArrayList<Integer> costo;
 
     @BeforeEach
     public void setUp() throws MazoInvalido {
 		HashMap<String, Integer> cartasModoUno = new HashMap<>();
         HashMap<String, Integer> cartasModoDos = new HashMap<>();
-        
-        Modo modoUno = new Modo1();
-		Modo modoDos = new Modo2();
 
 		cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartasModoUno, modoUno);
+        mazoModoUno = new Mazo(cartasModoUno);
 
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 60);
-		mazoModoDos = new Mazo(cartasModoDos, modoDos);
+		mazoModoDos = new Mazo(cartasModoDos);
 
         costo = new ArrayList<>();
         costo.add(0);
@@ -78,9 +77,9 @@ public class MetodoCartaTests {
     public void testTransferenciaDeEnergia(){
         MetodoCarta transferirEnergia =  new TransferirEnergia(costo);
 
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
 
-        Tablero contrincante = new Tablero("Jugador 2", mazoModoUno);
+        Tablero contrincante = new Tablero("Jugador 2", mazoModoUno, modoUno);
 
         Integer aguaInicialEnJuego = enJuego.energiaAgua();
 
@@ -103,9 +102,9 @@ public class MetodoCartaTests {
 
     @Test 
     public void testTransferirCarta(){
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
 
-        Tablero contrincante = new Tablero("Jugador 2", mazoModoDos);
+        Tablero contrincante = new Tablero("Jugador 2", mazoModoDos, modoDos);
 
         MetodoCarta transfeririCarta = new TransferirCarta(costo);
 
@@ -135,7 +134,7 @@ public class MetodoCartaTests {
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
 
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
 
         sacrificio.ejecutar(enJuego, null, null, null, carta, null, null);
 
@@ -166,7 +165,7 @@ public class MetodoCartaTests {
 
         MetodoCarta tomarCarta = new TomarCarta(cantidad, Tipo.Artefacto, costo);
 
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
 
         ArrayList<Carta> cartas = enJuego.cartasEnZona(null);
         
@@ -200,7 +199,6 @@ public class MetodoCartaTests {
         Ejecucion unaEjecucion = new Ejecucion(impedir, null, null, null, null, null, null, null);
 
         Deque<Ejecucion> metodos = new ArrayDeque<Ejecucion>();
-        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
 
         metodos.push(unaEjecucion);
         metodos.push(unaEjecucion);
@@ -252,12 +250,12 @@ public class MetodoCartaTests {
     @Test
     public void damagePorAtributoSeUsaEnCriaturasConElAtributo() throws MazoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        Modo modo = new Modo1();
+        
         cartas.put(CartasDisponibles.ESPADAMAGICA.nombre, 1);
         cartas.put(CartasDisponibles.AGUA.nombre, 50);
-        Mazo mazo = new Mazo(cartas, modo);
+        Mazo mazo = new Mazo(cartas);
 
-        Tablero tableroEnemigo = new Tablero("Jugador", mazo);
+        Tablero tableroEnemigo = new Tablero("Jugador", mazo, modoUno);
 
         Carta espadaMagica = null;
         for (Carta carta : tableroEnemigo.cartas){
