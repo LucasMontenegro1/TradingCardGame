@@ -3,6 +3,7 @@ package fiuba.tdd.tp;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ public class JugadorTests {
     @Test
     void testNombreDelJugador() {
         Jugador jugador = new Jugador("Juan", "1234");
-        assertEquals(jugador.nombreCarta(), "Juan");
+        assertEquals(jugador.nombreJugador(), "Juan");
     }
 
     @Test
@@ -146,7 +147,7 @@ public class JugadorTests {
         jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
         jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);  
 
-        jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA);
+        jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre);
 
         assertEquals(jugador.getCartas().get(CartasDisponibles.ALQUIMISTA.nombre), 2);
         assertEquals(jugador.getCantdDinero(), 40);
@@ -157,7 +158,7 @@ public class JugadorTests {
         Jugador jugador = new Jugador("Juan", "1234");
 
         assertThrows(CartaNoEncontrada.class, () -> {
-            jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA);
+            jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre);
         });
     }
 

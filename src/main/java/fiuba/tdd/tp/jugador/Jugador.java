@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.jugador;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -16,7 +17,7 @@ public class Jugador {
     private int cantdDinero;
     private HashMap<String, Integer> cartas = new HashMap<>();
     private HashMap<String, Mazo> mazos = new HashMap<>();
-
+    private HashMap<String, ArrayList<String>> intercambios = new HashMap<>();
 
     public Jugador(String nombreJugador, String contra) {
         this.nombre = nombreJugador;
@@ -32,7 +33,7 @@ public class Jugador {
         return cartas;
     }
 
-    public Object nombreCarta() {
+    public Object nombreJugador() {
         return nombre;
     }
 
@@ -51,6 +52,15 @@ public class Jugador {
         this.cantdDinero -= cantidad;
     }
 
+    void agregarCarta(String nombreCarta) {
+        if (this.cartas.containsKey(nombreCarta)) {
+            int cantidad = this.cartas.get(nombreCarta);
+            this.cartas.put(nombreCarta, cantidad+1);
+        } else {
+            this.cartas.put(nombreCarta, 1);
+        }
+    }
+
     public void comprarCarta(CartasDisponibles carta) throws DineroInsuficiente {
         int precioCarta = carta.precio;
         String nombreCarta = carta.nombre;
@@ -61,17 +71,11 @@ public class Jugador {
 
         this.extraerDinero(precioCarta);
         
-        if (this.cartas.containsKey(nombreCarta)) {
-            int cantidad = this.cartas.get(nombreCarta);
-            this.cartas.put(nombreCarta, cantidad+1);
-        } else {
-            this.cartas.put(nombreCarta, 1);
-        }
+        agregarCarta(nombreCarta);
     }
 
-    public void eliminarCarta(CartasDisponibles carta) throws CartaNoEncontrada {
 
-        String nombreCarta = carta.nombre;
+    public void eliminarCarta(String nombreCarta) throws CartaNoEncontrada {
 
         if (!this.cartas.containsKey(nombreCarta)) {
             throw new CartaNoEncontrada("Usted no tiene la carta");
@@ -90,7 +94,7 @@ public class Jugador {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
         }
 
-        if (this.cartas.size() == 0) {
+        if (this.cartas.isEmpty()) {
             throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
         }
 
@@ -109,7 +113,6 @@ public class Jugador {
             }
         }
 
-
         this.mazos.put(nombre, mazo);
     }
 
@@ -127,5 +130,9 @@ public class Jugador {
         }
 
         this.mazos.remove(nombre);
+    }
+
+    public HashMap<String, ArrayList<String>> intercambiosAbiertos() {
+        return intercambios;
     }
 }
