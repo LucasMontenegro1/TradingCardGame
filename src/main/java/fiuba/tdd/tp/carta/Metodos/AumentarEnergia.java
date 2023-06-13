@@ -8,6 +8,7 @@ import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
+import fiuba.tdd.tp.partida.Ejecucion;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaCombate;
@@ -35,7 +36,7 @@ public class AumentarEnergia extends MetodoCarta {
     }
 
     @Override
-    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<MetodoCarta> pilaMetodos, 
+    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
         enJuego.aumentarEnergia(this.tipoEnergia, this.cantidad);
     }

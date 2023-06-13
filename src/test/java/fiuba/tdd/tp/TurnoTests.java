@@ -10,7 +10,6 @@ import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaFinal;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.modo.Modo;
@@ -46,7 +45,7 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
+        Turno nuevoTurno = new Turno(this.modo1, puntos);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
@@ -56,7 +55,7 @@ public class TurnoTests {
 			
 		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
+        Turno nuevoTurno = new Turno(this.modo1, puntos);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
@@ -66,9 +65,9 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
 	
-		Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
+		Turno nuevoTurno = new Turno(this.modo1, puntos);
 
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 
 		nuevoTurno.pasarDeEtapa();
         
@@ -80,9 +79,9 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
         
-		Turno nuevoTurno = new Turno(this.modo1, this.cartas, puntos);
+		Turno nuevoTurno = new Turno(this.modo1, puntos);
 
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 	}
@@ -92,7 +91,7 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
 	
-        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, puntos);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
@@ -102,7 +101,7 @@ public class TurnoTests {
 			
 		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, puntos);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
@@ -112,9 +111,9 @@ public class TurnoTests {
 		
 		Integer puntos = 4;
 	
-		Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+		Turno nuevoTurno = new Turno(this.modo2, puntos);
 
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 
 		nuevoTurno.pasarDeEtapa();
         
@@ -126,9 +125,9 @@ public class TurnoTests {
 		
 		Integer puntos = 15;
         
-		Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+		Turno nuevoTurno = new Turno(this.modo2, puntos);
 
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 	}
@@ -138,9 +137,9 @@ public class TurnoTests {
 		
 		Integer puntos = 4;
 
-        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, puntos);
 		
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
@@ -154,7 +153,7 @@ public class TurnoTests {
 
 		nuevoTurno.pasarDeEtapa();
 
-		assert nuevoTurno.etapaActual() instanceof EtapaFinal;
+		assert nuevoTurno.etapaActual() == null;
 	}
 
     @Test 
@@ -162,9 +161,9 @@ public class TurnoTests {
 		
 		Integer puntos = 2;
 		
-        Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+        Turno nuevoTurno = new Turno(this.modo2, puntos);
 
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 		
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
@@ -178,7 +177,7 @@ public class TurnoTests {
 
 		nuevoTurno.pasarDeEtapa();
 
-		assert nuevoTurno.etapaActual() instanceof EtapaFinal;
+		assert nuevoTurno.etapaActual() == null;
 	}
 
     @Test 
@@ -186,15 +185,15 @@ public class TurnoTests {
     	
 		Integer puntos = 10;
 		
-		Turno nuevoTurno = new Turno(this.modo2, this.cartas, puntos);
+		Turno nuevoTurno = new Turno(this.modo2, puntos);
 
-		nuevoTurno.iniciarTurno();
+		nuevoTurno.iniciarTurno(this.cartas);
 		
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
 		nuevoTurno.pasarDeEtapa();
         
-        assert nuevoTurno.etapaActual() instanceof EtapaFinal;
+        assert nuevoTurno.etapaActual() == null;
 
     }
 }

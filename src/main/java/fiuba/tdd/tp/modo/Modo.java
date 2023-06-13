@@ -8,7 +8,7 @@ import fiuba.tdd.tp.carta.Carta;
 public interface Modo {
     public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos);
 
-    public void iniciarPartida();
+    public Integer getCantCartasIniciales();
 
     public boolean verificarMazoValido(HashMap<String, Integer> cartas);
 
@@ -23,4 +23,6 @@ public interface Modo {
     public Integer getMaxZonaReserva();
 
     public Integer getMaxZonaArtefactos();
+
+	public boolean partidaEnProceso(Integer puntos);
 }

@@ -1,9 +1,11 @@
 package fiuba.tdd.tp.etapa;
 
+import java.util.ArrayList;
+
 import fiuba.tdd.tp.carta.Carta;
 
 public interface Etapa {
-    void iniciar();
+    void iniciar(ArrayList<Carta> cartas);
 
     Etapa finalizar();
     
