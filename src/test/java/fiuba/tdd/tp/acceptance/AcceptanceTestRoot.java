@@ -7,10 +7,14 @@ import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.driver.*;
 import fiuba.tdd.tp.jugador.Jugador;
 import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
+import fiuba.tdd.tp.modo.Modo2;
+
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.security.SecureRandom;
@@ -23,7 +27,7 @@ public class AcceptanceTestRoot<Account, Card> {
     protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
         static Map<DriverCardName, CartasDisponibles> map = new HashMap<>();
         static {
-            map.put(DriverCardName.Antimagic,CartasDisponibles.ANTIMAGIA);
+            map.put(DriverCardName.Antimagic, CartasDisponibles.ANTIMAGIA);
             map.put(DriverCardName.Alchemist, CartasDisponibles.ALQUIMISTA);
             map.put(DriverCardName.Corrosion, CartasDisponibles.CORROSION);
             map.put(DriverCardName.Drain, CartasDisponibles.DRENAR);
@@ -43,9 +47,6 @@ public class AcceptanceTestRoot<Account, Card> {
             map.put(DriverCardName.MagicDrill,CartasDisponibles.TALADROMAGICO);
             map.put(DriverCardName.MagicBarrier,CartasDisponibles.BARRERAMAGICA);
             map.put(DriverCardName.Sacrifice,CartasDisponibles.SACRIFICIO);
-
-
-
         }
 
 
@@ -89,29 +90,43 @@ public class AcceptanceTestRoot<Account, Card> {
             HashMap<String, Integer> cartas = mazos.get(deckName).cartas;
             String nombre = map.get(cardName).nombre;
             Integer cantidad = Objects.requireNonNullElse(cartas.get(nombre), 0);
-            System.out.println(cantidad);
-            return cantidad;
 
+            return cantidad;
         }
 
         @Override
         public void addDeckCards(Jugador account, String deckName, DriverCardName cardName, int amount) {
-            HashMap<String, Integer> cartas = new HashMap<>();
-            String nombre = map.get(cardName).nombre;
-            cartas.put(nombre, amount);
+            String nombreCarta = map.get(cardName).nombre;
+            
+            buyCards(account, DriverCardName.FireEnergy, 40);
 
+            if (!account.getMazos().containsKey(deckName)) {
+                Mazo mazoModoUno = null;
+                HashMap<String, Integer> cartasModoUno = new HashMap<>();
+                Modo modoUno = new Modo1();
+                cartasModoUno.put(nombreCarta, amount);
+                cartasModoUno.put(CartasDisponibles.FUEGO.nombre, 40);
+                
+                try {
+                    mazoModoUno = new Mazo(cartasModoUno, modoUno);
+                } catch (MazoInvalido e) {
+                    throw new RuntimeException(e);
+                }
 
-            Mazo mazo = null;
-            try {
-                mazo = new Mazo(cartas, new Modo1());
-            } catch (MazoInvalido e) {
-                throw new RuntimeException(e);
-            }
-
-            try {
-                account.agregarMazo(deckName, mazo);
-            } catch (MazoExistente | CartaNoEncontrada e) {
-                throw new RuntimeException(e);
+                try {
+                    account.agregarMazo(deckName, mazoModoUno);
+                } catch (MazoExistente | CartaNoEncontrada e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                Mazo mazo = account.getMazos().get(deckName);
+                try {
+                    for (int i = 0; i < amount; i++) {
+                        mazo.agregarCarta(nombreCarta);
+                    }
+                } catch (MazoInvalido e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
 
