@@ -7,20 +7,20 @@ import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.driver.*;
 import fiuba.tdd.tp.jugador.Jugador;
 import fiuba.tdd.tp.mazo.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.modo.Modo2;
+import fiuba.tdd.tp.partida.Partida;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.security.SecureRandom;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @SpringBootTest
 public class AcceptanceTestRoot<Account, Card> {
@@ -132,7 +132,119 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public MatchDriver<Carta> startMatch(DriverGameMode mode, Jugador blue, String blueDeck, Jugador green, String greenDeck) {
-            return null;
+
+             
+            
+            return matchDriver;
+        }
+    };
+
+    protected MatchDriver<Carta> matchDriver = new MatchDriver<Carta>() {
+
+        @Override
+        public List<DriverCardName> deckOrder(DriverMatchSide player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'deckOrder'");
+        }
+
+        @Override
+        public void forceDeckOrder(DriverMatchSide player, List<DriverCardName> cards) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'forceDeckOrder'");
+        }
+
+        @Override
+        public void start() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'start'");
+        }
+
+        @Override
+        public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'skipToPhase'");
+        }
+
+        @Override
+        public Carta summon(DriverMatchSide player, DriverCardName card, DriverActiveZone zone) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'summon'");
+        }
+
+        @Override
+        public int getCreatureHitpoints(Carta card) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'getCreatureHitpoints'");
+        }
+
+        @Override
+        public void attackCreature(Carta creature, int index, Carta target) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'attackCreature'");
+        }
+
+        @Override
+        public void attackPlayer(Carta creature, int index) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'attackPlayer'");
+        }
+
+        @Override
+        public void activateArtifact(Carta artifact, int index, Optional<DriverMatchSide> targetPlayer,
+                List<Carta> targets) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'activateArtifact'");
+        }
+
+        @Override
+        public void activateAction(DriverMatchSide player, DriverCardName card, int index,
+                Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'activateAction'");
+        }
+
+        @Override
+        public void startReactionWindow() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'startReactionWindow'");
+        }
+
+        @Override
+        public void endReactionWindow() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'endReactionWindow'");
+        }
+
+        @Override
+        public void activateReactionFromHand(DriverMatchSide player, DriverCardName card,
+                Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'activateReactionFromHand'");
+        }
+
+        @Override
+        public void activateReactionFromActiveZone(Carta card, Optional<DriverMatchSide> targetPlayer,
+                List<Carta> targetCards) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'activateReactionFromActiveZone'");
+        }
+
+        @Override
+        public int playerHealth(DriverMatchSide player) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'playerHealth'");
+        }
+
+        @Override
+        public int playerEnergy(DriverMatchSide player, DriverEnergyType energyType) {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'playerEnergy'");
+        }
+
+        @Override
+        public Optional<DriverMatchSide> winner() {
+            // TODO Auto-generated method stub
+            throw new UnsupportedOperationException("Unimplemented method 'winner'");
         }
     };
 }
