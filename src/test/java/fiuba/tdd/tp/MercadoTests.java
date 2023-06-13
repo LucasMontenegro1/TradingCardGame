@@ -2,6 +2,7 @@ package fiuba.tdd.tp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,5 +104,38 @@ public class MercadoTests {
         assertThrows(CartaNoEncontrada.class, () -> {
             mercado.realizarIntercambio(jugador, CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
         });
+    }
+
+    @Test
+    void testJugadoresRealizanUnIntercambio() throws DineroInsuficiente, CartaNoEncontrada {
+        Jugador jugador1 = new Jugador("Jugador1", "1234");
+        Jugador jugador2 = new Jugador("Jugador2", "1234");
+        mercado.agregarIntercambiador(jugador1);
+        mercado.agregarIntercambiador(jugador2);
+
+        jugador1.depositarDinero(100);
+        jugador2.depositarDinero(100);
+        
+        jugador1.comprarCarta(CartasDisponibles.ALQUIMISTA);
+        jugador2.comprarCarta(CartasDisponibles.ANTIMAGIA);
+
+        mercado.realizarIntercambio(jugador1, CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.ANTIMAGIA.nombre);
+        mercado.realizarIntercambio(jugador2, CartasDisponibles.ANTIMAGIA.nombre, CartasDisponibles.ALQUIMISTA.nombre);
+
+        HashMap<String, Integer> cartasJugador1 = jugador1.getCartas();
+        HashMap<String, ArrayList<String>> intercambios1 = jugador1.intercambiosAbiertos();
+
+        HashMap<String, Integer> cartasJugador2 = jugador2.getCartas();
+        HashMap<String, ArrayList<String>> intercambios2 = jugador2.intercambiosAbiertos();
+
+
+        assertEquals(cartasJugador1.size(), 1);
+        assertEquals(cartasJugador2.size(), 1);
+
+        assertEquals(intercambios1.size(), 0);
+        assertEquals(intercambios2.size(), 0);
+
+        assertTrue(cartasJugador1.containsKey(CartasDisponibles.ANTIMAGIA.nombre));
+        assertTrue(cartasJugador2.containsKey(CartasDisponibles.ALQUIMISTA.nombre));
     }
 }
