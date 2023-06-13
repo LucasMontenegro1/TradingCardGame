@@ -22,7 +22,6 @@ import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.tablero.Tablero;
-import fiuba.tdd.tp.zona.ZonaCombate;
 
 @SpringBootTest
 public class TableroTests {
