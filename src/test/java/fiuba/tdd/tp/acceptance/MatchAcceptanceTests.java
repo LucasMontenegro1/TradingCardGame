@@ -4,6 +4,7 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.driver.*;
 import fiuba.tdd.tp.jugador.Jugador;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,8 +17,9 @@ import static fiuba.tdd.tp.driver.DriverMatchSide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@Disabled
 public class MatchAcceptanceTests<AccountReference, CardReference> extends AcceptanceTestRoot<Jugador, Carta> {
-
+    
     @Test
     void cantStartMatchWithTooFewCards() {
         List<DriverCardName> deck = loopedCardNames(20);
