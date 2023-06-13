@@ -32,7 +32,7 @@ public class Jugador {
         return cartas;
     }
 
-    public Object nombreJugador() {
+    public String nombreJugador() {
         return nombre;
     }
 

@@ -3,6 +3,8 @@ package fiuba.tdd.tp.driver;
 import java.util.List;
 import java.util.Optional;
 
+import fiuba.tdd.tp.partida.Partida;
+
 /**
  * Facade for the TCG game matches, to allow for multiple implementations.<p>
  *
@@ -11,6 +13,7 @@ import java.util.Optional;
  * otherwise methods should act as if both players refused to react.
  */
 public interface MatchDriver<CardReference> {
+
     /**
      * @return The player's deck, where the Nth card is what they will draw
      * in their Nth card draw
@@ -149,4 +152,6 @@ public interface MatchDriver<CardReference> {
      * @return The match's winner, if it has ended
      */
     Optional<DriverMatchSide> winner();
+
+    void nuevaPartida(Partida partida);
 }

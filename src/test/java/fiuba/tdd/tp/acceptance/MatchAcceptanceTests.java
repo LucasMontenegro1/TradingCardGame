@@ -17,7 +17,6 @@ import static fiuba.tdd.tp.driver.DriverMatchSide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@Disabled
 public class MatchAcceptanceTests<AccountReference, CardReference> extends AcceptanceTestRoot<Jugador, Carta> {
     
     @Test
@@ -40,6 +39,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
+    @Disabled
     @Test
     void cantSummonWithoutEnergy() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -52,6 +52,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
+    @Disabled
     @Test
     void cantSummonInWrongZone() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -68,6 +69,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
+    @Disabled
     @Test
     void cantSummonInWrongPhase() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -86,6 +88,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
+    @Disabled
     @Test
     void useAction() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -102,6 +105,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(17, match.playerHealth(Green));
     }
 
+    @Disabled
     @Test
     void useReaction() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -125,6 +129,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(0, match.playerEnergy(Green, DriverEnergyType.Water));
     }
 
+    @Disabled
     @Test
     void hitpointLossVictoryCondition() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -147,6 +152,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(Optional.of(Blue), match.winner());
     }
 
+    @Disabled
     @Test
     void creatureSlayerVictoryCondition() {
         List<DriverCardName> greenCreatures = List.of(
