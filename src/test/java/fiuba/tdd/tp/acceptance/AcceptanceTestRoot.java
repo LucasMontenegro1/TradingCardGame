@@ -1,51 +1,122 @@
 package fiuba.tdd.tp.acceptance;
 
-import fiuba.tdd.tp.driver.Driver;
-import fiuba.tdd.tp.driver.DriverCardName;
-import fiuba.tdd.tp.driver.DriverGameMode;
-import fiuba.tdd.tp.driver.MatchDriver;
+
+import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
+import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
+import fiuba.tdd.tp.Excepciones.MazoExistente;
+import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.driver.*;
+import fiuba.tdd.tp.jugador.Jugador;
+import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.modo.Modo1;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.security.SecureRandom;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @SpringBootTest
 public class AcceptanceTestRoot<Account, Card> {
-    protected Driver<Account, Card> testDriver = new Driver<Account, Card>() {
-        @Override
-        public Account newAccount() {
-            return null;
-        }
+    protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
+        static Map<DriverCardName, CartasDisponibles> map = new HashMap<>();
+        static {
+            map.put(DriverCardName.Antimagic,CartasDisponibles.ANTIMAGIA);
+            map.put(DriverCardName.Alchemist, CartasDisponibles.ALQUIMISTA);
+            map.put(DriverCardName.Corrosion, CartasDisponibles.CORROSION);
+            map.put(DriverCardName.Drain, CartasDisponibles.DRENAR);
+            map.put(DriverCardName.FireEnergy, CartasDisponibles.FUEGO);
+            map.put(DriverCardName.WaterEnergy, CartasDisponibles.AGUA);
+            map.put(DriverCardName.PlantEnergy, CartasDisponibles.PLANTA);
+            map.put(DriverCardName.BlockReaction,CartasDisponibles.IMPEDIR);
+            map.put(DriverCardName.Goblin,CartasDisponibles.GOBLIN);
+            map.put(DriverCardName.Hospital,CartasDisponibles.HOSPITAL);
+            map.put(DriverCardName.Inventor,CartasDisponibles.INVENTOR);
+            map.put(DriverCardName.Saboteur,CartasDisponibles.SABOTEAR);
+            map.put(DriverCardName.Resonance,CartasDisponibles.RESONANCIA);
+            map.put(DriverCardName.Treason,CartasDisponibles.TRAICION);
+            map.put(DriverCardName.Orc,CartasDisponibles.ORCO);
+            map.put(DriverCardName.Recycle,CartasDisponibles.RECICLAR);
+            map.put(DriverCardName.MagicSword,CartasDisponibles.ESPADAMAGICA);
+            map.put(DriverCardName.MagicDrill,CartasDisponibles.TALADROMAGICO);
+            map.put(DriverCardName.MagicBarrier,CartasDisponibles.BARRERAMAGICA);
+            map.put(DriverCardName.Sacrifice,CartasDisponibles.SACRIFICIO);
 
-        @Override
-        public int countCards(Account account, DriverCardName cardName) {
-            return 0;
-        }
 
-        @Override
-        public int availableCurrency(Account account) {
-            return 0;
-        }
-
-        @Override
-        public void addCurrency(Account account, int amount) {
-
-        }
-
-        @Override
-        public void buyCards(Account account, DriverCardName cardName, int amount) {
-
-        }
-
-        @Override
-        public int countDeckCards(Account account, String deckName, DriverCardName cardName) {
-            return 0;
-        }
-
-        @Override
-        public void addDeckCards(Account account, String deckName, DriverCardName cardName, int amount) {
 
         }
 
+
         @Override
-        public MatchDriver<Card> startMatch(DriverGameMode mode, Account blue, String blueDeck, Account green, String greenDeck) {
+        public Jugador newAccount() {
+            return new Jugador("jugador", "contra");
+        }
+
+        @Override
+        public int countCards(Jugador account, DriverCardName cardName) {
+            HashMap<String, Integer> cartas = account.getCartas();
+            String nombre = map.get(cardName).nombre;
+            return Objects.requireNonNullElse(cartas.get(nombre), 0);
+        }
+
+        @Override
+        public int availableCurrency(Jugador account) {
+            return account.getCantdDinero();
+        }
+
+        @Override
+        public void addCurrency(Jugador account, int amount) {
+            account.depositarDinero(amount);
+        }
+
+        @Override
+        public void buyCards(Jugador account, DriverCardName cardName, int amount) {
+            CartasDisponibles carta = map.get(cardName);
+            for(int i = 0; i< amount; i++){
+                try {
+                    account.comprarCarta(carta);
+                } catch (DineroInsuficiente e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        @Override
+        public int countDeckCards(Jugador account, String deckName, DriverCardName cardName) {
+            HashMap<String, Mazo> mazos = account.getMazos();
+            HashMap<String, Integer> cartas = mazos.get(deckName).cartas;
+            String nombre = map.get(cardName).nombre;
+            Integer cantidad = Objects.requireNonNullElse(cartas.get(nombre), 0);
+            System.out.println(cantidad);
+            return cantidad;
+
+        }
+
+        @Override
+        public void addDeckCards(Jugador account, String deckName, DriverCardName cardName, int amount) {
+            HashMap<String, Integer> cartas = new HashMap<>();
+            String nombre = map.get(cardName).nombre;
+            cartas.put(nombre, amount);
+
+
+            Mazo mazo = null;
+            try {
+                mazo = new Mazo(cartas, new Modo1());
+            } catch (MazoInvalido e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                account.agregarMazo(deckName, mazo);
+            } catch (MazoExistente | CartaNoEncontrada e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        @Override
+        public MatchDriver<Carta> startMatch(DriverGameMode mode, Jugador blue, String blueDeck, Jugador green, String greenDeck) {
             return null;
         }
     };
