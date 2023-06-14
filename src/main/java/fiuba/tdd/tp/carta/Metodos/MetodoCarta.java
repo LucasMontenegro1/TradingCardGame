@@ -16,7 +16,7 @@ public abstract class  MetodoCarta {
     protected ArrayList<Integer> costo;
 
     public abstract void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                                    String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia);
+                                    String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia);
 
     public abstract boolean esAplicableA(final Etapa etapa, final Zona zona, Deque<MetodoCarta> pilaMetodos);
     

@@ -27,8 +27,10 @@ public class Destruir extends MetodoCarta {
     
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
-        cartaObjetivo.descartar();
+        for (Carta carta : cartasObjetivo) {
+            carta.descartar();
+        }
     }
 }

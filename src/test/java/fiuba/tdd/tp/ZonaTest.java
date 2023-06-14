@@ -1,9 +1,11 @@
 package fiuba.tdd.tp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaArtefacto;
 import fiuba.tdd.tp.zona.ZonaCombate;
@@ -16,27 +18,38 @@ public class ZonaTest {
     // Zona de Artefactos
 
     @Test
-    public void testZonaDeArtefactoCambiarZona() {
+    public void testZonaDeArtefactoCambiarZona() throws MovimientoInvalido {
         Zona zona = new ZonaArtefacto();
-        assertEquals(zona.cambiarZona().getClass(), ZonaArtefacto.class);
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.cambiarZona();
+        });
     }
 
     @Test
-    public void testZonaDeArtefactoMoverACombate() {
+    public void testZonaDeArtefactoMoverACombate() throws MovimientoInvalido {
         Zona zona = new ZonaArtefacto();
-        assertEquals(zona.moverACombate().getClass(), ZonaArtefacto.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverACombate();
+        });
     }
 
     @Test
-    public void testZonaDeArtefactoMoverAReserva() {
+    public void testZonaDeArtefactoMoverAReserva() throws MovimientoInvalido {
         Zona zona = new ZonaArtefacto();
-        assertEquals(zona.moverAReserva().getClass(), ZonaArtefacto.class);
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverAReserva();
+        });
     }
 
     @Test
-    public void testZonaDeArtefactoInvocar() {
+    public void testZonaDeArtefactoInvocar() throws MovimientoInvalido {
         Zona zona = new ZonaArtefacto();
-        assertEquals(zona.invocar().getClass(), ZonaArtefacto.class);
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.invocar();
+        });
     }
 
     @Test
@@ -48,27 +61,36 @@ public class ZonaTest {
     // Zona de Combate
 
     @Test
-    public void testZonaDeCombateCambiarZona() {
+    public void testZonaDeCombateCambiarZona() throws MovimientoInvalido {
         Zona zona = new ZonaCombate();
         assertEquals(zona.cambiarZona().getClass(), ZonaReserva.class);
     }
 
     @Test
-    public void testZonaDeCombateMoverACombate() {
+    public void testZonaDeCombateMoverACombate() throws MovimientoInvalido {
         Zona zona = new ZonaCombate();
-        assertEquals(zona.moverACombate().getClass(), ZonaCombate.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverACombate();
+        });
     }
 
     @Test
-    public void testZonaDeCombateMoverAReserva() {
+    public void testZonaDeCombateMoverAReserva() throws MovimientoInvalido {
         Zona zona = new ZonaCombate();
-        assertEquals(zona.moverAReserva().getClass(), ZonaCombate.class);
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverAReserva();
+        });
     }
 
     @Test
-    public void testZonaDeCombateInvocar() {
+    public void testZonaDeCombateInvocar() throws MovimientoInvalido {
         Zona zona = new ZonaCombate();
-        assertEquals(zona.invocar().getClass(), ZonaCombate.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.invocar();
+        });
     }
 
     @Test
@@ -80,27 +102,39 @@ public class ZonaTest {
     // Zona de Descarte
 
     @Test
-    public void testZonaDeDescarteCambiarZona() {
+    public void testZonaDeDescarteCambiarZona() throws MovimientoInvalido {
         Zona zona = new ZonaDescarte();
-        assertEquals(zona.cambiarZona().getClass(), ZonaDescarte.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.cambiarZona();
+        });
     }
 
     @Test
-    public void testZonaDeDescarteMoverACombate() {
+    public void testZonaDeDescarteMoverACombate() throws MovimientoInvalido {
         Zona zona = new ZonaDescarte();
-        assertEquals(zona.moverACombate().getClass(), ZonaDescarte.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverACombate();
+        });
     }
 
     @Test
-    public void testZonaDeDescarteMoverAReserva() {
+    public void testZonaDeDescarteMoverAReserva() throws MovimientoInvalido {
         Zona zona = new ZonaDescarte();
-        assertEquals(zona.moverAReserva().getClass(), ZonaDescarte.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverAReserva();
+        });
     }
 
     @Test
-    public void testZonaDeDescarteInvocar() {
+    public void testZonaDeDescarteInvocar() throws MovimientoInvalido {
         Zona zona = new ZonaDescarte();
-        assertEquals(zona.invocar().getClass(), ZonaDescarte.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.invocar();
+        });
     }
 
     @Test
@@ -112,25 +146,28 @@ public class ZonaTest {
     // Zona Mano
 
     @Test
-    public void testZonaManoCambiarZona() {
+    public void testZonaManoCambiarZona() throws MovimientoInvalido {
         Zona zona = new ZonaMano();
-        assertEquals(zona.cambiarZona().getClass(), ZonaMano.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.cambiarZona();
+        });
     }
 
     @Test
-    public void testZonaManoMoverACombate() {
+    public void testZonaManoMoverACombate() throws MovimientoInvalido {
         Zona zona = new ZonaMano();
         assertEquals(zona.moverACombate().getClass(), ZonaCombate.class);
     }
 
     @Test
-    public void testZonaManoMoverAReserva() {
+    public void testZonaManoMoverAReserva() throws MovimientoInvalido {
         Zona zona = new ZonaMano();
         assertEquals(zona.moverAReserva().getClass(), ZonaReserva.class);
     }
 
     @Test
-    public void testZonaManoInvocar() {
+    public void testZonaManoInvocar() throws MovimientoInvalido {
         Zona zona = new ZonaMano();
         assertEquals(zona.invocar().getClass(), ZonaArtefacto.class);
     }
@@ -144,27 +181,36 @@ public class ZonaTest {
     // Zona de Reserva
 
     @Test
-    public void testZonaDeReservaCambiarZona() {
+    public void testZonaDeReservaCambiarZona() throws MovimientoInvalido {
         Zona zona = new ZonaReserva();
         assertEquals(zona.cambiarZona().getClass(), ZonaCombate.class);
     }
 
     @Test
-    public void testZonaDeReservaMoverACombate() {
+    public void testZonaDeReservaMoverACombate() throws MovimientoInvalido {
         Zona zona = new ZonaReserva();
-        assertEquals(zona.moverACombate().getClass(), ZonaReserva.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverACombate();
+        });
     }
 
     @Test
-    public void testZonaDeReservaMoverAReserva() {
+    public void testZonaDeReservaMoverAReserva() throws MovimientoInvalido {
         Zona zona = new ZonaReserva();
-        assertEquals(zona.moverAReserva().getClass(), ZonaReserva.class);
+
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.moverAReserva();
+        });
     }
 
     @Test
-    public void testZonaDeReservaInvocar() {
+    public void testZonaDeReservaInvocar() throws MovimientoInvalido {
         Zona zona = new ZonaReserva();
-        assertEquals(zona.invocar().getClass(), ZonaReserva.class);
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            zona.invocar();
+        });
     }
 
     @Test

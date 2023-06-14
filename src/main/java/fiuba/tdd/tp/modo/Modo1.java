@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.modo;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class Modo1 implements Modo {
     final Integer puntosFinDePartida = 0;
 
     @Override
-    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
+    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) throws MovimientoInvalido {
         if (cartas.size() > 0){
             tomarCarta(cartas, 1);
             return true;
@@ -31,7 +32,7 @@ public class Modo1 implements Modo {
     }
 
     @Override
-    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) {
+    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) throws MovimientoInvalido {
         tomarCarta(cartas1, cantCartasIniciales);
         tomarCarta(cartas2, cantCartasIniciales);
     }

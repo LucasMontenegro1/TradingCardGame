@@ -1,5 +1,7 @@
 package fiuba.tdd.tp.zona;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
+
 public class ZonaCombate implements Zona {
 
     @Override
@@ -8,18 +10,21 @@ public class ZonaCombate implements Zona {
     }
 
     @Override
-    public Zona moverACombate() {
-        return new ZonaCombate();
+    public Zona moverACombate() throws MovimientoInvalido {
+        //return new ZonaCombate();
+        throw new MovimientoInvalido("");
     }
 
     @Override
-    public Zona moverAReserva() {
-        return new ZonaCombate();
+    public Zona moverAReserva() throws MovimientoInvalido {
+        //return new ZonaCombate();
+        throw new MovimientoInvalido("");
     }
 
     @Override
-    public Zona invocar() {
-        return new ZonaCombate();
+    public Zona invocar() throws MovimientoInvalido {
+        //return new ZonaCombate();
+        throw new MovimientoInvalido("");
     }
 
     @Override

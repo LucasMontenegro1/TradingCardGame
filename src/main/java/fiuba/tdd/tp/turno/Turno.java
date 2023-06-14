@@ -2,6 +2,7 @@ package fiuba.tdd.tp.turno;
 
 import java.util.ArrayList;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaInicial;
@@ -19,7 +20,7 @@ public class Turno {
         this.etapa = new EtapaInicial(modo, puntos);    
     }
     
-    public void iniciarTurno(ArrayList<Carta> cartas) {
+    public void iniciarTurno(ArrayList<Carta> cartas) throws MovimientoInvalido {
         this.etapa.iniciar(cartas);
     }
 

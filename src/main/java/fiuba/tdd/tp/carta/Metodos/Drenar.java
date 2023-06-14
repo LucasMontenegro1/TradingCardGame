@@ -27,9 +27,9 @@ public class Drenar extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
-        // Selecciona un jugador. Durante cada etapa inicial, pierde un punto de energía del tipo que más puntos de energía tenga.
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
+    
+                                
     }
     
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.jugador.Mazo;
@@ -56,7 +57,7 @@ public class PartidaTests {
     }
 
     @Test 
-    public void testPartidaIniciaUnTurno() throws PartidaInvalida {
+    public void testPartidaIniciaUnTurno() throws PartidaInvalida, MovimientoInvalido {
         Partida partida = new Partida(modoUno, "jugador1", "jugador2", mazoModoUno, mazoModoUno);
         
         partida.iniciarPartida();

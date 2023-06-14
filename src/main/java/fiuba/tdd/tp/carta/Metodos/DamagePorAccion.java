@@ -30,11 +30,13 @@ public class DamagePorAccion extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
         if (jugadorObjetivo != null) {
             contrincante.disminuirPuntos(3);
         }
-        cartaObjetivo.disminuirHP(this.hp);
+        for (Carta carta: cartasObjetivo){
+            carta.disminuirHP(this.hp);
+        }
     }
 }

@@ -51,7 +51,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
-    @Disabled
     @Test
     void cantSummonInWrongZone() {
         MatchDriver<Carta> match = commonMatch(Stream.of(

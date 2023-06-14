@@ -4,11 +4,8 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

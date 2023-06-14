@@ -2,6 +2,7 @@ package fiuba.tdd.tp.etapa;
 
 import java.util.ArrayList;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.modo.Modo;
 
@@ -18,7 +19,7 @@ public class EtapaInicial implements Etapa {
     }
 
     @Override
-    public void iniciar(ArrayList<Carta> cartas) {
+    public void iniciar(ArrayList<Carta> cartas) throws MovimientoInvalido {
         this.cartasJugador = cartas;
         this.asginacion = this.modoPartida.ejecutarEtapaInicial(cartasJugador, puntosPartida);
     }
@@ -33,19 +34,22 @@ public class EtapaInicial implements Etapa {
     }
     
     @Override
-    public void moverCarta(Carta carta) {
+    public void moverCarta(Carta carta) throws MovimientoInvalido {
+        throw new MovimientoInvalido("");
     }
 
     @Override
-    public void invocarAZonaDeCombate(Carta carta) {
+    public void invocarAZonaDeCombate(Carta carta) throws MovimientoInvalido {
+        throw new MovimientoInvalido("");
     }
 
     @Override
-    public void invocarAZonaDeReserva(Carta carta) {
-        
+    public void invocarAZonaDeReserva(Carta carta) throws MovimientoInvalido {
+        throw new MovimientoInvalido("");
     }
 
     @Override
-    public void invocarAZonaDeArtefacto(Carta carta) {
+    public void invocarAZonaDeArtefacto(Carta carta) throws MovimientoInvalido {
+        throw new MovimientoInvalido("");
     }
 }

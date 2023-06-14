@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.carta.Metodos;
 
+import java.util.ArrayList;
 import java.util.Deque;
 
 import fiuba.tdd.tp.carta.Carta;
@@ -26,9 +27,9 @@ public class MetodoCartaCompuesto extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
                                 
-        this.metodoUno.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, cartaObjetivo, cartaActivada, energia);
-        this.metodoDos.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, cartaObjetivo, cartaActivada, energia);
+        this.metodoUno.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, cartasObjetivo, cartaActivada, energia);
+        this.metodoDos.ejecutar(enJuego, contrincante, pilaMetodos, jugadorObjetivo, cartasObjetivo, cartaActivada, energia);
     }
 }

@@ -116,8 +116,10 @@ public class MetodoCartaTests {
 
         Random random = new Random();
         Carta carta = contrincante.cartas.get(random.nextInt(contrincante.cartas.size()));
+        ArrayList<Carta> cartas = new ArrayList<Carta>();
+        cartas.add(carta);
 
-        transfeririCarta.ejecutar(enJuego, contrincante, null, null, carta, null, null);       
+        transfeririCarta.ejecutar(enJuego, contrincante, null, null, cartas, null, null);       
 
         assertEquals(cantInicialEnJuego + 1, enJuego.cartas.size());
         assertEquals(cantInicialContrincante - 1, contrincante.cartas.size());
@@ -135,11 +137,13 @@ public class MetodoCartaTests {
         MetodoCarta sacrificio = new Sacrificio(costo);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
+        ArrayList<Carta> cartas = new ArrayList<Carta>();
+        cartas.add(carta);
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
         enJuego.iniciarTablero();
 
-        sacrificio.ejecutar(enJuego, null, null, null, carta, null, null);
+        sacrificio.ejecutar(enJuego, null, null, null, cartas, null, null);
 
         assertEquals(3, enJuego.energiaFuego());
         assertEquals(3, enJuego.energiaPlanta());

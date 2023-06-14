@@ -3,6 +3,7 @@ package fiuba.tdd.tp.carta;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaDescarte;
@@ -43,7 +44,7 @@ public class Carta {
         return this.atributos.contains(atributo);
     }
 
-    public void cambiarZona() {
+    public void cambiarZona() throws MovimientoInvalido {
         if (this.zona == null) {
             this.zona = new ZonaMano();
         } else {
@@ -51,17 +52,21 @@ public class Carta {
         }
     }
     
-    public void moverAArtefacto() {
-        this.zona = this.zona.invocar();
+    public void moverAArtefacto() throws MovimientoInvalido {
+        if (this.tipos.contains(Tipo.Artefacto)) {
+            this.zona = this.zona.invocar();
+        } else {
+            throw new MovimientoInvalido("El movimiento es invalido");
+        }
     }
 
-    public void moverACombate() {
+    public void moverACombate() throws MovimientoInvalido {
         if (this.nombre != "BARRERAMAGICA") {
             this.zona = this.zona.moverACombate();
         }
     }
     
-    public void moverAReserva(){
+    public void moverAReserva() throws MovimientoInvalido{
         this.zona = this.zona.moverAReserva();
     }
     
@@ -69,7 +74,7 @@ public class Carta {
         this.zona = new ZonaDescarte();
     }
 
-    public void descartar(){
+    public void descartar() {
         this.zona = this.zona.descartar();
     }
 

@@ -28,7 +28,7 @@ public class TransferirEnergia extends MetodoCarta {
 
     @Override
    public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
         if (energia != null) {
             contrincante.disminuirEnergia(energia, 1);

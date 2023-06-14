@@ -18,24 +18,14 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.jugador.Mazo;
 import java.util.ArrayDeque;
 import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.zona.ZonaArtefacto;
-import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
-import fiuba.tdd.tp.zona.ZonaReserva;
 
 public class Tablero {
-    
-    final static String ZonaArtefacto = "ZonaArtefacto";
-    final static String ZonaCombate = "ZonaCombate";
-    final static String ZonaReserva = "ZonaReserva";
-    
+
     public String usuario;
     public ArrayList<Carta> cartas = new ArrayList<>();
     public Integer puntos;
     public HashMap<Energia, Integer> energia = new HashMap<Energia, Integer>();
-    public Integer maxZonaCombate;
-    public Integer maxZonaReserva;
-    public Integer maxZonaArtefactos;
     public Mazo mazoInicial;
     public ArrayList<String> mazoOrdenado;
     
@@ -49,9 +39,6 @@ public class Tablero {
         this.energia.put(Energia.Agua, 0);
         this.energia.put(Energia.Fuego, 0);
         this.energia.put(Energia.Planta, 0);
-        this.maxZonaReserva = modo.getMaxZonaReserva();
-        this.maxZonaArtefactos = modo.getMaxZonaArtefactos();
-        this.maxZonaCombate = modo.getMaxZonaCombate();
         this.mazoInicial = mazo;
         this.mazoOrdenado = new ArrayList<String>();
     }
@@ -64,7 +51,7 @@ public class Tablero {
         this.puntos -= cantidad;
     }
 
-    private Carta buscarCarta(String nombreCarta) {
+    public Carta buscarCarta(String nombreCarta) {
         for (Carta carta : cartas){
             if (carta.nombreCarta() == nombreCarta && carta.zona instanceof ZonaMano) {
                 return carta;
@@ -72,56 +59,6 @@ public class Tablero {
         }
 
         return null;
-    }
-
-    private void descontarEnergia(Carta carta) throws EnergiaInsuficiente {
-        HashMap<Energia, Integer> costos = carta.getCostoDeInvocacion();
-
-        Integer fuegoActual = this.energia.get(Energia.Fuego);
-        Integer plantaActual = this.energia.get(Energia.Planta);
-        Integer aguaActual = this.energia.get(Energia.Fuego);
-
-        Integer costoFuego = costos.get(Energia.Fuego);
-        Integer costoPlanta = costos.get(Energia.Planta);
-        Integer costoAgua = costos.get(Energia.Fuego);
-
-        if (fuegoActual >= costoFuego && plantaActual >= costoPlanta && aguaActual >= costoAgua) {
-                this.energia.put(Energia.Fuego, fuegoActual - costoFuego);
-                this.energia.put(Energia.Planta, plantaActual - costoPlanta);
-                this.energia.put(Energia.Agua, aguaActual - costoAgua);
-        } else {
-            throw new EnergiaInsuficiente("No tiene energía suficiente para realizar la invocación");
-        }
-    }
-
-    public Carta invocarCarta(String carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente {
-
-        Carta cartaEnTablero = buscarCarta(carta);
-        if (cartaEnTablero == null) {
-            throw new CartaNoEncontrada("La carta no existe");
-        } 
-
-        descontarEnergia(cartaEnTablero);
-
-        switch (zona) {
-            case ZonaArtefacto -> {
-                if (cartasEnZona(ZonaArtefacto.class.getSimpleName()).size() < maxZonaArtefactos) {
-                    cartaEnTablero.moverAArtefacto();
-                }
-            }
-            case ZonaCombate -> {
-                if (cartasEnZona(ZonaCombate.class.getSimpleName()).size() < maxZonaCombate) {
-                    cartaEnTablero.moverACombate();
-                }
-            }
-            case ZonaReserva -> {
-                if (cartasEnZona(ZonaReserva.class.getSimpleName()).size() < maxZonaReserva) {
-                    cartaEnTablero.moverAReserva();
-                }
-            }
-        }
-
-        return cartaEnTablero;
     }
 
     public void reordenarMazo(ArrayList<String> listaOrdenada) throws CartaNoEncontrada {
@@ -215,6 +152,26 @@ public class Tablero {
         }
 
         return null;
+    }
+
+    public void descontarEnergia(Carta carta) throws EnergiaInsuficiente {
+        HashMap<Energia, Integer> costos = carta.getCostoDeInvocacion();
+
+        Integer fuegoActual = this.energia.get(Energia.Fuego);
+        Integer plantaActual = this.energia.get(Energia.Planta);
+        Integer aguaActual = this.energia.get(Energia.Fuego);
+
+        Integer costoFuego = costos.get(Energia.Fuego);
+        Integer costoPlanta = costos.get(Energia.Planta);
+        Integer costoAgua = costos.get(Energia.Fuego);
+
+        if (fuegoActual >= costoFuego && plantaActual >= costoPlanta && aguaActual >= costoAgua) {
+                this.energia.put(Energia.Fuego, fuegoActual - costoFuego);
+                this.energia.put(Energia.Planta, plantaActual - costoPlanta);
+                this.energia.put(Energia.Agua, aguaActual - costoAgua);
+        } else {
+            throw new EnergiaInsuficiente("No tiene energía suficiente para realizar la invocación");
+        }
     }
 
     public void eliminarCarta(Carta carta) {

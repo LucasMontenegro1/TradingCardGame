@@ -1,4 +1,6 @@
 package fiuba.tdd.tp;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -6,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.etapa.Etapa;
@@ -55,7 +58,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testAlFinalizarEtapaInicialConCartaAsignadaInicialLaEtapaPrincipalEnUnaPartidaModoUno(){
+    void testAlFinalizarEtapaInicialConCartaAsignadaInicialLaEtapaPrincipalEnUnaPartidaModoUno() throws MovimientoInvalido{
 		
 		Integer puntos = 15;
         
@@ -69,7 +72,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedenMoverCartasEnUnaPartidaModoUno(){
+    void testEnLaEtapaInicialNoSePuedenMoverCartasEnUnaPartidaModoUno() throws MovimientoInvalido{
 		
 		Integer puntos = 15;
 	
@@ -80,13 +83,13 @@ public class EtapaTests {
 
         etapaIncial.iniciar(this.cartas);
 
-        etapaIncial.moverCarta(carta);
-
-        assert carta.zona instanceof ZonaReserva;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.moverCarta(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeCombateEnUnaPartidaModoUno(){
+    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeCombateEnUnaPartidaModoUno() throws MovimientoInvalido{
 		
 		Integer puntos = 15;
         
@@ -98,13 +101,14 @@ public class EtapaTests {
 
         etapaIncial.iniciar(this.cartas);
 
-        etapaIncial.invocarAZonaDeCombate(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.invocarAZonaDeCombate(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeReservaEnUnaPartidaModoUno(){
+    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeReservaEnUnaPartidaModoUno() throws MovimientoInvalido {
 
         Integer puntos = 15;
 
@@ -112,17 +116,17 @@ public class EtapaTests {
 
         carta.zona = new ZonaMano();
 		
-		Etapa etapaIncial = new EtapaInicial(this.modo1, puntos);
+		Etapa etapaInicial = new EtapaInicial(this.modo1, puntos);
 
-        etapaIncial.iniciar(this.cartas);
+        etapaInicial.iniciar(this.cartas);
 
-        etapaIncial.invocarAZonaDeReserva(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaInicial.invocarAZonaDeReserva(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedeInvocarUnArtefactoAZonaDeArtefactosEnUnaPartidaModoUno(){
+    void testEnLaEtapaInicialNoSePuedeInvocarUnArtefactoAZonaDeArtefactosEnUnaPartidaModoUno() throws MovimientoInvalido{
 		
 		Integer puntos = 15;
 
@@ -134,9 +138,10 @@ public class EtapaTests {
 
         etapaIncial.iniciar(this.cartas);
 
-        etapaIncial.invocarAZonaDeArtefacto(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.invocarAZonaDeArtefacto(carta);
+        });
     }
 
     @Test
@@ -151,7 +156,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testAlFinalizarEtapaInicialConMasDeSeisPuntosDeVictoriaEnUnaPartidaModoDos(){
+    void testAlFinalizarEtapaInicialConMasDeSeisPuntosDeVictoriaEnUnaPartidaModoDos() throws MovimientoInvalido{
 		
 		Integer puntos = 15;
         
@@ -165,7 +170,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedenMoverCartasEnUnaPartidaModoDos(){
+    void testEnLaEtapaInicialNoSePuedenMoverCartasEnUnaPartidaModoDos() throws MovimientoInvalido{
 		
 		Integer puntos = 4;
 	
@@ -177,13 +182,13 @@ public class EtapaTests {
 
         etapaIncial.iniciar(this.cartas);
 
-        etapaIncial.moverCarta(carta);
-
-        assert carta.zona instanceof ZonaReserva;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.moverCarta(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeCombateEnUnaPartidaModoDos(){
+    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeCombateEnUnaPartidaModoDos() throws MovimientoInvalido{
 		
 		Integer puntos = 4;
         
@@ -194,14 +199,14 @@ public class EtapaTests {
         Etapa etapaIncial = new EtapaInicial(this.modo2, puntos);
 
         etapaIncial.iniciar(this.cartas);
-
-        etapaIncial.invocarAZonaDeCombate(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.invocarAZonaDeCombate(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeReservaEnUnaPartidaModoDos(){
+    void testEnLaEtapaInicialNoSePuedeInvocarUnaCriaturaAZonaDeReservaEnUnaPartidaModoDos() throws MovimientoInvalido {
 
         Integer puntos = 4;
 
@@ -213,13 +218,13 @@ public class EtapaTests {
 
         etapaIncial.iniciar(this.cartas);
 
-        etapaIncial.invocarAZonaDeReserva(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.invocarAZonaDeReserva(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaInicialNoSePuedeInvocarUnArtefactoAZonaDeArtefactosEnUnaPartidaModoDos(){
+    void testEnLaEtapaInicialNoSePuedeInvocarUnArtefactoAZonaDeArtefactosEnUnaPartidaModoDos() throws MovimientoInvalido {
 		
 		Integer puntos = 4;
 
@@ -231,9 +236,10 @@ public class EtapaTests {
 
         etapaIncial.iniciar(this.cartas);
 
-        etapaIncial.invocarAZonaDeArtefacto(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaIncial.invocarAZonaDeArtefacto(carta);
+        });
     }
 
     // Etapa principal
@@ -255,7 +261,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaPrincipalSePuedenMoverCartas(){
+    void testEnLaEtapaPrincipalSePuedenMoverCartas() throws MovimientoInvalido {
     
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
@@ -271,7 +277,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeCombate(){
+    void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeCombate() throws MovimientoInvalido {
         
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
@@ -287,7 +293,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeReserva(){
+    void testEnLaEtapaPrincipalSePuedeInvocarUnaCriaturaAZonaDeReserva() throws MovimientoInvalido {
         
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
@@ -303,7 +309,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaPrincipalSePuedeInvocarUnArtefactoAZonaDeArtefactos(){
+    void testEnLaEtapaPrincipalSePuedeInvocarUnArtefactoAZonaDeArtefactos() throws MovimientoInvalido {
 
         Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
         
@@ -337,7 +343,7 @@ public class EtapaTests {
     }
 
     @Test
-    void testEnLaEtapaDeAtaqueNoSePuedenMoverCartas(){
+    void testEnLaEtapaDeAtaqueNoSePuedenMoverCartas() throws MovimientoInvalido {
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
@@ -346,14 +352,14 @@ public class EtapaTests {
         Etapa etapaDeAtaque = new EtapaDeAtaque();
 
         etapaDeAtaque.iniciar(this.cartas);
-
-        etapaDeAtaque.moverCarta(carta);
-
-        assert carta.zona instanceof ZonaReserva;
+        
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaDeAtaque.moverCarta(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeCombate(){
+    void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeCombate() throws MovimientoInvalido {
         
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
         
@@ -363,13 +369,13 @@ public class EtapaTests {
 
         etapaDeAtaque.iniciar(this.cartas);
 
-        etapaDeAtaque.invocarAZonaDeCombate(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaDeAtaque.invocarAZonaDeCombate(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeReserva(){
+    void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnaCriaturaAZonaDeReserva() throws MovimientoInvalido {
     
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
@@ -380,13 +386,13 @@ public class EtapaTests {
 
         etapaDeAtaque.iniciar(this.cartas);
 
-        etapaDeAtaque.invocarAZonaDeReserva(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaDeAtaque.invocarAZonaDeReserva(carta);
+        });
     }
 
     @Test
-    void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnArtefactoAZonaDeArtefactos(){
+    void testEnLaEtapaDeAtaqueNoSePuedeInvocarUnArtefactoAZonaDeArtefactos() throws MovimientoInvalido {
         
         Carta carta = new Carta(CartasDisponibles.ANTIMAGIA);
         
@@ -396,9 +402,9 @@ public class EtapaTests {
 
         etapaDeAtaque.iniciar(this.cartas);
 
-        etapaDeAtaque.invocarAZonaDeArtefacto(carta);
-
-        assert carta.zona instanceof ZonaMano;
+        assertThrows(MovimientoInvalido.class, () -> {
+            etapaDeAtaque.invocarAZonaDeArtefacto(carta);
+        });
     }
 
     

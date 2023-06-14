@@ -30,11 +30,13 @@ public class Sacrificio extends MetodoCarta {
     
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
-        modificarEnergia(enJuego.energia, Energia.Fuego, cartaObjetivo.costoDeInvocacion.get(Energia.Fuego));
-        modificarEnergia(enJuego.energia, Energia.Planta, cartaObjetivo.costoDeInvocacion.get(Energia.Planta));
-        modificarEnergia(enJuego.energia, Energia.Agua, cartaObjetivo.costoDeInvocacion.get(Energia.Agua));
+        for (Carta carta : cartasObjetivo) {
+            modificarEnergia(enJuego.energia, Energia.Fuego, carta.costoDeInvocacion.get(Energia.Fuego));
+            modificarEnergia(enJuego.energia, Energia.Planta, carta.costoDeInvocacion.get(Energia.Planta));
+            modificarEnergia(enJuego.energia, Energia.Agua, carta.costoDeInvocacion.get(Energia.Agua));
+        }
     }
 
     private void modificarEnergia(HashMap<Energia, Integer> energias,Energia energia, Integer costo){

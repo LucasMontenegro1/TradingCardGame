@@ -3,14 +3,15 @@ package fiuba.tdd.tp.modo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.zona.Zona;
 
 public interface Modo {
     
-    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos);
+    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) throws MovimientoInvalido;
 
-    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2);
+    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) throws MovimientoInvalido;
 
     public boolean verificarMazoValido(HashMap<String, Integer> cartas);
 
@@ -28,7 +29,7 @@ public interface Modo {
 
 	public boolean partidaEnProceso(Integer puntos);
 
-    public default void tomarCarta(ArrayList<Carta> cartas, Integer cantidad) {
+    public default void tomarCarta(ArrayList<Carta> cartas, Integer cantidad) throws MovimientoInvalido {
         
         Integer indiceCarta = 0;
         Zona zona = cartas.get(indiceCarta).zona;

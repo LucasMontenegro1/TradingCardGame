@@ -1,10 +1,12 @@
 package fiuba.tdd.tp.acceptance;
 
 
+import fiuba.tdd.tp.Excepciones.CartaNoActivable;
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
 import fiuba.tdd.tp.Excepciones.MazoExistente;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
@@ -17,9 +19,7 @@ import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
 import fiuba.tdd.tp.tablero.Tablero;
-
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -213,7 +213,11 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void start() {
-            partida.iniciarPartida();
+            try {
+                partida.iniciarPartida();
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         private boolean mismaEtapa(String nombreEtapa, Etapa etapa) {
@@ -226,8 +230,12 @@ public class AcceptanceTestRoot<Account, Card> {
             String jugador = mapJugador.get(player);
             String etapa = mapFase.get(phase);
 
-            while (!partida.jugadorEnTurno(jugador) && !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual())) {
-                partida.terminarEtapa();
+            try {
+                while (!partida.jugadorEnTurno(jugador) && !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual())) {
+                    partida.terminarEtapa();
+                }
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
             }
         }
 
@@ -235,15 +243,13 @@ public class AcceptanceTestRoot<Account, Card> {
         public Carta summon(DriverMatchSide player, DriverCardName card, DriverActiveZone zone) {
 
             String carta = mapCartas.get(card).nombre;
-            
-            Tablero tableroJugador = partida.tableroJugador(mapJugador.get(player));
-
+            String nombreJugador = mapJugador.get(player);
             String zona = mapZona.get(zone);
 
             try {
-                Carta cartaMovida = tableroJugador.invocarCarta(carta, zona);
+                Carta cartaMovida = partida.invocarCarta(nombreJugador, carta, zona);
                 return cartaMovida;
-            } catch (CartaNoEncontrada | EnergiaInsuficiente e) {
+            } catch (CartaNoEncontrada | EnergiaInsuficiente | MovimientoInvalido e) {
                 throw new RuntimeException(e);
             }
         }
@@ -269,8 +275,24 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public void activateArtifact(Carta artifact, int index, Optional<DriverMatchSide> targetPlayer,
                 List<Carta> targets) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'activateArtifact'");
+            /**
+             * Activate an artifact in the player's active zones, supplying targets if
+             * the specific card needs them
+             * @throws RuntimeException if the artifact can't be activated as indicated
+             */
+            
+            String jugadorObjetivo = null;
+            ArrayList<Carta> cartasObjetivos = new ArrayList<>(targets);
+
+            if (targetPlayer.isPresent()) {
+                jugadorObjetivo = mapJugador.get(targetPlayer.get());
+            } 
+            
+            try {
+                partida.activarCarta(artifact, index, jugadorObjetivo, cartasObjetivos, null);
+            } catch (CartaNoActivable e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override

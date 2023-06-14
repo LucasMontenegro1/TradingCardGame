@@ -3,6 +3,7 @@ package fiuba.tdd.tp.driver;
 import java.util.List;
 import java.util.Optional;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.partida.Partida;
 
 /**
@@ -37,6 +38,7 @@ public interface MatchDriver<CardReference> {
     /**
      * End phases and turns until the current player and phase match the
      * arguments. Must end at least one phase
+     * @throws MovimientoInvalido
      */
     void skipToPhase(DriverMatchSide player, DriverTurnPhase phase);
 

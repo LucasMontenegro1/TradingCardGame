@@ -36,7 +36,7 @@ public class TomarCarta extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
         for (int i = 0; i < this.cantidad; i++){
             ArrayList<Carta> cartas = enJuego.cartasEnZona(null);
