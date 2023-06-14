@@ -14,9 +14,11 @@ import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
+import fiuba.tdd.tp.tablero.Tablero;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +27,8 @@ import java.util.Optional;
 
 @SpringBootTest
 public class AcceptanceTestRoot<Account, Card> {
-    protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
-        static Map<DriverCardName, CartasDisponibles> mapCartas = new HashMap<>();
+
+    static Map<DriverCardName, CartasDisponibles> mapCartas = new HashMap<>();
         static {
             mapCartas.put(DriverCardName.Antimagic, CartasDisponibles.ANTIMAGIA);
             mapCartas.put(DriverCardName.Alchemist, CartasDisponibles.ALQUIMISTA);
@@ -55,6 +57,14 @@ public class AcceptanceTestRoot<Account, Card> {
             mapModo.put(DriverGameMode.CreatureSlayer, new Modo1());
             mapModo.put(DriverGameMode.CreatureSlayer, new Modo2());
         }
+
+        static Map<DriverMatchSide, String> mapJugador = new HashMap<>();
+        static {
+            mapJugador.put(DriverMatchSide.Blue, "blue");
+            mapJugador.put(DriverMatchSide.Green, "green");
+        }
+
+    protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
 
         @Override
         public Jugador newAccount() {
@@ -129,6 +139,9 @@ public class AcceptanceTestRoot<Account, Card> {
             Mazo mazoJugadorBlue = blue.getMazos().get(blueDeck);
             Mazo mazoJugadorGreen = green.getMazos().get(greenDeck);
 
+            blue.modificarNombre("blue");
+            green.modificarNombre("green");
+
             Partida partida;
 
             try {
@@ -162,8 +175,20 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void forceDeckOrder(DriverMatchSide player, List<DriverCardName> cards) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'forceDeckOrder'");
+
+            ArrayList<String> cartas = new ArrayList<>();
+
+            for (DriverCardName card : cards) {
+                cartas.add(mapCartas.get(card).nombre);
+            }
+
+            Tablero tableroJugador = partida.tableroJugador(mapJugador.get(player));
+
+            try {
+                tableroJugador.reordenarMazo(cartas);
+            } catch (CartaNoEncontrada e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override

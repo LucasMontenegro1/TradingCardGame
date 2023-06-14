@@ -1,9 +1,6 @@
 package fiuba.tdd.tp.partida;
 
-import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Random;
-
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
@@ -36,21 +33,13 @@ public class Partida {
         this.tablero2 = new Tablero(otroJugador, otroMazo, modoPartida);
         this.turno = new Turno(modoPartida, this.tablero1.puntos);
     }
- 
-    private void cartaAleatoria(Tablero tablero) {
-        Random random = new Random();
-        ArrayList<Carta> cartas = tablero.cartasEnZona(null);
-        Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
-        cartaAleatoria.cambiarZona();
-    }
 
     public void iniciarPartida() {
-        Integer cantidad = this.modo.getCantCartasIniciales();
         
-        for (int i = 0; i < cantidad; i++) {
-            cartaAleatoria(tablero1);
-            cartaAleatoria(tablero2);
-        }
+        tablero1.iniciarTablero();
+        tablero2.iniciarTablero();
+        
+        this.modo.iniciarTableros(tablero1.cartas, tablero2.cartas);
 
         this.turno.iniciarTurno(this.tablero1.cartasEnZona(null));
         this.turno.pasarDeEtapa();

@@ -51,7 +51,9 @@ public class TableroTests {
 
     @Test
     void testTableroSeCreaCorrectamenteEnUnaPartidaModoUno() {
-        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno); 
+        Tablero tablero = new Tablero("jugador", mazoModoUno, modoUno);
+        tablero.iniciarTablero();
+        
         assertEquals("jugador", tablero.usuario);
         assertEquals(40, tablero.cartas.size());        
     }
@@ -59,6 +61,8 @@ public class TableroTests {
     @Test
     void testTableroSeCreaCorrectamenteEnUnaPartidaModoDos() {
         Tablero tablero = new Tablero("jugador", mazoModoDos, modoDos); 
+        tablero.iniciarTablero();
+
         assertEquals("jugador", tablero.usuario);
         assertEquals(60, tablero.cartas.size());        
     }
@@ -184,6 +188,7 @@ public class TableroTests {
     void testEliminarCartaAlTablero(){
 
         Tablero tablero = new Tablero("Jugador", mazoModoDos, modoDos);
+        tablero.iniciarTablero();
 
         Integer cantInicialDeCartas = tablero.cartas.size();
 
@@ -231,6 +236,7 @@ public class TableroTests {
         Mazo mazo = new Mazo(cartasModoUno);
 
         Tablero tablero = new Tablero("jugador", mazo, modoUno);
+        tablero.iniciarTablero();
 
         ArrayList<Carta> cartas = tablero.cartasEnZona(null);
         for (Carta carta : cartas) {

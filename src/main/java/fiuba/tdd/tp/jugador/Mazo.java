@@ -12,7 +12,6 @@ public class Mazo {
         this.cantidadCartas = 0;
 
         for (Integer cantidad : cartas.values()) {
-            System.out.println(cantidad);
             this.cantidadCartas += cantidad;
         }
     }

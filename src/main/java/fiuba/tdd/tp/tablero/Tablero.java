@@ -1,10 +1,13 @@
 package fiuba.tdd.tp.tablero;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.Deque;
+
+import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
@@ -12,7 +15,6 @@ import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.jugador.Mazo;
-import fiuba.tdd.tp.zona.Zona;
 import java.util.ArrayDeque;
 import fiuba.tdd.tp.modo.Modo;
 
@@ -25,6 +27,8 @@ public class Tablero {
     public Integer maxZonaCombate;
     public Integer maxZonaReserva;
     public Integer maxZonaArtefactos;
+    public Mazo mazoInicial;
+    public ArrayList<String> mazoOrdenado;
     
     final String AGUA  = "AGUA";
     final String FUEGO  = "FUEGO";
@@ -39,15 +43,8 @@ public class Tablero {
         this.maxZonaReserva = modo.getMaxZonaReserva();
         this.maxZonaArtefactos = modo.getMaxZonaArtefactos();
         this.maxZonaCombate = modo.getMaxZonaCombate();
-
-        for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
-            String nombreCarta = carta.getKey();
-            Integer cantidadCartas = carta.getValue();
-
-            for (int i = 0; i < cantidadCartas; i++) {
-                this.cartas.add(new Carta(CartasDisponibles.valueOf(nombreCarta)));
-            }
-        }
+        this.mazoInicial = mazo;
+        this.mazoOrdenado = new ArrayList<String>();
     }
 
     public void aumentarPuntos(Integer cantidad){
@@ -56,6 +53,41 @@ public class Tablero {
 
     public void disminuirPuntos(Integer cantidad) {
         this.puntos -= cantidad;
+    }
+
+    public void reordenarMazo(ArrayList<String> listaOrdenada) throws CartaNoEncontrada {
+
+        HashMap<String, Integer> cartasOrdenInicial = new HashMap<>(mazoInicial.cartas); 
+        Mazo mazoInicial = new Mazo(cartasOrdenInicial);
+
+        for (String carta : listaOrdenada) {
+            if (mazoInicial.cartas.containsKey(carta)) {
+                mazoInicial.eliminarCarta(carta);
+                this.mazoOrdenado.add(carta);
+            } else {
+                throw new CartaNoEncontrada("La lista ordenada no corresponde con el mazo");
+            }
+        }
+    }
+
+    public void iniciarTablero() {
+
+        if (mazoOrdenado.isEmpty()) {
+            for (Entry<String, Integer> carta : mazoInicial.cartas.entrySet()) {
+                String nombreCarta = carta.getKey();
+                Integer cantidadCartas = carta.getValue();
+
+                for (int i = 0; i < cantidadCartas; i++) {
+                    mazoOrdenado.add(nombreCarta);
+                }
+            }
+
+            Collections.shuffle(mazoOrdenado);
+        }
+
+        for (String nombreCarta : mazoOrdenado) {
+            this.cartas.add(new Carta(CartasDisponibles.valueOf(nombreCarta)));
+        }
     }
 
     public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {

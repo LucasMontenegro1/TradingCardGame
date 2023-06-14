@@ -36,6 +36,10 @@ public class Jugador {
         return nombre;
     }
 
+    public void modificarNombre(String nuevoNombre) {
+        this.nombre = nuevoNombre;
+    }
+
     public HashMap<String, Mazo> getMazos() {
         return this.mazos;
     }

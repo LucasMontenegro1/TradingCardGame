@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
 
-public class Modo2 implements Modo{
+public class Modo2 implements Modo {
 
     final Integer maxPuntosVictoria = 6;
     final Integer puntos = 0;
@@ -39,9 +39,10 @@ public class Modo2 implements Modo{
     }
 
     @Override
-    public Integer getCantCartasIniciales() {
-        return cantCartasIniciales;
-    }
+    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) {
+        tomarCarta(cartas1, cantCartasIniciales);
+        tomarCarta(cartas2, cantCartasIniciales);
+    }   
 
     @Override
     public boolean verificarMazoValido(HashMap<String, Integer> cartas) {
@@ -99,5 +100,4 @@ public class Modo2 implements Modo{
     public Integer getMaxZonaArtefactos() {
         return maxZonaArtefactos;
     }
-
 }

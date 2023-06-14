@@ -103,8 +103,10 @@ public class MetodoCartaTests {
     @Test 
     public void testTransferirCarta(){
         Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
-
         Tablero contrincante = new Tablero("Jugador 2", mazoModoDos, modoDos);
+
+        enJuego.iniciarTablero();
+        contrincante.iniciarTablero();
 
         MetodoCarta transfeririCarta = new TransferirCarta(costo);
 
@@ -166,6 +168,7 @@ public class MetodoCartaTests {
         MetodoCarta tomarCarta = new TomarCarta(cantidad, Tipo.Artefacto, costo);
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
+        enJuego.iniciarTablero();
 
         ArrayList<Carta> cartas = enJuego.cartasEnZona(null);
         
@@ -256,6 +259,7 @@ public class MetodoCartaTests {
         Mazo mazo = new Mazo(cartas);
 
         Tablero tableroEnemigo = new Tablero("Jugador", mazo, modoUno);
+        tableroEnemigo.iniciarTablero();
 
         Carta espadaMagica = null;
         for (Carta carta : tableroEnemigo.cartas){

@@ -18,7 +18,6 @@ import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
 import fiuba.tdd.tp.tablero.Tablero;
-import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaMano;
 
 @SpringBootTest
@@ -63,9 +62,7 @@ public class PartidaTests {
         partida.iniciarPartida();
 
         Tablero tableroJugador1 = partida.tableroJugador("jugador1");
-
-        Zona unaZona = new ZonaMano();
         
-        assertEquals(tableroJugador1.cartasEnZona(unaZona.getClass().getSimpleName()).size(), 6);
+        assertEquals(tableroJugador1.cartasEnZona(ZonaMano.class.getSimpleName()).size(), 6);
     }
 }
