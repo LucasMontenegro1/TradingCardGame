@@ -17,5 +17,5 @@ public interface Etapa {
     void invocarAZonaDeArtefacto(Carta carta) throws MovimientoInvalido;
 
     void moverCarta(Carta carta) throws MovimientoInvalido;
-    
+
 }

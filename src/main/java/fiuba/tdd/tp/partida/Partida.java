@@ -118,19 +118,7 @@ public class Partida {
         return null;
     }
 
-    public Carta invocarCarta(String jugador, String carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido {
-
-        Tablero tablero = tableroJugador(jugador);
-
-        Carta cartaEnTablero = tablero.buscarCarta(carta);
-        if (cartaEnTablero == null) {
-            throw new CartaNoEncontrada("La carta no existe");
-        } 
-
-        tablero.descontarEnergia(cartaEnTablero); // TODO mover a donde corresponda
-
-        Etapa etapaActual = turnoEnProceso().etapaActual();
-
+    private void invocarPorZona(String zona, Etapa etapaActual, Tablero tablero, Carta cartaEnTablero) throws MovimientoInvalido {
         switch (zona) {
             case ZonaArtefacto -> {
                 if (tablero.cartasEnZona(ZonaArtefacto.class.getSimpleName()).size() < maxZonaArtefactos) {
@@ -148,7 +136,27 @@ public class Partida {
                 }
             }
         }
+    }
 
+    public Carta invocarCarta(String jugador, String 
+    carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido {
+
+        Tablero tablero = tableroJugador(jugador);
+
+        Carta cartaEnTablero = tablero.buscarCarta(carta);
+        if (cartaEnTablero == null) {
+            throw new CartaNoEncontrada("La carta no existe");
+        } 
+
+        Etapa etapaActual = turnoEnProceso().etapaActual();
+
+        if (tablero.verificarEnergia(cartaEnTablero)) {
+            invocarPorZona(zona, etapaActual, tablero, cartaEnTablero); 
+            tablero.disminuirEnergia(Energia.Fuego, cartaEnTablero.costoDeInvocacion.get(Energia.Fuego));
+            tablero.disminuirEnergia(Energia.Agua, cartaEnTablero.costoDeInvocacion.get(Energia.Agua));
+            tablero.disminuirEnergia(Energia.Planta, cartaEnTablero.costoDeInvocacion.get(Energia.Planta));
+        }
+        
         return cartaEnTablero;
     }
 

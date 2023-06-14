@@ -154,7 +154,7 @@ public class Tablero {
         return null;
     }
 
-    public void descontarEnergia(Carta carta) throws EnergiaInsuficiente {
+    public boolean verificarEnergia(Carta carta) throws EnergiaInsuficiente {
         HashMap<Energia, Integer> costos = carta.getCostoDeInvocacion();
 
         Integer fuegoActual = this.energia.get(Energia.Fuego);
@@ -166,12 +166,10 @@ public class Tablero {
         Integer costoAgua = costos.get(Energia.Fuego);
 
         if (fuegoActual >= costoFuego && plantaActual >= costoPlanta && aguaActual >= costoAgua) {
-                this.energia.put(Energia.Fuego, fuegoActual - costoFuego);
-                this.energia.put(Energia.Planta, plantaActual - costoPlanta);
-                this.energia.put(Energia.Agua, aguaActual - costoAgua);
-        } else {
-            throw new EnergiaInsuficiente("No tiene energía suficiente para realizar la invocación");
-        }
+            return true;
+        } 
+
+        throw new EnergiaInsuficiente("No tiene energía suficiente");
     }
 
     public void eliminarCarta(Carta carta) {
