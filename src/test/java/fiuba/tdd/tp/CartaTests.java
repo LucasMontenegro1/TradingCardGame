@@ -2,12 +2,14 @@ package fiuba.tdd.tp;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -110,21 +112,23 @@ public class CartaTests {
     @Test
     void testAlquimistaConCostoDeInvocacion(){
         Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
-        ArrayList<Integer> esperado = new ArrayList<>();
-        esperado.add(1);
-        esperado.add(1);
-        esperado.add(0);
-
+        HashMap<Energia, Integer> esperado = new HashMap<>();
+        
+        esperado.put(Energia.Fuego, 1);
+        esperado.put(Energia.Planta, 1);
+        esperado.put(Energia.Agua, 0);
+        
         assertEquals(esperado,alquimista.getCostoDeInvocacion());
     }
 
     @Test
     void testCostoDeCualquierTipo(){
         Carta antimagia = new Carta(CartasDisponibles.ANTIMAGIA);
-        ArrayList<Integer> esperado = new ArrayList<>();
-        esperado.add(null);
-        esperado.add(null);
-        esperado.add(null);
+        HashMap<Energia, Integer> esperado = new HashMap<>();
+        
+        esperado.put(Energia.Fuego, null);
+        esperado.put(Energia.Planta, null);
+        esperado.put(Energia.Agua, null);
 
         assertEquals(esperado,antimagia.getCostoDeInvocacion());
     }

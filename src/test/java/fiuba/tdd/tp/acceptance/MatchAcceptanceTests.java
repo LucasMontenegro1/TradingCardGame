@@ -39,7 +39,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
-    @Disabled
     @Test
     void cantSummonWithoutEnergy() {
         MatchDriver<Carta> match = commonMatch(Stream.of(

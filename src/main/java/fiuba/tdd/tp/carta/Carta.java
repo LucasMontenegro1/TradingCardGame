@@ -1,6 +1,7 @@
 package fiuba.tdd.tp.carta;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.zona.Zona;
@@ -15,7 +16,7 @@ public class Carta {
     public ArrayList<MetodoCarta> metodos;
     public Integer hp;
     public Integer maxHP;
-    public ArrayList<Integer> costoDeInvocacion;
+    public HashMap<Energia, Integer> costoDeInvocacion = new HashMap<>();
 
     public Carta(CartasDisponibles carta) {
         this.nombre = carta.nombre;
@@ -24,7 +25,9 @@ public class Carta {
         this.tipos = carta.tipos;
         this.atributos = carta.atributos;
         this.metodos = carta.metodos;
-        this.costoDeInvocacion = carta.costoDeInvocacion;
+        this.costoDeInvocacion.put(Energia.Fuego, carta.costoDeInvocacion.get(0));
+        this.costoDeInvocacion.put(Energia.Planta, carta.costoDeInvocacion.get(1));
+        this.costoDeInvocacion.put(Energia.Agua, carta.costoDeInvocacion.get(2));
         this.zona = null;
     }
 
@@ -48,6 +51,10 @@ public class Carta {
         }
     }
     
+    public void moverAArtefacto() {
+        this.zona = this.zona.invocar();
+    }
+
     public void moverACombate() {
         if (this.nombre != "BARRERAMAGICA") {
             this.zona = this.zona.moverACombate();
@@ -79,7 +86,7 @@ public class Carta {
         }
     }
 
-    public ArrayList<Integer> getCostoDeInvocacion(){
+    public HashMap<Energia, Integer> getCostoDeInvocacion(){
         return this.costoDeInvocacion;
     }
 }

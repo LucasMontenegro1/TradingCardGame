@@ -34,6 +34,10 @@ public class Partida {
         this.turno = new Turno(modoPartida, this.tablero1.puntos);
     }
 
+    public Turno turnoEnProceso() {
+        return turno;
+    }
+
     public void iniciarPartida() {
         
         tablero1.iniciarTablero();

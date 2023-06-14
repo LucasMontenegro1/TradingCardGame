@@ -32,9 +32,9 @@ public class Sacrificio extends MetodoCarta {
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
         
-        modificarEnergia(enJuego.energia, Energia.Fuego, cartaObjetivo.costoDeInvocacion.get(0));
-        modificarEnergia(enJuego.energia, Energia.Planta, cartaObjetivo.costoDeInvocacion.get(1));
-        modificarEnergia(enJuego.energia, Energia.Agua, cartaObjetivo.costoDeInvocacion.get(2));
+        modificarEnergia(enJuego.energia, Energia.Fuego, cartaObjetivo.costoDeInvocacion.get(Energia.Fuego));
+        modificarEnergia(enJuego.energia, Energia.Planta, cartaObjetivo.costoDeInvocacion.get(Energia.Planta));
+        modificarEnergia(enJuego.energia, Energia.Agua, cartaObjetivo.costoDeInvocacion.get(Energia.Agua));
     }
 
     private void modificarEnergia(HashMap<Energia, Integer> energias,Energia energia, Integer costo){

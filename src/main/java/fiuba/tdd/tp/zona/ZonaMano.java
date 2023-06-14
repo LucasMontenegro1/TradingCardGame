@@ -18,7 +18,7 @@ public class ZonaMano implements Zona {
     }
 
     @Override
-    public Zona invocar(){
+    public Zona invocar() {
         return new ZonaArtefacto();
     }    
 

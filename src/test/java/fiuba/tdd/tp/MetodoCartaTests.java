@@ -137,13 +137,13 @@ public class MetodoCartaTests {
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
+        enJuego.iniciarTablero();
 
         sacrificio.ejecutar(enJuego, null, null, null, carta, null, null);
 
         assertEquals(3, enJuego.energiaFuego());
         assertEquals(3, enJuego.energiaPlanta());
         assertEquals(0, enJuego.energiaAgua());
-
     }
 
     @Test

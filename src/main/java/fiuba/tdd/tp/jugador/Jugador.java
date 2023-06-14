@@ -93,7 +93,7 @@ public class Jugador {
     }
 
     public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente, CartaNoEncontrada {
-        if (this.mazos.get(nombre) != null) {
+        if (this.mazos.containsKey(nombre)) {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
         }
 

@@ -3,11 +3,13 @@ package fiuba.tdd.tp.acceptance;
 
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
+import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
 import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.driver.*;
+import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.jugador.Jugador;
 import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
@@ -28,33 +30,37 @@ import java.util.Optional;
 @SpringBootTest
 public class AcceptanceTestRoot<Account, Card> {
 
+    final static String ZonaArtefacto = "ZonaArtefacto";
+    final static String ZonaCombate = "ZonaCombate";
+    final static String ZonaReserva = "ZonaReserva";
+
     static Map<DriverCardName, CartasDisponibles> mapCartas = new HashMap<>();
         static {
-            mapCartas.put(DriverCardName.Antimagic, CartasDisponibles.ANTIMAGIA);
+            mapCartas.put(DriverCardName.WaterEnergy, CartasDisponibles.AGUA);
+            mapCartas.put(DriverCardName.FireEnergy, CartasDisponibles.FUEGO);
+            mapCartas.put(DriverCardName.PlantEnergy, CartasDisponibles.PLANTA);
             mapCartas.put(DriverCardName.Alchemist, CartasDisponibles.ALQUIMISTA);
+            mapCartas.put(DriverCardName.Antimagic, CartasDisponibles.ANTIMAGIA);
+            mapCartas.put(DriverCardName.MagicBarrier, CartasDisponibles.BARRERAMAGICA);
             mapCartas.put(DriverCardName.Corrosion, CartasDisponibles.CORROSION);
             mapCartas.put(DriverCardName.Drain, CartasDisponibles.DRENAR);
-            mapCartas.put(DriverCardName.FireEnergy, CartasDisponibles.FUEGO);
-            mapCartas.put(DriverCardName.WaterEnergy, CartasDisponibles.AGUA);
-            mapCartas.put(DriverCardName.PlantEnergy, CartasDisponibles.PLANTA);
-            mapCartas.put(DriverCardName.BlockReaction, CartasDisponibles.IMPEDIR);
+            mapCartas.put(DriverCardName.MagicSword, CartasDisponibles.ESPADAMAGICA);
             mapCartas.put(DriverCardName.Goblin, CartasDisponibles.GOBLIN);
             mapCartas.put(DriverCardName.Hospital, CartasDisponibles.HOSPITAL);
+            mapCartas.put(DriverCardName.BlockReaction, CartasDisponibles.IMPEDIR);
             mapCartas.put(DriverCardName.Inventor, CartasDisponibles.INVENTOR);
-            mapCartas.put(DriverCardName.Saboteur, CartasDisponibles.SABOTEAR);
-            mapCartas.put(DriverCardName.Resonance, CartasDisponibles.RESONANCIA);
-            mapCartas.put(DriverCardName.Treason, CartasDisponibles.TRAICION);
             mapCartas.put(DriverCardName.Orc, CartasDisponibles.ORCO);
             mapCartas.put(DriverCardName.Recycle, CartasDisponibles.RECICLAR);
-            mapCartas.put(DriverCardName.MagicSword, CartasDisponibles.ESPADAMAGICA);
-            mapCartas.put(DriverCardName.MagicDrill, CartasDisponibles.TALADROMAGICO);
-            mapCartas.put(DriverCardName.MagicBarrier, CartasDisponibles.BARRERAMAGICA);
+            mapCartas.put(DriverCardName.Resonance, CartasDisponibles.RESONANCIA);
+            mapCartas.put(DriverCardName.Saboteur, CartasDisponibles.SABOTEAR);
             mapCartas.put(DriverCardName.Sacrifice, CartasDisponibles.SACRIFICIO);
+            mapCartas.put(DriverCardName.MagicDrill, CartasDisponibles.TALADROMAGICO);
+            mapCartas.put(DriverCardName.Treason, CartasDisponibles.TRAICION);
         }
 
         static Map<DriverGameMode, Modo> mapModo = new HashMap<>();
         static {
-            mapModo.put(DriverGameMode.CreatureSlayer, new Modo1());
+            mapModo.put(DriverGameMode.HitpointLoss, new Modo1());
             mapModo.put(DriverGameMode.CreatureSlayer, new Modo2());
         }
 
@@ -62,6 +68,21 @@ public class AcceptanceTestRoot<Account, Card> {
         static {
             mapJugador.put(DriverMatchSide.Blue, "blue");
             mapJugador.put(DriverMatchSide.Green, "green");
+        }
+
+        static Map<DriverTurnPhase, String> mapFase = new HashMap<>();
+        static {
+            mapFase.put(DriverTurnPhase.Initial, "EtapaInicial");
+            mapFase.put(DriverTurnPhase.Main, "EtapaPrincipal");
+            mapFase.put(DriverTurnPhase.Attack, "EtapaDeAtaque");
+            mapFase.put(DriverTurnPhase.End, null);
+        }
+
+        static Map<DriverActiveZone, String> mapZona = new HashMap<>();
+        static {
+            mapZona.put(DriverActiveZone.Artifact, ZonaArtefacto);
+            mapZona.put(DriverActiveZone.Combat, ZonaCombate);
+            mapZona.put(DriverActiveZone.Reserve, ZonaReserva);
         }
 
     protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
@@ -111,6 +132,10 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void addDeckCards(Jugador account, String deckName, DriverCardName cardName, int amount) {
+            if (cardName == null) {
+                return;
+            } 
+            
             String nombreCarta = mapCartas.get(cardName).nombre;
             
             if (!account.getMazos().containsKey(deckName)) {
@@ -132,10 +157,7 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public MatchDriver<Carta> startMatch(DriverGameMode mode, Jugador blue, String blueDeck, Jugador green, String greenDeck) {
-            
-            testDriver.addDeckCards(blue, blueDeck, null, 0);
-            testDriver.addDeckCards(green, greenDeck, null, 0);
-
+        
             Mazo mazoJugadorBlue = blue.getMazos().get(blueDeck);
             Mazo mazoJugadorGreen = green.getMazos().get(greenDeck);
 
@@ -145,10 +167,8 @@ public class AcceptanceTestRoot<Account, Card> {
             Partida partida;
 
             try {
-                blue.agregarMazo(blueDeck, mazoJugadorBlue);
-                green.agregarMazo(greenDeck, mazoJugadorGreen);
                 partida = new Partida(mapModo.get(mode), blue.nombreJugador(), green.nombreJugador(), mazoJugadorBlue, mazoJugadorGreen);             
-            } catch (MazoExistente | CartaNoEncontrada | PartidaInvalida e) {
+            } catch (PartidaInvalida e) {
                 throw new RuntimeException(e);
             }
             
@@ -193,28 +213,39 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void start() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'start'");
+            partida.iniciarPartida();
+        }
+
+        private boolean mismaEtapa(String nombreEtapa, Etapa etapa) {
+            return (nombreEtapa == null && etapa == null) || (etapa.getClass().getSimpleName() == nombreEtapa);
         }
 
         @Override
         public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
-            /**
-             * End phases and turns until the current player and phase match the
-             * arguments. Must end at least one phase
-             */
 
-            throw new UnsupportedOperationException("Unimplemented method 'skipToPhase'");
+            String jugador = mapJugador.get(player);
+            String etapa = mapFase.get(phase);
+
+            while (!partida.jugadorEnTurno(jugador) && !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual())) {
+                partida.terminarEtapa();
+            }
         }
 
         @Override
         public Carta summon(DriverMatchSide player, DriverCardName card, DriverActiveZone zone) {
-            /**
-             * Play one card from the player's hand into the given zone
-             * @return Reference to the newly placed card
-             * @throws RuntimeException if the summon can't complete as indicated
-             */
-            throw new UnsupportedOperationException("Unimplemented method 'summon'");
+
+            String carta = mapCartas.get(card).nombre;
+            
+            Tablero tableroJugador = partida.tableroJugador(mapJugador.get(player));
+
+            String zona = mapZona.get(zone);
+
+            try {
+                Carta cartaMovida = tableroJugador.invocarCarta(carta, zona);
+                return cartaMovida;
+            } catch (CartaNoEncontrada | EnergiaInsuficiente e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
