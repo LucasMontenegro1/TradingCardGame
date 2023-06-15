@@ -15,6 +15,9 @@ import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.driver.*;
 import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaDeAtaque;
+import fiuba.tdd.tp.etapa.EtapaInicial;
+import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.jugador.Jugador;
 import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
@@ -82,9 +85,9 @@ public class AcceptanceTestRoot<Account, Card> {
 
         static Map<DriverTurnPhase, String> mapFase = new HashMap<>();
         static {
-            mapFase.put(DriverTurnPhase.Initial, "EtapaInicial");
-            mapFase.put(DriverTurnPhase.Main, "EtapaPrincipal");
-            mapFase.put(DriverTurnPhase.Attack, "EtapaDeAtaque");
+            mapFase.put(DriverTurnPhase.Initial, EtapaInicial.class.getSimpleName());
+            mapFase.put(DriverTurnPhase.Main, EtapaPrincipal.class.getSimpleName());
+            mapFase.put(DriverTurnPhase.Attack, EtapaDeAtaque.class.getSimpleName());
             mapFase.put(DriverTurnPhase.End, null);
         }
 
@@ -230,18 +233,22 @@ public class AcceptanceTestRoot<Account, Card> {
             }
         }
 
-        private boolean mismaEtapa(String nombreEtapa, Etapa etapa) {
-            return (nombreEtapa == null && etapa == null) || (etapa.getClass().getSimpleName() == nombreEtapa);
+        private boolean mismaEtapa(String nombreEtapa, Etapa etapa, DriverTurnPhase phase) {
+            return (phase == DriverTurnPhase.End && etapa == null) || (etapa.getClass().getSimpleName() == nombreEtapa);
         }
 
         @Override
         public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
 
+            System.out.println("SKIP TO PHASE");
+
             String jugador = mapJugador.get(player);
-            String etapa = mapFase.get(phase);  
+            String etapa = mapFase.get(phase);
 
             try {
-                while (!partida.jugadorEnTurno(jugador) && !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual())) {
+                System.out.println(partida.jugadorEnTurno(jugador));
+                System.out.println(mismaEtapa(etapa, partida.turnoEnProceso().etapaActual(), phase));
+                while (!partida.jugadorEnTurno(jugador) || !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual(), phase)) {
                     partida.terminarEtapa();
                 }
             } catch (MovimientoInvalido e) {
@@ -272,14 +279,27 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void attackCreature(Carta creature, int index, Carta target) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'attackCreature'");
+            
+            ArrayList<Carta> cartasObjetivo = new ArrayList<>();
+            cartasObjetivo.add(target);
+
+            try {
+                partida.activarCarta(creature, index, null, cartasObjetivo, null);
+            } catch (CartaNoActivable e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public void attackPlayer(Carta creature, int index) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'attackPlayer'");
+
+            String jugadorObjetivo = partida.tableroEnEspera().usuario;
+
+            try {
+                partida.activarCarta(creature, index, jugadorObjetivo, null, null);
+            } catch (CartaNoActivable e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
@@ -394,8 +414,22 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public Optional<DriverMatchSide> winner() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'winner'");
+
+            System.out.println(playerHealth(DriverMatchSide.Green));
+            
+            String ganador = partida.ganador();
+            System.out.println(ganador);
+            if (ganador == null) {
+                return Optional.empty();
+            }
+
+            for (DriverMatchSide side : mapJugador.keySet()) {
+                if (mapJugador.get(side) == ganador) {
+                    return Optional.of(side);
+                }
+            }
+
+            return Optional.empty();
         }
     };
 }

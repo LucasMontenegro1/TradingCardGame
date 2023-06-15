@@ -124,7 +124,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(0, match.playerEnergy(Green, DriverEnergyType.Water));
     }
 
-    @Disabled
     @Test
     void hitpointLossVictoryCondition() {
         MatchDriver<Carta> match = commonMatch(Stream.of(

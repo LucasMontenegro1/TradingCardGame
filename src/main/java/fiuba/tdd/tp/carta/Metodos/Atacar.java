@@ -31,8 +31,13 @@ public class Atacar extends MetodoCarta {
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
-        for (Carta carta: cartasObjetivo){
-            carta.disminuirHP(this.hp);
+
+        if (jugadorObjetivo != null) {
+            contrincante.disminuirPuntos(this.hp);
+        } else {
+            for (Carta carta: cartasObjetivo) {
+                carta.disminuirHP(this.hp);
+            }
         }
     }
 

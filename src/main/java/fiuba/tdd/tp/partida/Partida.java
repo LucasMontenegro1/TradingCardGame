@@ -127,11 +127,22 @@ public class Partida {
     }
     
     private String verificarGanador(Tablero tablero) {
-        if (this.partidaEnJuego = this.modo.partidaEnProceso(tablero.puntos)) {
-            return tablero.usuario;
+        if (!this.modo.partidaEnProceso(tablero.puntos)) {
+            this.partidaEnJuego = false;
+            
+            if (tablero == tablero1) {
+                return tablero2.usuario;
+            }
+            
+            return tablero1.usuario;
         }
 
         return null;
+    }
+
+    public String ganador() {
+        
+        return verificarGanador(tablero1) == null ? verificarGanador(tablero2) : verificarGanador(tablero1);
     }
 
     private void invocarPorZona(String zona, Etapa etapaActual, Tablero tablero, Carta cartaEnTablero) throws MovimientoInvalido {
@@ -197,9 +208,10 @@ public class Partida {
                 Ejecucion nuevaEjecucion = new Ejecucion(metodo, tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
                 pilaDeEjecucion.push(nuevaEjecucion);
             } else {
+                System.out.println("Entro acá");
                 metodo.ejecutar(tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
             }
-        } 
+        }
     }
 
     public void iniciarPilaDeEjecucion() {
