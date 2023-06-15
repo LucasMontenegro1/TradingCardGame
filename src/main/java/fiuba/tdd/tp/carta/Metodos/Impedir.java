@@ -2,6 +2,7 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
@@ -14,13 +15,12 @@ import fiuba.tdd.tp.zona.Zona;
 
 public class Impedir extends MetodoCarta {
 
-    public Impedir(ArrayList<Integer> costoDeUso) {
+    public Impedir() {
         tipo = Tipo.Reaccion;
-        costo = costoDeUso;
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
         
         if (pilaMetodos == null) {
             return false;

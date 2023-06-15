@@ -2,6 +2,7 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
@@ -14,13 +15,12 @@ import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Replica extends MetodoCarta {
 
-    public Replica(ArrayList<Integer> costoDeUso) {
+    public Replica() {
         tipo = Tipo.Reaccion;
-        costo = costoDeUso;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
         if (pilaMetodos == null || zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
             return false;
         } 
@@ -33,7 +33,6 @@ public class Replica extends MetodoCarta {
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
             
         Ejecucion metodo = pilaMetodos.peekLast();
-        //logica para elegir
         pilaMetodos.add(metodo);
     }
     

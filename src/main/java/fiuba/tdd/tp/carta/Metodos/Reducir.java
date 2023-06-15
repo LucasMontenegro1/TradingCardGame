@@ -2,6 +2,7 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
@@ -14,13 +15,12 @@ import fiuba.tdd.tp.zona.Zona;
 
 public class Reducir extends MetodoCarta {
 
-    public Reducir(ArrayList<Integer> costoDeUso) {
+    public Reducir() {
         tipo = Tipo.Reaccion;
-        costo = costoDeUso;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
        return zona != null && !(etapa instanceof EtapaInicial);
     }
     

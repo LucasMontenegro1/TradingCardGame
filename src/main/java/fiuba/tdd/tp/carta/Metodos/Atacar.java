@@ -2,6 +2,7 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
@@ -18,14 +19,13 @@ public class Atacar extends MetodoCarta {
 
     private int hp;
     
-    public Atacar(int hp, ArrayList<Integer> costoDeUso) {
+    public Atacar(int hp) {
         tipo = Tipo.Criatura;
-        costo = costoDeUso;
         this.hp = hp;
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
         return etapa instanceof EtapaDeAtaque && zona instanceof ZonaCombate;
     }
 

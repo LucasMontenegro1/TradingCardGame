@@ -2,6 +2,7 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
@@ -15,13 +16,12 @@ import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Descartar extends MetodoCarta {
 
-    public Descartar(Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
+    public Descartar(Tipo tipoCarta) {
         tipo = tipoCarta;
-        costo = costoDeUso;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
         return !(etapa instanceof EtapaInicial) && !(zona == null || zona instanceof ZonaDescarte);
     }
 

@@ -18,13 +18,12 @@ public class Sacrificio extends MetodoCarta {
 
     final Integer CANTIDAD  = 3;
 
-    public Sacrificio(ArrayList<Integer> costoDeUso) {
+    public Sacrificio() {
         tipo = Tipo.Accion;
-        costo = costoDeUso;
     }
   
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
     

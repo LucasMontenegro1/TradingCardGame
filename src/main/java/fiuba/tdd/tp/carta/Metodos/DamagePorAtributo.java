@@ -2,6 +2,7 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Atributo;
@@ -22,16 +23,15 @@ public class DamagePorAtributo extends MetodoCarta {
     private int hp;
     private Atributo atributo;
 
-    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipoCarta, ArrayList<Integer> costoDeUso) {
+    public DamagePorAtributo(int hp, boolean ambosJugadores, Atributo atributo, Tipo tipoCarta) {
         tipo = tipoCarta;
-        costo = costoDeUso;
         this.ambosJugadores = ambosJugadores;
         this.hp = hp;
         this.atributo = atributo;
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
         if (ambosJugadores){
             return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
         }

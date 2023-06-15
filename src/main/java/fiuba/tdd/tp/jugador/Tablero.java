@@ -109,7 +109,7 @@ public class Tablero {
 
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila, cartasUsadas)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila, cartasUsadas, this.energia)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();

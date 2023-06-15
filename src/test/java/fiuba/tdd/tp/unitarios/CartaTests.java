@@ -123,9 +123,9 @@ public class CartaTests {
         Carta antimagia = new Carta(CartasDisponibles.ANTIMAGIA);
         HashMap<Energia, Integer> esperado = new HashMap<>();
         
-        esperado.put(Energia.Fuego, null);
-        esperado.put(Energia.Planta, null);
-        esperado.put(Energia.Agua, null);
+        esperado.put(Energia.Fuego, 0);
+        esperado.put(Energia.Planta, 0);
+        esperado.put(Energia.Agua, 0);
 
         assertEquals(esperado,antimagia.getCostoDeInvocacion());
     }

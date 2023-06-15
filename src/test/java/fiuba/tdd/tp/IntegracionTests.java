@@ -178,7 +178,7 @@ public class IntegracionTests {
         ArrayList<Carta> cartasObjetivosJugador1 = new ArrayList<Carta>();
         cartasObjetivosJugador1.add(cartasAtacablesJugador1.get(0));
         cartasObjetivosJugador1.add(cartasAtacablesJugador1.get(1));
-        partida.activarCarta(partida.tablero2.cartas.get(8), 1, null, cartasObjetivosJugador1, null);
+        partida.activarCarta(partida.tablero2.cartas.get(8), 0, null, cartasObjetivosJugador1, null);
         
         partida.ejecutarPila();
         
