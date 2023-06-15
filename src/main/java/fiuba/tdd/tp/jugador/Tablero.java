@@ -54,6 +54,7 @@ public class Tablero {
 
     public Carta buscarCarta(String nombreCarta, String zona) {
         for (Carta carta : cartas) {
+
             if (carta.nombreCarta() == nombreCarta && (carta.zona != null) && 
                 !(carta.zona instanceof ZonaDescarte) && !(carta.zona.getClass().getSimpleName().equals(zona))) {
 

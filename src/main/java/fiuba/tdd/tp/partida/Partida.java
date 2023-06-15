@@ -201,6 +201,15 @@ public class Partida {
             tablero = tableroEnEspera();
         } 
         
+        System.out.println("Activar carta");
+
+        System.out.println(cartas.size());
+
+        for (Carta unaCarta: cartas.keySet()) {
+            System.out.println(unaCarta.nombre);
+            System.out.println(unaCarta);
+        }
+
         if (cartas != null && cartas.containsKey(carta) && !(cartasUsadasEnTurno.contains(carta))) {
 
             MetodoCarta metodo = cartas.get(carta).get(indiceMetodo);

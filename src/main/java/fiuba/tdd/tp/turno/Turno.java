@@ -8,13 +8,13 @@ public class Turno {
     
     private Etapa etapa; 
 
-    public Etapa etapaActual(){
-        return this.etapa;
-    }
-    
     public Turno (Modo modo) {
         this.etapa = new EtapaInicial(modo);    
     }
+
+    public Etapa etapaActual() {
+        return this.etapa;
+    }    
     
     public void iniciarTurno(Tablero tablero) throws MovimientoInvalido {
         this.etapa.iniciar(tablero);
