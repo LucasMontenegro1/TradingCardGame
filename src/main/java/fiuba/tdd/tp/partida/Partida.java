@@ -10,6 +10,7 @@ import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
 import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
+import fiuba.tdd.tp.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
@@ -137,31 +138,37 @@ public class Partida {
         return this.ganador;
     }
 
-    private void invocarPorZona(String zona, Etapa etapaActual, Tablero tablero, Carta cartaEnTablero) throws MovimientoInvalido {
+    private void invocarPorZona(String zona, Etapa etapaActual, Tablero tablero, Carta cartaEnTablero) throws MovimientoInvalido, ZonaLlena {
         switch (zona) {
             case ZonaArtefacto -> {
                 if (tablero.cartasEnZona(ZonaArtefacto.class.getSimpleName()).size() < maxZonaArtefactos) {
                     etapaActual.invocarAZonaDeArtefacto(cartaEnTablero);
+                } else {
+                    throw new ZonaLlena("No puede agregar más cartas a la zona de artefacto");
                 }
             }
             case ZonaCombate -> {
                 if (tablero.cartasEnZona(ZonaCombate.class.getSimpleName()).size() < maxZonaCombate) {
                     etapaActual.invocarAZonaDeCombate(cartaEnTablero);
+                } else {
+                    throw new ZonaLlena("No puede agregar más cartas a la zona de combate");
                 }
             }
             case ZonaReserva -> {
                 if (tablero.cartasEnZona(ZonaReserva.class.getSimpleName()).size() < maxZonaReserva) {
                     etapaActual.invocarAZonaDeReserva(cartaEnTablero);
+                } else {
+                    throw new ZonaLlena("No puede agregar más cartas a la zona de reserva");
                 }
             }
         }
     }
 
-    public Carta invocarCarta(String jugador, String carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido {
+    public Carta invocarCarta(String jugador, String carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
 
         Tablero tablero = tableroJugador(jugador);
 
-        Carta cartaEnTablero = tablero.buscarCarta(carta);
+        Carta cartaEnTablero = tablero.buscarCarta(carta, zona);
         if (cartaEnTablero == null) {
             throw new CartaNoEncontrada("La carta no existe");
         } 

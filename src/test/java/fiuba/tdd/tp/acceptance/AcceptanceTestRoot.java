@@ -9,6 +9,7 @@ import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
+import fiuba.tdd.tp.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
@@ -262,7 +263,7 @@ public class AcceptanceTestRoot<Account, Card> {
             try {
                 Carta cartaMovida = partida.invocarCarta(nombreJugador, carta, zona);
                 return cartaMovida;
-            } catch (CartaNoEncontrada | EnergiaInsuficiente | MovimientoInvalido e) {
+            } catch (CartaNoEncontrada | EnergiaInsuficiente | MovimientoInvalido | ZonaLlena e) {
                 throw new RuntimeException(e);
             }
         }
@@ -414,8 +415,6 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public Optional<DriverMatchSide> winner() {
-
-            System.out.println(partida.tablero2.puntos);
         
             String ganador = partida.ganador();    
             if (ganador == null) {

@@ -8,25 +8,21 @@ public class ZonaArtefacto implements Zona {
 
     @Override
     public Zona cambiarZona() throws MovimientoInvalido {
-        //return new ZonaArtefacto();
         throw new MovimientoInvalido("");
     }
     
     @Override
     public Zona moverACombate() throws MovimientoInvalido {
-        //return new ZonaArtefacto();
         throw new MovimientoInvalido("");
     }
 
     @Override
     public Zona moverAReserva() throws MovimientoInvalido {
-        //return new ZonaArtefacto();
         throw new MovimientoInvalido("");
     }
 
     @Override
     public Zona invocar() throws MovimientoInvalido {
-        //return new ZonaArtefacto();
         throw new MovimientoInvalido("");
     }
 

@@ -1,9 +1,9 @@
 package fiuba.tdd.tp.driver;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.partida.Partida;
 
 /**
@@ -14,6 +14,8 @@ import fiuba.tdd.tp.partida.Partida;
  * otherwise methods should act as if both players refused to react.
  */
 public interface MatchDriver<CardReference> {
+
+    void nuevaPartida(Partida unaPartida);
 
     /**
      * @return The player's deck, where the Nth card is what they will draw
@@ -38,7 +40,6 @@ public interface MatchDriver<CardReference> {
     /**
      * End phases and turns until the current player and phase match the
      * arguments. Must end at least one phase
-     * @throws MovimientoInvalido
      */
     void skipToPhase(DriverMatchSide player, DriverTurnPhase phase);
 
@@ -80,7 +81,7 @@ public interface MatchDriver<CardReference> {
     );
 
     default void activateArtifact(CardReference artifact) {
-        activateArtifact(artifact, 0, Optional.empty(), List.of());
+        activateArtifact(artifact, 0, Optional.empty(), new ArrayList<>());
     }
 
     /**
@@ -154,6 +155,4 @@ public interface MatchDriver<CardReference> {
      * @return The match's winner, if it has ended
      */
     Optional<DriverMatchSide> winner();
-
-    void nuevaPartida(Partida partida);
 }

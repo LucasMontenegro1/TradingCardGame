@@ -51,9 +51,11 @@ public class Tablero {
         this.puntos -= cantidad;
     }
 
-    public Carta buscarCarta(String nombreCarta) {
+    public Carta buscarCarta(String nombreCarta, String zona) {
         for (Carta carta : cartas) {
-            if (carta.nombreCarta() == nombreCarta && (carta.zona != null) && !(carta.zona instanceof ZonaDescarte)) {
+            if (carta.nombreCarta() == nombreCarta && (carta.zona != null) && 
+                !(carta.zona instanceof ZonaDescarte) && !(carta.zona.getClass().getSimpleName().equals(zona))) {
+
                 return carta;
             }
         }
