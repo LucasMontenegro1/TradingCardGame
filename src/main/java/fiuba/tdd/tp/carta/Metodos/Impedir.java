@@ -20,17 +20,21 @@ public class Impedir extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         
-        MetodoCarta ultimoMetodo = pilaMetodos.peekLast();
+        if (pilaMetodos == null) {
+            return false;
+        }
 
-        return ultimoMetodo.tipo == Tipo.Reaccion && zona != null && !(etapa instanceof EtapaInicial);
+        Ejecucion ultimoMetodo = pilaMetodos.peekLast();
+
+        return ultimoMetodo.metodo.tipo == Tipo.Reaccion && zona != null && !(etapa instanceof EtapaInicial);
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
 
-            pilaMetodos.pop();
+        pilaMetodos.pop();
     }
 }

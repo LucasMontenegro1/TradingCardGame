@@ -21,15 +21,17 @@ public class TransferirCarta extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
     
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
        
-        contrincante.eliminarCarta(cartaObjetivo);
-        enJuego.agregarCarta(cartaObjetivo);
+        for (Carta carta: cartasObjetivo){
+            contrincante.eliminarCarta(carta);
+            enJuego.agregarCarta(carta);
+        }
     }
 }

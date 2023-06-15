@@ -1,14 +1,16 @@
 package fiuba.tdd.tp.zona;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
+
 public interface Zona {
 
-    public Zona cambiarZona();
+    public Zona cambiarZona() throws MovimientoInvalido;
 
-    public Zona moverACombate();
+    public Zona moverACombate() throws MovimientoInvalido;
 
-    public Zona moverAReserva();
+    public Zona moverAReserva() throws MovimientoInvalido;
 
-    public Zona invocar();
+    public Zona invocar() throws MovimientoInvalido;
 
     public Zona descartar();
 }

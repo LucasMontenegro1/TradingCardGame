@@ -1,14 +1,13 @@
 package fiuba.tdd.tp.modo;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.tablero.Tablero;
-import fiuba.tdd.tp.zona.ZonaMano;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Random;
 
 public class Modo1 implements Modo {
     
@@ -24,25 +23,20 @@ public class Modo1 implements Modo {
     final Integer cantCartasIniciales = 5;
 
     final Integer puntosFinDePartida = 0;
-    
-    private void cartaAlAzar(ArrayList<Carta> cartas) {
-        Random random = new Random();
-        Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
-        cartaAleatoria.zona = new ZonaMano();
-    }
 
     @Override
-    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) {
+    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) throws MovimientoInvalido {
         if (cartas.size() > 0){
-            cartaAlAzar(cartas);
+            tomarCarta(cartas, 1);
             return true;
        }
        return false;
     }
 
     @Override
-    public Integer getCantCartasIniciales() {
-        return cantCartasIniciales;
+    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) throws MovimientoInvalido {
+        tomarCarta(cartas1, cantCartasIniciales);
+        tomarCarta(cartas2, cantCartasIniciales);
     }
 
     private Integer cantidadCartas(HashMap<String, Integer> cartas) {
@@ -86,8 +80,15 @@ public class Modo1 implements Modo {
     }
 
     @Override
-    public boolean partidaEnProceso(Integer puntos) {
-        return puntos > puntosFinDePartida;
+    public String calcularGanador(Tablero tablero1, Tablero tablero2) {
+        
+        if (tablero1.puntos <= puntosFinDePartida) {
+           return tablero2.usuario;
+        } else if (tablero2.puntos <= puntosFinDePartida) {
+            return tablero1.usuario;
+        } 
+        
+        return null;
     }
 
     @Override
@@ -109,4 +110,9 @@ public class Modo1 implements Modo {
     public Integer getMaxZonaArtefactos() {
         return maxZonaArtefactos;
     }
+
+	@Override
+	public Integer obtenerPuntosDeVida(Tablero tablero) {
+		return tablero.puntos;
+	}
 }

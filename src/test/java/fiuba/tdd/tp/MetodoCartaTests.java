@@ -2,6 +2,7 @@ package fiuba.tdd.tp;
 
 import fiuba.tdd.tp.carta.Metodos.*;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
@@ -9,7 +10,7 @@ import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Atributo;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.etapa.EtapaPrincipal;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
@@ -35,21 +36,20 @@ public class MetodoCartaTests {
 
     private Mazo mazoModoUno;
 	private Mazo mazoModoDos;
+    private Modo modoUno = new Modo1();
+    private Modo modoDos = new Modo2();
     private ArrayList<Integer> costo;
 
     @BeforeEach
     public void setUp() throws MazoInvalido {
 		HashMap<String, Integer> cartasModoUno = new HashMap<>();
         HashMap<String, Integer> cartasModoDos = new HashMap<>();
-        
-        Modo modoUno = new Modo1();
-		Modo modoDos = new Modo2();
 
 		cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartasModoUno, modoUno);
+        mazoModoUno = new Mazo(cartasModoUno);
 
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 60);
-		mazoModoDos = new Mazo(cartasModoDos, modoDos);
+		mazoModoDos = new Mazo(cartasModoDos);
 
         costo = new ArrayList<>();
         costo.add(0);
@@ -75,12 +75,12 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testTransferenciaDeEnergia(){
+    public void testTransferenciaDeEnergia() throws MovimientoInvalido{
         MetodoCarta transferirEnergia =  new TransferirEnergia(costo);
 
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
 
-        Tablero contrincante = new Tablero("Jugador 2", mazoModoUno);
+        Tablero contrincante = new Tablero("Jugador 2", mazoModoUno, modoUno);
 
         Integer aguaInicialEnJuego = enJuego.energiaAgua();
 
@@ -102,10 +102,12 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testTransferirCarta(){
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos);
+    public void testTransferirCarta() throws MovimientoInvalido{
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
+        Tablero contrincante = new Tablero("Jugador 2", mazoModoDos, modoDos);
 
-        Tablero contrincante = new Tablero("Jugador 2", mazoModoDos);
+        enJuego.iniciarTablero();
+        contrincante.iniciarTablero();
 
         MetodoCarta transfeririCarta = new TransferirCarta(costo);
 
@@ -115,8 +117,10 @@ public class MetodoCartaTests {
 
         Random random = new Random();
         Carta carta = contrincante.cartas.get(random.nextInt(contrincante.cartas.size()));
+        ArrayList<Carta> cartas = new ArrayList<Carta>();
+        cartas.add(carta);
 
-        transfeririCarta.ejecutar(enJuego, contrincante, null, null, carta, null, null);       
+        transfeririCarta.ejecutar(enJuego, contrincante, null, null, cartas, null, null);       
 
         assertEquals(cantInicialEnJuego + 1, enJuego.cartas.size());
         assertEquals(cantInicialContrincante - 1, contrincante.cartas.size());
@@ -130,19 +134,21 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testSacrificio(){
+    public void testSacrificio() throws MovimientoInvalido{
         MetodoCarta sacrificio = new Sacrificio(costo);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
+        ArrayList<Carta> cartas = new ArrayList<Carta>();
+        cartas.add(carta);
 
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
+        enJuego.iniciarTablero();
 
-        sacrificio.ejecutar(enJuego, null, null, null, carta, null, null);
+        sacrificio.ejecutar(enJuego, null, null, null, cartas, null, null);
 
         assertEquals(3, enJuego.energiaFuego());
         assertEquals(3, enJuego.energiaPlanta());
         assertEquals(0, enJuego.energiaAgua());
-
     }
 
     @Test
@@ -160,13 +166,14 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testTomarCarta(){
+    public void testTomarCarta() throws MovimientoInvalido{
 
         Integer cantidad = 4;
 
         MetodoCarta tomarCarta = new TomarCarta(cantidad, Tipo.Artefacto, costo);
 
-        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos);
+        Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
+        enJuego.iniciarTablero();
 
         ArrayList<Carta> cartas = enJuego.cartasEnZona(null);
         
@@ -181,10 +188,11 @@ public class MetodoCartaTests {
     public void testMetodoImpedirEsAplicableLuegoDeActivarUnaReaccion() {
         MetodoCarta impedir = new Impedir(costo);
 
-        Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
+        Deque<Ejecucion> metodos = new ArrayDeque<Ejecucion>();
         MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
+        Ejecucion ejecucion = new Ejecucion(resonancia, null, null, metodos, null, null, null, null);
 
-        metodos.push(resonancia);
+        metodos.push(ejecucion);
 
         Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), metodos);
 
@@ -193,14 +201,13 @@ public class MetodoCartaTests {
     }
 
     @Test
-    public void testMetodoImpedirSeEjecutaCorrectamente() {
+    public void testMetodoImpedirSeEjecutaCorrectamente() throws MovimientoInvalido {
 
         MetodoCarta impedir = new Impedir(costo);
 
         Ejecucion unaEjecucion = new Ejecucion(impedir, null, null, null, null, null, null, null);
 
         Deque<Ejecucion> metodos = new ArrayDeque<Ejecucion>();
-        MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
 
         metodos.push(unaEjecucion);
         metodos.push(unaEjecucion);
@@ -221,13 +228,13 @@ public class MetodoCartaTests {
     public void testMetodoReduccionHPEsAplicable() {
         MetodoCarta impedir = new Reducir(costo);
 
-        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), new ArrayDeque<MetodoCarta>());
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), null);
 
         assertEquals(esAplicable, true);
     }
 
     @Test
-    public void testMetodoReduccionDeHPFuncionaCorrectamente() {
+    public void testMetodoReduccionDeHPFuncionaCorrectamente() throws MovimientoInvalido {
         
         Carta barreraMagica = new Carta(CartasDisponibles.BARRERAMAGICA);
 
@@ -242,22 +249,27 @@ public class MetodoCartaTests {
     public void replicaSeUsaEnArtefacto(){
         MetodoCarta energia = new AumentarEnergia(Energia.Fuego,1,Tipo.Artefacto, costo);
         MetodoCarta replica = new Replica(costo);
-        Deque<MetodoCarta> stack = new ArrayDeque<>();
-        stack.add(energia);
-        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(),stack);
+
+        Ejecucion ejecucion = new Ejecucion(energia, null, null, null, null, null, null, null);
+
+        Deque<Ejecucion> stack = new ArrayDeque<>();
+        stack.add(ejecucion);
+        
+        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(), stack);
         assertTrue(result);
 
     }
 
     @Test
-    public void damagePorAtributoSeUsaEnCriaturasConElAtributo() throws MazoInvalido {
+    public void damagePorAtributoSeUsaEnCriaturasConElAtributo() throws MazoInvalido, MovimientoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
-        Modo modo = new Modo1();
+        
         cartas.put(CartasDisponibles.ESPADAMAGICA.nombre, 1);
         cartas.put(CartasDisponibles.AGUA.nombre, 50);
-        Mazo mazo = new Mazo(cartas, modo);
+        Mazo mazo = new Mazo(cartas);
 
-        Tablero tableroEnemigo = new Tablero("Jugador", mazo);
+        Tablero tableroEnemigo = new Tablero("Jugador", mazo, modoUno);
+        tableroEnemigo.iniciarTablero();
 
         Carta espadaMagica = null;
         for (Carta carta : tableroEnemigo.cartas){

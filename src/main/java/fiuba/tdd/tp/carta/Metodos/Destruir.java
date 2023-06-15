@@ -21,14 +21,17 @@ public class Destruir extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+
         return zona instanceof ZonaMano && etapa instanceof EtapaPrincipal;
     }
     
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
-        cartaObjetivo.descartar();
+        for (Carta carta : cartasObjetivo) {
+            carta.descartar();
+        }
     }
 }

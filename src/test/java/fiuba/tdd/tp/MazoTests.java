@@ -1,129 +1,43 @@
 package fiuba.tdd.tp;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.util.HashMap;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.mazo.Mazo;
-import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.modo.Modo2;
+import fiuba.tdd.tp.jugador.Mazo;
 
 @SpringBootTest
 public class MazoTests {
-   
-    @Test
-    void testCreacionMazoModoUnoInvalido() throws MazoInvalido {
-
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ALQUIMISTA.nombre, 2);
-        
-        Modo modoMazo = new Modo1();
-
-        assertThrows(MazoInvalido.class, () -> {
-            new Mazo(cartas, modoMazo);
-        });
-    }
-      
-    @Test
-    void testCreacionMazoModoDosInvalido() throws MazoInvalido {
-
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.ALQUIMISTA.nombre, 2);
-        
-        Modo modoMazo = new Modo2();
-
-        assertThrows(MazoInvalido.class, () -> {
-            new Mazo(cartas, modoMazo);
-        });
-    }
 
     @Test
-    void testCreacionMazoModoUnoValido() throws MazoInvalido {
+    void testCreacionMazoValido() {
 
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        
-        Modo modoMazo = new Modo1();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
         assert mazo instanceof Mazo;
+        assertEquals(mazo.cantdCartas(), 40);
     }
 
     @Test
-    void testCreacionMazoModoDosValido() throws MazoInvalido {
-
+    void testAgregarCartaAMazo() {
         HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.AGUA.nombre, 60);
-        
-        Modo modoMazo = new Modo2();
+        cartas.put(CartasDisponibles.AGUA.nombre, 1);
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
-        assert mazo instanceof Mazo;
+        assertEquals(mazo.cantdCartas(), 1);
     }
 
     @Test
-    void testAgregarCartaAMazoModoUno() throws MazoInvalido {
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        
-        Modo modoMazo = new Modo1();
-
-        Mazo mazo = new Mazo(cartas, modoMazo);
-
-        mazo.agregarCarta(CartasDisponibles.ALQUIMISTA.nombre); 
-
-        assertEquals(mazo.cantdCartas(), 41);
-    }
-
-    @Test
-    void testAgregarCartaAMazoModoUnoNoSePuede() throws MazoInvalido {
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.AGUA.nombre, 60);
-        
-        Modo modoMazo = new Modo1();
-
-        Mazo mazo = new Mazo(cartas, modoMazo);
-
-        assertThrows(MazoInvalido.class, () -> {
-            mazo.agregarCarta(CartasDisponibles.ALQUIMISTA.nombre); 
-        });
-
-        assertEquals(mazo.cantdCartas(), 60);
-    }
-
-    @Test
-    void testAgregarCartaAMazoModoDosNoEsPosible() throws MazoInvalido {
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.AGUA.nombre, 60);
-        
-        Modo modoMazo = new Modo2();
-
-        Mazo mazo = new Mazo(cartas, modoMazo);
-
-        assertThrows(MazoInvalido.class, () -> {
-            mazo.agregarCarta(CartasDisponibles.ALQUIMISTA.nombre); 
-        });
-
-        assertEquals(mazo.cantdCartas(), 60);
-    }
-
-    @Test
-    void testEliminarCartaAMazoModoUno() throws MazoInvalido {
+    void testEliminarCartaAMazo() {
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 50);
-        
-        Modo modoMazo = new Modo1();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
         mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
 
@@ -131,51 +45,24 @@ public class MazoTests {
     }
 
     @Test
-    void testEliminarCartaAMazoModoUnoNoSePuede() throws MazoInvalido {
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.AGUA.nombre, 40);
-        
-        Modo modoMazo = new Modo1();
+    void testEliminarCartaAMazoNoSePuede() {
+        Mazo mazo = new Mazo();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
 
-        assertThrows(MazoInvalido.class, () -> {
-            mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
-        });
-
-        assertEquals(mazo.cantdCartas(), 40);
+        assertEquals(mazo.cantdCartas(), 0);
     }
 
     @Test
-    void testNoSePuedeEliminarUnaCartaQueNoExiste() throws MazoInvalido {
+    void testNoSePuedeEliminarUnaCartaQueNoExiste() {
         HashMap<String, Integer> cartas = new HashMap<>();
         cartas.put(CartasDisponibles.AGUA.nombre, 50);
-        
-        Modo modoMazo = new Modo1();
 
-        Mazo mazo = new Mazo(cartas, modoMazo);
+        Mazo mazo = new Mazo(cartas);
 
-        assertThrows(MazoInvalido.class, () -> {
-            mazo.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre); 
-        });
+        mazo.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre); 
 
         assertEquals(mazo.cantdCartas(), 50);
-    }
-
-    @Test
-    void testEliminarCartaAMazoModoDos() throws MazoInvalido {
-        HashMap<String, Integer> cartas = new HashMap<>();
-        cartas.put(CartasDisponibles.AGUA.nombre, 60);
-        
-        Modo modoMazo = new Modo2();
-
-        Mazo mazo = new Mazo(cartas, modoMazo);
-
-        assertThrows(MazoInvalido.class, () -> {
-            mazo.eliminarCarta(CartasDisponibles.AGUA.nombre); 
-        }); 
-
-        assertEquals(mazo.cantdCartas(), 60);
     }
 
 }

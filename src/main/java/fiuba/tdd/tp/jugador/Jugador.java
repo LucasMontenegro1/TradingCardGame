@@ -8,7 +8,6 @@ import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.Excepciones.MazoExistente;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.mazo.Mazo;
 
 public class Jugador {
 
@@ -33,8 +32,12 @@ public class Jugador {
         return cartas;
     }
 
-    public Object nombreJugador() {
+    public String nombreJugador() {
         return nombre;
+    }
+
+    public void modificarNombre(String nuevoNombre) {
+        this.nombre = nuevoNombre;
     }
 
     public HashMap<String, Mazo> getMazos() {
@@ -90,7 +93,7 @@ public class Jugador {
     }
 
     public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente, CartaNoEncontrada {
-        if (this.mazos.get(nombre) != null) {
+        if (this.mazos.containsKey(nombre)) {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
         }
 

@@ -21,13 +21,13 @@ public class Descartar extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
-        return !(etapa instanceof EtapaInicial) && (zona == null || zona instanceof ZonaDescarte);
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+        return !(etapa instanceof EtapaInicial) && !(zona == null || zona instanceof ZonaDescarte);
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia)  {
         
         cartaActivada.descartar();
     }

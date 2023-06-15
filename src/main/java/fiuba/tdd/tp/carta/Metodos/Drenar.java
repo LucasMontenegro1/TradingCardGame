@@ -21,15 +21,15 @@ public class Drenar extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
-        // Selecciona un jugador. Durante cada etapa inicial, pierde un punto de energía del tipo que más puntos de energía tenga.
-        throw new UnsupportedOperationException("Unimplemented method 'ejecutar'");
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
+    
+                                
     }
     
 }

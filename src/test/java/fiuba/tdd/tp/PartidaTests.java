@@ -10,22 +10,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
 import fiuba.tdd.tp.tablero.Tablero;
-import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaMano;
 
 @SpringBootTest
 public class PartidaTests {
 
-    Modo modoUno;
-    Modo modoDos;
+    Modo modoUno = new Modo1();
+	Modo modoDos = new Modo2();
     Mazo mazoModoUno;
     Mazo mazoModoDos;
 
@@ -34,15 +34,12 @@ public class PartidaTests {
 		HashMap<String, Integer> cartasModoUno = new HashMap<>();
         HashMap<String, Integer> cartasModoDos = new HashMap<>();
         
-        modoUno = new Modo1();
-		modoDos = new Modo2();
-
 		cartasModoUno.put(CartasDisponibles.AGUA.nombre, 40);
-        mazoModoUno = new Mazo(cartasModoUno, modoUno);
+        mazoModoUno = new Mazo(cartasModoUno);
 
 		cartasModoDos.put(CartasDisponibles.AGUA.nombre, 56);
         cartasModoDos.put(CartasDisponibles.ALQUIMISTA.nombre, 4);
-		mazoModoDos = new Mazo(cartasModoDos, modoDos);
+		mazoModoDos = new Mazo(cartasModoDos);
     }
     
     @Test
@@ -60,15 +57,13 @@ public class PartidaTests {
     }
 
     @Test 
-    public void testPartidaIniciaUnTurno() throws PartidaInvalida {
+    public void testPartidaIniciaUnTurno() throws PartidaInvalida, MovimientoInvalido {
         Partida partida = new Partida(modoUno, "jugador1", "jugador2", mazoModoUno, mazoModoUno);
         
         partida.iniciarPartida();
 
         Tablero tableroJugador1 = partida.tableroJugador("jugador1");
-
-        Zona unaZona = new ZonaMano();
         
-        assertEquals(tableroJugador1.cartasEnZona(unaZona.getClass().getSimpleName()).size(), 6);
+        assertEquals(tableroJugador1.cartasEnZona(ZonaMano.class.getSimpleName()).size(), 6);
     }
 }

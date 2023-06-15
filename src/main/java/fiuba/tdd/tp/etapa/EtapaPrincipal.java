@@ -2,6 +2,7 @@ package fiuba.tdd.tp.etapa;
 
 import java.util.ArrayList;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 
 public class EtapaPrincipal implements Etapa{
@@ -14,7 +15,7 @@ public class EtapaPrincipal implements Etapa{
     }
     
     @Override
-    public void moverCarta(Carta carta){
+    public void moverCarta(Carta carta) throws MovimientoInvalido{
         carta.cambiarZona();
     }
 
@@ -24,18 +25,17 @@ public class EtapaPrincipal implements Etapa{
     }
 
     @Override
-    public void invocarAZonaDeCombate(Carta carta) {
+    public void invocarAZonaDeCombate(Carta carta) throws MovimientoInvalido {
         carta.moverACombate();
     }
 
     @Override
-    public void invocarAZonaDeReserva(Carta carta) {
+    public void invocarAZonaDeReserva(Carta carta) throws MovimientoInvalido {
         carta.moverAReserva();
     }
 
     @Override
-    public void invocarAZonaDeArtefacto(Carta carta) {
-       carta.zona = carta.zona.invocar();
+    public void invocarAZonaDeArtefacto(Carta carta) throws MovimientoInvalido {
+       carta.moverAArtefacto();
     }
-    
 }

@@ -3,6 +3,7 @@ package fiuba.tdd.tp.carta.Metodos;
 import java.util.ArrayList;
 import java.util.Deque;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Atributo;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
@@ -30,7 +31,7 @@ public class DamagePorAtributo extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         if (ambosJugadores){
             return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
         }
@@ -39,7 +40,7 @@ public class DamagePorAtributo extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, Carta cartaObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) throws MovimientoInvalido {
         
         if (this.ambosJugadores) {
             disminuirHPCartas(enJuego);
@@ -48,10 +49,15 @@ public class DamagePorAtributo extends MetodoCarta {
 
     }
 
-    private void disminuirHPCartas(Tablero unTablero) {
+    private void disminuirHPCartas(Tablero unTablero) throws MovimientoInvalido {
         for (Carta unaCarta : unTablero.cartas) {
             if (unaCarta.esTipo(this.tipo) && (unaCarta.esAtributo(this.atributo)) && !(unaCarta.zona instanceof ZonaMano || unaCarta.zona instanceof ZonaDescarte)) {
                 unaCarta.disminuirHP(this.hp);
+                if (unaCarta.hp == 0) {
+                    unaCarta.descartar();
+                    unTablero.aumentarPuntos(1);
+                    unTablero.cartasEnZona(null).get(0).cambiarZona();
+                }
             }
         }
     }

@@ -1,21 +1,33 @@
 package fiuba.tdd.tp.acceptance;
 
 
+import fiuba.tdd.tp.Excepciones.CartaNoActivable;
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
+import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
 import fiuba.tdd.tp.Excepciones.MazoExistente;
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
+import fiuba.tdd.tp.Excepciones.PartidaInvalida;
+import fiuba.tdd.tp.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.driver.*;
+import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaDeAtaque;
+import fiuba.tdd.tp.etapa.EtapaInicial;
+import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.jugador.Jugador;
-import fiuba.tdd.tp.mazo.Mazo;
+import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
+import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
-
+import fiuba.tdd.tp.tablero.Tablero;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,31 +36,70 @@ import java.util.Optional;
 
 @SpringBootTest
 public class AcceptanceTestRoot<Account, Card> {
-    protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
-        static Map<DriverCardName, CartasDisponibles> map = new HashMap<>();
+
+    final static String ZonaArtefacto = "ZonaArtefacto";
+    final static String ZonaCombate = "ZonaCombate";
+    final static String ZonaReserva = "ZonaReserva";
+
+    static Map<DriverCardName, CartasDisponibles> mapCartas = new HashMap<>();
         static {
-            map.put(DriverCardName.Antimagic, CartasDisponibles.ANTIMAGIA);
-            map.put(DriverCardName.Alchemist, CartasDisponibles.ALQUIMISTA);
-            map.put(DriverCardName.Corrosion, CartasDisponibles.CORROSION);
-            map.put(DriverCardName.Drain, CartasDisponibles.DRENAR);
-            map.put(DriverCardName.FireEnergy, CartasDisponibles.FUEGO);
-            map.put(DriverCardName.WaterEnergy, CartasDisponibles.AGUA);
-            map.put(DriverCardName.PlantEnergy, CartasDisponibles.PLANTA);
-            map.put(DriverCardName.BlockReaction,CartasDisponibles.IMPEDIR);
-            map.put(DriverCardName.Goblin,CartasDisponibles.GOBLIN);
-            map.put(DriverCardName.Hospital,CartasDisponibles.HOSPITAL);
-            map.put(DriverCardName.Inventor,CartasDisponibles.INVENTOR);
-            map.put(DriverCardName.Saboteur,CartasDisponibles.SABOTEAR);
-            map.put(DriverCardName.Resonance,CartasDisponibles.RESONANCIA);
-            map.put(DriverCardName.Treason,CartasDisponibles.TRAICION);
-            map.put(DriverCardName.Orc,CartasDisponibles.ORCO);
-            map.put(DriverCardName.Recycle,CartasDisponibles.RECICLAR);
-            map.put(DriverCardName.MagicSword,CartasDisponibles.ESPADAMAGICA);
-            map.put(DriverCardName.MagicDrill,CartasDisponibles.TALADROMAGICO);
-            map.put(DriverCardName.MagicBarrier,CartasDisponibles.BARRERAMAGICA);
-            map.put(DriverCardName.Sacrifice,CartasDisponibles.SACRIFICIO);
+            mapCartas.put(DriverCardName.WaterEnergy, CartasDisponibles.AGUA);
+            mapCartas.put(DriverCardName.FireEnergy, CartasDisponibles.FUEGO);
+            mapCartas.put(DriverCardName.PlantEnergy, CartasDisponibles.PLANTA);
+            mapCartas.put(DriverCardName.Alchemist, CartasDisponibles.ALQUIMISTA);
+            mapCartas.put(DriverCardName.Antimagic, CartasDisponibles.ANTIMAGIA);
+            mapCartas.put(DriverCardName.MagicBarrier, CartasDisponibles.BARRERAMAGICA);
+            mapCartas.put(DriverCardName.Corrosion, CartasDisponibles.CORROSION);
+            mapCartas.put(DriverCardName.Drain, CartasDisponibles.DRENAR);
+            mapCartas.put(DriverCardName.MagicSword, CartasDisponibles.ESPADAMAGICA);
+            mapCartas.put(DriverCardName.Goblin, CartasDisponibles.GOBLIN);
+            mapCartas.put(DriverCardName.Hospital, CartasDisponibles.HOSPITAL);
+            mapCartas.put(DriverCardName.BlockReaction, CartasDisponibles.IMPEDIR);
+            mapCartas.put(DriverCardName.Inventor, CartasDisponibles.INVENTOR);
+            mapCartas.put(DriverCardName.Orc, CartasDisponibles.ORCO);
+            mapCartas.put(DriverCardName.Recycle, CartasDisponibles.RECICLAR);
+            mapCartas.put(DriverCardName.Resonance, CartasDisponibles.RESONANCIA);
+            mapCartas.put(DriverCardName.Saboteur, CartasDisponibles.SABOTEAR);
+            mapCartas.put(DriverCardName.Sacrifice, CartasDisponibles.SACRIFICIO);
+            mapCartas.put(DriverCardName.MagicDrill, CartasDisponibles.TALADROMAGICO);
+            mapCartas.put(DriverCardName.Treason, CartasDisponibles.TRAICION);
         }
 
+        static Map<DriverGameMode, Modo> mapModo = new HashMap<>();
+        static {
+            mapModo.put(DriverGameMode.HitpointLoss, new Modo1());
+            mapModo.put(DriverGameMode.CreatureSlayer, new Modo2());
+        }
+
+        static Map<DriverEnergyType, Energia> mapEnergia = new HashMap<>();
+        static {
+            mapEnergia.put(DriverEnergyType.Fire, Energia.Fuego);
+            mapEnergia.put(DriverEnergyType.Plant, Energia.Planta);
+            mapEnergia.put(DriverEnergyType.Water, Energia.Agua);
+        }
+
+        static Map<DriverMatchSide, String> mapJugador = new HashMap<>();
+        static {
+            mapJugador.put(DriverMatchSide.Blue, "blue");
+            mapJugador.put(DriverMatchSide.Green, "green");
+        }
+
+        static Map<DriverTurnPhase, String> mapFase = new HashMap<>();
+        static {
+            mapFase.put(DriverTurnPhase.Initial, EtapaInicial.class.getSimpleName());
+            mapFase.put(DriverTurnPhase.Main, EtapaPrincipal.class.getSimpleName());
+            mapFase.put(DriverTurnPhase.Attack, EtapaDeAtaque.class.getSimpleName());
+            mapFase.put(DriverTurnPhase.End, null);
+        }
+
+        static Map<DriverActiveZone, String> mapZona = new HashMap<>();
+        static {
+            mapZona.put(DriverActiveZone.Artifact, ZonaArtefacto);
+            mapZona.put(DriverActiveZone.Combat, ZonaCombate);
+            mapZona.put(DriverActiveZone.Reserve, ZonaReserva);
+        }
+
+    protected Driver<Jugador, Carta> testDriver = new Driver<Jugador, Carta>() {
 
         @Override
         public Jugador newAccount() {
@@ -58,7 +109,7 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public int countCards(Jugador account, DriverCardName cardName) {
             HashMap<String, Integer> cartas = account.getCartas();
-            String nombre = map.get(cardName).nombre;
+            String nombre = mapCartas.get(cardName).nombre;
             return Objects.requireNonNullElse(cartas.get(nombre), 0);
         }
 
@@ -74,8 +125,9 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void buyCards(Jugador account, DriverCardName cardName, int amount) {
-            CartasDisponibles carta = map.get(cardName);
-            for(int i = 0; i< amount; i++){
+            CartasDisponibles carta = mapCartas.get(cardName);
+
+            for(int i = 0; i < amount; i++) {
                 try {
                     account.comprarCarta(carta);
                 } catch (DineroInsuficiente e) {
@@ -87,59 +139,67 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public int countDeckCards(Jugador account, String deckName, DriverCardName cardName) {
             HashMap<String, Mazo> mazos = account.getMazos();
-            HashMap<String, Integer> cartas = mazos.get(deckName).cartas;
-            String nombre = map.get(cardName).nombre;
-            Integer cantidad = Objects.requireNonNullElse(cartas.get(nombre), 0);
-
-            return cantidad;
+            Mazo mazo = mazos.get(deckName);
+            
+            return mazo.cantCartaEspecifica(mapCartas.get(cardName).nombre);
         }
 
         @Override
         public void addDeckCards(Jugador account, String deckName, DriverCardName cardName, int amount) {
-            String nombreCarta = map.get(cardName).nombre;
+            if (cardName == null) {
+                return;
+            } 
             
-            buyCards(account, DriverCardName.FireEnergy, 40);
-
+            String nombreCarta = mapCartas.get(cardName).nombre;
+            
             if (!account.getMazos().containsKey(deckName)) {
-                Mazo mazoModoUno = null;
-                HashMap<String, Integer> cartasModoUno = new HashMap<>();
-                Modo modoUno = new Modo1();
-                cartasModoUno.put(nombreCarta, amount);
-                cartasModoUno.put(CartasDisponibles.FUEGO.nombre, 40);
+                HashMap<String, Integer> cartas = new HashMap<>();
+                cartas.put(nombreCarta, amount);
                 
-                try {
-                    mazoModoUno = new Mazo(cartasModoUno, modoUno);
-                } catch (MazoInvalido e) {
-                    throw new RuntimeException(e);
-                }
+                Mazo mazo = new Mazo(cartas);
 
                 try {
-                    account.agregarMazo(deckName, mazoModoUno);
+                    account.agregarMazo(deckName, mazo);
                 } catch (MazoExistente | CartaNoEncontrada e) {
                     throw new RuntimeException(e);
                 }
             } else {
                 Mazo mazo = account.getMazos().get(deckName);
-                try {
-                    for (int i = 0; i < amount; i++) {
-                        mazo.agregarCarta(nombreCarta);
-                    }
-                } catch (MazoInvalido e) {
-                    throw new RuntimeException(e);
-                }
+                mazo.agregarCarta(nombreCarta, amount);
             }
         }
 
         @Override
         public MatchDriver<Carta> startMatch(DriverGameMode mode, Jugador blue, String blueDeck, Jugador green, String greenDeck) {
+        
+            Mazo mazoJugadorBlue = blue.getMazos().get(blueDeck);
+            Mazo mazoJugadorGreen = green.getMazos().get(greenDeck);
 
-             
+            blue.modificarNombre("blue");
+            green.modificarNombre("green");
+
+            Partida partida;
+
+            try {
+                partida = new Partida(mapModo.get(mode), blue.nombreJugador(), green.nombreJugador(), mazoJugadorBlue, mazoJugadorGreen);             
+            } catch (PartidaInvalida e) {
+                throw new RuntimeException(e);
+            }
             
+            matchDriver.nuevaPartida(partida);
+
             return matchDriver;
         }
     };
 
     protected MatchDriver<Carta> matchDriver = new MatchDriver<Carta>() {
+
+        private Partida partida;
+
+        @Override
+        public void nuevaPartida(Partida unaPartida) {
+            this.partida = unaPartida;
+        }
 
         @Override
         public List<DriverCardName> deckOrder(DriverMatchSide player) {
@@ -149,26 +209,68 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void forceDeckOrder(DriverMatchSide player, List<DriverCardName> cards) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'forceDeckOrder'");
+
+            ArrayList<String> cartas = new ArrayList<>();
+
+            for (DriverCardName card : cards) {
+                cartas.add(mapCartas.get(card).nombre);
+            }
+
+            Tablero tableroJugador = partida.tableroJugador(mapJugador.get(player));
+
+            try {
+                tableroJugador.reordenarMazo(cartas);
+            } catch (CartaNoEncontrada e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public void start() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'start'");
+            try {
+                partida.iniciarPartida();
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private boolean mismaEtapa(String nombreEtapa, Etapa etapa, DriverTurnPhase phase) {
+            return (phase == DriverTurnPhase.End && etapa == null) || (etapa.getClass().getSimpleName() == nombreEtapa);
         }
 
         @Override
         public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'skipToPhase'");
+            try {
+                partida.terminarEtapa();
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
+            
+            String jugador = mapJugador.get(player);
+            String etapa = mapFase.get(phase);
+
+            try {
+                while (!partida.jugadorEnTurno(jugador) || !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual(), phase)) {
+                    partida.terminarEtapa();
+                }
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public Carta summon(DriverMatchSide player, DriverCardName card, DriverActiveZone zone) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'summon'");
+
+            String carta = mapCartas.get(card).nombre;
+            String nombreJugador = mapJugador.get(player);
+            String zona = mapZona.get(zone);
+
+            try {
+                Carta cartaMovida = partida.invocarCarta(nombreJugador, carta, zona);
+                return cartaMovida;
+            } catch (CartaNoEncontrada | EnergiaInsuficiente | MovimientoInvalido | ZonaLlena e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
@@ -179,47 +281,105 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void attackCreature(Carta creature, int index, Carta target) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'attackCreature'");
+            
+            ArrayList<Carta> cartasObjetivo = new ArrayList<>();
+            cartasObjetivo.add(target);
+
+            try {
+                partida.activarCarta(creature, index, null, cartasObjetivo, null);
+            } catch (CartaNoActivable | MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public void attackPlayer(Carta creature, int index) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'attackPlayer'");
+
+            String jugadorObjetivo = partida.tableroEnEspera().usuario;
+
+            try {
+                partida.activarCarta(creature, index, jugadorObjetivo, null, null);
+            } catch (CartaNoActivable | MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public void activateArtifact(Carta artifact, int index, Optional<DriverMatchSide> targetPlayer,
                 List<Carta> targets) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'activateArtifact'");
+            
+            String jugadorObjetivo = null;
+            ArrayList<Carta> cartasObjetivos = new ArrayList<>(targets);
+
+            if (targetPlayer.isPresent()) {
+                jugadorObjetivo = mapJugador.get(targetPlayer.get());
+            } 
+
+            try {
+                partida.activarCarta(artifact, 0, jugadorObjetivo, cartasObjetivos, null);
+            } catch (CartaNoActivable | MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
+        }
+        
+        private void activarAccionReaccion(DriverMatchSide player, DriverCardName card, int index,
+                Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
+            
+            String jugador = mapJugador.get(player);
+            String carta = mapCartas.get(card).nombre;
+            
+            String jugadorObjetivo = null;
+            ArrayList<Carta> cartasObjetivos = new ArrayList<>(targetCards);
+            
+            Tablero tablero = partida.tableroJugador(jugador);
+            HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = tablero.cartasUsables(partida.turnoEnProceso().etapaActual(), partida.pilaDeEjecucion);
+
+            Carta cartaEnJuego = null;
+
+            for (Carta unaCarta : cartasUsables.keySet()) {
+                if (unaCarta.nombre == carta) {
+                    cartaEnJuego = unaCarta;
+                }
+            }
+
+            if (targetPlayer.isPresent()) {
+                jugadorObjetivo = mapJugador.get(targetPlayer.get());
+            } 
+            
+            try {
+                partida.activarCarta(cartaEnJuego, index, jugadorObjetivo, cartasObjetivos, null);
+            } catch (CartaNoActivable | MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public void activateAction(DriverMatchSide player, DriverCardName card, int index,
                 Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'activateAction'");
+        
+            activarAccionReaccion(player, card, index, targetPlayer, targetCards);
         }
+
 
         @Override
         public void startReactionWindow() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'startReactionWindow'");
+            partida.iniciarPilaDeEjecucion();
         }
 
         @Override
         public void endReactionWindow() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'endReactionWindow'");
+            try {
+                partida.ejecutarPila();
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
         public void activateReactionFromHand(DriverMatchSide player, DriverCardName card,
                 Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'activateReactionFromHand'");
+            
+            activarAccionReaccion(player, card, 0, targetPlayer, targetCards);
         }
 
         @Override
@@ -231,20 +391,48 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public int playerHealth(DriverMatchSide player) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'playerHealth'");
+            String jugador = mapJugador.get(player);
+        
+            int puntosDeVida;
+            try {
+                puntosDeVida = partida.puntosDeVida(jugador);
+            } catch (ModoSinPuntosDeVida e) {
+                throw new RuntimeException(e);
+            }
+            return puntosDeVida;
         }
 
         @Override
         public int playerEnergy(DriverMatchSide player, DriverEnergyType energyType) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'playerEnergy'");
+           
+            String jugador = mapJugador.get(player);
+            Energia energia = mapEnergia.get(energyType);
+            Tablero tablero = partida.tableroJugador(jugador);
+
+            switch (energia) {
+                case Fuego -> {return tablero.energiaFuego();}
+                case Agua -> {return tablero.energiaAgua();}
+                case Planta -> {return tablero.energiaPlanta();}
+            }
+            
+            return 0;
         }
 
         @Override
         public Optional<DriverMatchSide> winner() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'winner'");
+        
+            String ganador = partida.ganador();    
+            if (ganador == null) {
+                return Optional.empty();
+            }
+
+            for (DriverMatchSide side : mapJugador.keySet()) {
+                if (mapJugador.get(side) == ganador) {
+                    return Optional.of(side);
+                }
+            }
+
+            return Optional.empty();
         }
     };
 }

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.etapa.EtapaDeAtaque;
@@ -61,7 +62,7 @@ public class TurnoTests {
 	}
 
 	@Test
-	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoUno(){
+	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoUno() throws MovimientoInvalido {
 		
 		Integer puntos = 15;
 	
@@ -75,7 +76,7 @@ public class TurnoTests {
 	}
 
 	@Test 
-	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoUno(){
+	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoUno() throws MovimientoInvalido {
 		
 		Integer puntos = 15;
         
@@ -107,7 +108,7 @@ public class TurnoTests {
 	}
 
 	@Test
-	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoDos(){
+	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoDos() throws MovimientoInvalido {
 		
 		Integer puntos = 4;
 	
@@ -121,7 +122,7 @@ public class TurnoTests {
 	}
 
 	@Test 
-	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoDos(){
+	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoDos() throws MovimientoInvalido {
 		
 		Integer puntos = 15;
         
@@ -133,7 +134,7 @@ public class TurnoTests {
 	}
 
 	@Test
-	void testAdministracionDeEtapasEnUnTurnoModoUno(){
+	void testAdministracionDeEtapasEnUnTurnoModoUno() throws MovimientoInvalido {
 		
 		Integer puntos = 4;
 
@@ -157,7 +158,7 @@ public class TurnoTests {
 	}
 
     @Test 
-	void testAdministracionDeEtapasEnUnTurnoModoDosConMenosDeSeisPuntosDeVictoria(){
+	void testAdministracionDeEtapasEnUnTurnoModoDosConMenosDeSeisPuntosDeVictoria() throws MovimientoInvalido {
 		
 		Integer puntos = 2;
 		
@@ -181,7 +182,7 @@ public class TurnoTests {
 	}
 
     @Test 
-	void testAdministracionDeEtapasEnUnTurnoModoDosConMasDeSeisPuntosDeVictoria(){
+	void testAdministracionDeEtapasEnUnTurnoModoDosConMasDeSeisPuntosDeVictoria() throws MovimientoInvalido {
     	
 		Integer puntos = 10;
 		
