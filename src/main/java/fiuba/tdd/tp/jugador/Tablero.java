@@ -1,4 +1,4 @@
-package fiuba.tdd.tp.tablero;
+package fiuba.tdd.tp.jugador;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,15 +9,15 @@ import java.util.Deque;
 
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
+import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.partida.Ejecucion;
+import fiuba.tdd.tp.turno.Etapa;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Tablero {
@@ -28,6 +28,8 @@ public class Tablero {
     public HashMap<Energia, Integer> energia = new HashMap<Energia, Integer>();
     public Mazo mazoInicial;
     public ArrayList<String> mazoOrdenado;
+    public boolean jugadorAtacadoConDrenar;
+    public Modo modo;
     
     final String AGUA  = "AGUA";
     final String FUEGO  = "FUEGO";
@@ -41,18 +43,21 @@ public class Tablero {
         this.energia.put(Energia.Planta, 0);
         this.mazoInicial = mazo;
         this.mazoOrdenado = new ArrayList<String>();
+        this.jugadorAtacadoConDrenar = false;
+        this.modo = modo;
     }
 
-    public void aumentarPuntos(Integer cantidad){
+    public void aumentarPuntos(Integer cantidad) {
         this.puntos += cantidad;
     }
 
     public void disminuirPuntos(Integer cantidad) {
-        this.puntos -= cantidad;
+        this.puntos -= this.modo.disminuirHPJugador(cantidad);
     }
 
     public Carta buscarCarta(String nombreCarta, String zona) {
         for (Carta carta : cartas) {
+
             if (carta.nombreCarta() == nombreCarta && (carta.zona != null) && 
                 !(carta.zona instanceof ZonaDescarte) && !(carta.zona.getClass().getSimpleName().equals(zona))) {
 
@@ -98,13 +103,13 @@ public class Tablero {
         }
     }
 
-    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa, Deque<Ejecucion> pila) {
+    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa, Deque<Ejecucion> pila, ArrayList<Carta> cartasUsadas) {
         
         HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
 
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila, cartasUsadas)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
@@ -207,5 +212,25 @@ public class Tablero {
 
     public int energiaPlanta() {
         return this.energia.get(Energia.Planta);
+    }
+
+    public void recibirDrenar() {
+        this.jugadorAtacadoConDrenar = true;
+    }
+
+    public Energia obtenerEnergiaMaxima() {
+
+        Energia energiaMaxima = null;
+        Integer maxActual = 0;
+
+        for (Energia energiaEspcifica : this.energia.keySet()) {
+            Integer cantidadEnergia = this.energia.get(energiaEspcifica);
+            if (cantidadEnergia > maxActual) {
+                energiaMaxima = energiaEspcifica;
+                maxActual = cantidadEnergia;
+            }
+        }
+
+        return energiaMaxima;
     }
 }

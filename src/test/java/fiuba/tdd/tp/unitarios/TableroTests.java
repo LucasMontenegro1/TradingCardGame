@@ -1,4 +1,4 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,12 +17,12 @@ import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
 import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
 
 @SpringBootTest
 public class TableroTests {
@@ -216,7 +216,7 @@ public class TableroTests {
 
         Tablero tablero = new Tablero("jugador", mazo, modoUno);
 
-        HashMap<Carta, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque(), null);
+        HashMap<Carta, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque(), null, null);
 
         Set<Carta> cartasUsables = resultadoObtenido.keySet();
 

@@ -1,4 +1,4 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
@@ -107,7 +107,7 @@ public class CartaTests {
     }
 
     @Test
-    void testAlquimistaConCostoDeInvocacion(){
+    void testAlquimistaConCostoDeInvocacion() {
         Carta alquimista = new Carta(CartasDisponibles.ALQUIMISTA);
         HashMap<Energia, Integer> esperado = new HashMap<>();
         
@@ -119,7 +119,7 @@ public class CartaTests {
     }
 
     @Test
-    void testCostoDeCualquierTipo(){
+    void testCostoDeCualquierTipo() {
         Carta antimagia = new Carta(CartasDisponibles.ANTIMAGIA);
         HashMap<Energia, Integer> esperado = new HashMap<>();
         

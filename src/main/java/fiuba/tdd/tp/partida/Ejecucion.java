@@ -7,7 +7,7 @@ import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.jugador.Tablero;
 
 public class Ejecucion {
 
@@ -16,7 +16,7 @@ public class Ejecucion {
     private Tablero tableroContrincante;
     private Deque<Ejecucion> pilaDeEjecucion;
     private String jugadorObjetivo;
-    private ArrayList<Carta> cartasObjetivo;
+    public ArrayList<Carta> cartasObjetivo;
     private Carta cartaActivada;    
     private Energia energia;
     

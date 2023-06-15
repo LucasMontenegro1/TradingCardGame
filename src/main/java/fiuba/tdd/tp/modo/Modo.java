@@ -2,18 +2,16 @@ package fiuba.tdd.tp.modo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.tablero.Tablero;
-import fiuba.tdd.tp.zona.Zona;
+import fiuba.tdd.tp.jugador.Tablero;
 
 public interface Modo {
     
-    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) throws MovimientoInvalido;
+    public boolean ejecutarEtapaInicial(Tablero tablero) throws MovimientoInvalido;
 
-    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) throws MovimientoInvalido;
+    public void iniciarTableros(Tablero tablero1, Tablero tablero2) throws MovimientoInvalido;
 
     public boolean verificarMazoValido(HashMap<String, Integer> cartas);
 
@@ -31,23 +29,18 @@ public interface Modo {
 
 	public String calcularGanador(Tablero tablero1, Tablero tablero2);
 
-    public default void tomarCarta(ArrayList<Carta> cartas, Integer cantidad) throws MovimientoInvalido {
+    public default void tomarCarta(Tablero tablero, Integer cantidad) throws MovimientoInvalido {
         
-        Zona zona = cartas.get(0).zona;
-
-        for (int i = 0; i < cartas.size(); i++) {
-            zona = cartas.get(i).zona;
-            
-            if (zona == null) {
-                for (int j = 0; j < cantidad; j++) {
-                    Carta unaCarta = cartas.get(j+i);
-                    unaCarta.cambiarZona();
-                }
-                break;
+        ArrayList<Carta> cartasEnMazo = tablero.cartasEnZona(null);
+        for (int i = 0; i < cantidad; i++) {
+            if (!cartasEnMazo.isEmpty()) {
+                cartasEnMazo.get(i).cambiarZona();
             }
         }
 
     }
 
     public Integer obtenerPuntosDeVida(Tablero tablero) throws ModoSinPuntosDeVida;
+
+    public Integer disminuirHPJugador(Integer cantidad);
 }

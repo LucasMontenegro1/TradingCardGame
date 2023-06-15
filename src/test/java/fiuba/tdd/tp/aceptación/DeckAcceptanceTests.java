@@ -1,4 +1,4 @@
-package fiuba.tdd.tp.acceptance;
+package fiuba.tdd.tp.aceptación;
 
 import fiuba.tdd.tp.driver.DriverCardName;
 import fiuba.tdd.tp.jugador.Jugador;

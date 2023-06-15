@@ -7,10 +7,10 @@ import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
-import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.partida.Ejecucion;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.Etapa;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
 import fiuba.tdd.tp.zona.Zona;
 import fiuba.tdd.tp.zona.ZonaCombate;
 
@@ -25,7 +25,7 @@ public class Atacar extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
         return etapa instanceof EtapaDeAtaque && zona instanceof ZonaCombate;
     }
 

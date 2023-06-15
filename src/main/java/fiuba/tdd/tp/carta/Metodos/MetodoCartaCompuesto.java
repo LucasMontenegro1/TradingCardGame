@@ -6,9 +6,9 @@ import java.util.Deque;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.partida.Ejecucion;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.Etapa;
 import fiuba.tdd.tp.zona.Zona;
 
 public class MetodoCartaCompuesto extends MetodoCarta {
@@ -22,8 +22,8 @@ public class MetodoCartaCompuesto extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
-        return this.metodoUno.esAplicableA(etapa, zona,pilaMetodos) && this.metodoDos.esAplicableA(etapa, zona,pilaMetodos);
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+        return this.metodoUno.esAplicableA(etapa, zona,pilaMetodos, cartasUsadas) && this.metodoDos.esAplicableA(etapa, zona, pilaMetodos, cartasUsadas);
     }
 
     @Override

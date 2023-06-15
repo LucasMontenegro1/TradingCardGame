@@ -1,74 +1,68 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 
-import java.util.ArrayList;
-
+import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
-import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaInicial;
-import fiuba.tdd.tp.etapa.EtapaPrincipal;
+import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.turno.EtapaInicial;
+import fiuba.tdd.tp.turno.EtapaPrincipal;
 import fiuba.tdd.tp.turno.Turno;
 
 @SpringBootTest
 public class TurnoTests {
 	
-	ArrayList<Carta> cartas = new ArrayList<>();
+	HashMap<String, Integer> cartas = new HashMap<>();
 	Modo modo1 = new Modo1();
 	Modo modo2 = new Modo2();
+    Tablero tablero1;
+    Tablero tablero2;
 
 	@BeforeEach
     public void setUp() throws MazoInvalido {
-		this.cartas.add(new Carta(CartasDisponibles.ALQUIMISTA));
-		this.cartas.add(new Carta(CartasDisponibles.ALQUIMISTA));
-		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
-		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
-		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
-		this.cartas.add(new Carta(CartasDisponibles.ANTIMAGIA));
-		this.cartas.add(new Carta(CartasDisponibles.BARRERAMAGICA));
-		this.cartas.add(new Carta(CartasDisponibles.BARRERAMAGICA));
-		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
-		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
-		this.cartas.add(new Carta(CartasDisponibles.FUEGO));
-    }
+        this.cartas.put(CartasDisponibles.ALQUIMISTA.nombre, 2);
+        this.cartas.put(CartasDisponibles.ANTIMAGIA.nombre, 4);
+        this.cartas.put(CartasDisponibles.BARRERAMAGICA.nombre, 2);
+		this.cartas.put(CartasDisponibles.FUEGO.nombre, 3);
+		
+        Mazo mazo = new Mazo(cartas);
 
+        tablero1 = new Tablero("jugador", mazo, modo1);
+        tablero1.iniciarTablero();
+        tablero2 = new Tablero("jugador", mazo, modo2);
+        tablero2.iniciarTablero();
+    }
 	
 	@Test
 	void testCreacionTurnoDeUnaPartidaModoUno() {
-		
-		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.modo1, puntos);
+        Turno nuevoTurno = new Turno(this.modo1);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
 
 	@Test
 	void testIniciarTurnoDeUnaPartidaModoUno(){
-			
-		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.modo1, puntos);
+        Turno nuevoTurno = new Turno(this.modo1);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
 
 	@Test
 	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoUno() throws MovimientoInvalido {
-		
-		Integer puntos = 15;
 	
-		Turno nuevoTurno = new Turno(this.modo1, puntos);
+		Turno nuevoTurno = new Turno(this.modo1);
 
-		nuevoTurno.iniciarTurno(this.cartas);
+		nuevoTurno.iniciarTurno(tablero1);
 
 		nuevoTurno.pasarDeEtapa();
         
@@ -77,44 +71,36 @@ public class TurnoTests {
 
 	@Test 
 	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoUno() throws MovimientoInvalido {
-		
-		Integer puntos = 15;
         
-		Turno nuevoTurno = new Turno(this.modo1, puntos);
+		Turno nuevoTurno = new Turno(this.modo1);
 
-		nuevoTurno.iniciarTurno(this.cartas);
+		nuevoTurno.iniciarTurno(tablero1);
 
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 	}
 
 	@Test
 	void testCreacionTurnoDeUnaPartidaModoDos() {
-		
-		Integer puntos = 15;
 	
-        Turno nuevoTurno = new Turno(this.modo2, puntos);
+        Turno nuevoTurno = new Turno(this.modo2);
         
         assert nuevoTurno instanceof Turno : "No es una instancia de Turno";
 	}
 
 	@Test
 	void testIniciarTurnoDeUnaPartidaModoDos(){
-			
-		Integer puntos = 15;
 
-        Turno nuevoTurno = new Turno(this.modo2, puntos);
+        Turno nuevoTurno = new Turno(this.modo2);
         
         assert nuevoTurno.etapaActual() instanceof EtapaInicial : "Error al iniciar el turno";
 	}
 
 	@Test
 	void testPasarDeEtapaEnUnTurnoDeJugadorEnUnaPartidaModoDos() throws MovimientoInvalido {
-		
-		Integer puntos = 4;
 	
-		Turno nuevoTurno = new Turno(this.modo2, puntos);
+		Turno nuevoTurno = new Turno(this.modo2);
 
-		nuevoTurno.iniciarTurno(this.cartas);
+		nuevoTurno.iniciarTurno(tablero2);
 
 		nuevoTurno.pasarDeEtapa();
         
@@ -123,24 +109,20 @@ public class TurnoTests {
 
 	@Test 
 	void testInformarEtapaActualDeUnTurnoDeUnaPartidaModoDos() throws MovimientoInvalido {
-		
-		Integer puntos = 15;
         
-		Turno nuevoTurno = new Turno(this.modo2, puntos);
+		Turno nuevoTurno = new Turno(this.modo2);
 
-		nuevoTurno.iniciarTurno(this.cartas);
+		nuevoTurno.iniciarTurno(tablero2);
 
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 	}
 
 	@Test
 	void testAdministracionDeEtapasEnUnTurnoModoUno() throws MovimientoInvalido {
-		
-		Integer puntos = 4;
 
-        Turno nuevoTurno = new Turno(this.modo2, puntos);
+        Turno nuevoTurno = new Turno(this.modo2);
 		
-		nuevoTurno.iniciarTurno(this.cartas);
+		nuevoTurno.iniciarTurno(tablero2);
 
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
@@ -160,11 +142,9 @@ public class TurnoTests {
     @Test 
 	void testAdministracionDeEtapasEnUnTurnoModoDosConMenosDeSeisPuntosDeVictoria() throws MovimientoInvalido {
 		
-		Integer puntos = 2;
-		
-        Turno nuevoTurno = new Turno(this.modo2, puntos);
+        Turno nuevoTurno = new Turno(this.modo2);
 
-		nuevoTurno.iniciarTurno(this.cartas);
+		nuevoTurno.iniciarTurno(tablero2);
 		
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		
@@ -183,12 +163,13 @@ public class TurnoTests {
 
     @Test 
 	void testAdministracionDeEtapasEnUnTurnoModoDosConMasDeSeisPuntosDeVictoria() throws MovimientoInvalido {
-    	
-		Integer puntos = 10;
-		
-		Turno nuevoTurno = new Turno(this.modo2, puntos);
 
-		nuevoTurno.iniciarTurno(this.cartas);
+		Integer puntos = 15;
+		tablero2.puntos = puntos;
+    			
+		Turno nuevoTurno = new Turno(this.modo2);
+
+		nuevoTurno.iniciarTurno(tablero2);
 		
 		assert nuevoTurno.etapaActual() instanceof EtapaInicial;
 		

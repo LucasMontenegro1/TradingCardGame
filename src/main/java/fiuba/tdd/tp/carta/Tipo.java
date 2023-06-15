@@ -1,8 +1,8 @@
 package fiuba.tdd.tp.carta;
 
-import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaPrincipal;
+import fiuba.tdd.tp.turno.Etapa;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.turno.EtapaPrincipal;
 
 public enum Tipo {
     Accion(new EtapaPrincipal()),

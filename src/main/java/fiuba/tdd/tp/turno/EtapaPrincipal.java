@@ -1,17 +1,18 @@
-package fiuba.tdd.tp.etapa;
+package fiuba.tdd.tp.turno;
 
 import java.util.ArrayList;
 
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.jugador.Tablero;
 
 public class EtapaPrincipal implements Etapa{
 
     public ArrayList<Carta> cartasJugador;
 
     @Override
-    public void iniciar(ArrayList<Carta> cartas) {
-        this.cartasJugador = cartas;
+    public void iniciar(Tablero tablero) {
+        this.cartasJugador = tablero.cartas;
     }
     
     @Override

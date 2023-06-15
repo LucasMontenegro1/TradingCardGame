@@ -1,33 +1,28 @@
-package fiuba.tdd.tp.etapa;
-
-import java.util.ArrayList;
+package fiuba.tdd.tp.turno;
 
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 
 public class EtapaInicial implements Etapa {
 
     private Modo modoPartida;
-    private ArrayList<Carta> cartasJugador;
-    private Integer puntosPartida;
-    private boolean asginacion;
+    private boolean asiginacion;
 
-    public EtapaInicial(Modo modo, Integer puntos){
+    public EtapaInicial(Modo modo) {
         this.modoPartida = modo;
-        this.puntosPartida = puntos;
     }
 
     @Override
-    public void iniciar(ArrayList<Carta> cartas) throws MovimientoInvalido {
-        this.cartasJugador = cartas;
-        this.asginacion = this.modoPartida.ejecutarEtapaInicial(cartasJugador, puntosPartida);
+    public void iniciar(Tablero tablero) throws MovimientoInvalido {
+        this.asiginacion = this.modoPartida.ejecutarEtapaInicial(tablero);
     }
 
     @Override
     public Etapa finalizar() {
 
-        if (!this.asginacion){
+        if (!this.asiginacion){
             return null;
         }
         return new EtapaPrincipal();

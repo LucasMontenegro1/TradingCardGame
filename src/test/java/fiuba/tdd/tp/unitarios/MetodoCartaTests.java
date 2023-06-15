@@ -1,4 +1,4 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 
 import fiuba.tdd.tp.carta.Metodos.*;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
@@ -8,14 +8,14 @@ import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Atributo;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Ejecucion;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.turno.EtapaPrincipal;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
 
@@ -64,14 +64,14 @@ public class MetodoCartaTests {
 
         MetodoCarta efecto = new MetodoCartaCompuesto(atacar, tomarCarta);
        
-        assertTrue(efecto.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null));
+        assertTrue(efecto.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(), null, null));
     }
 
     @Test
     public void testTransferirEnergiaCriterioDeAplicacion(){
         MetodoCarta transferirEnergia =  new TransferirEnergia(costo);
 
-        assertTrue(transferirEnergia.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null));
+        assertTrue(transferirEnergia.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null, null));
     }
 
     @Test 
@@ -98,7 +98,7 @@ public class MetodoCartaTests {
     public void testTransferirCartaCriterioDeAplicacion(){
         MetodoCarta transferirCarta = new TransferirCarta(costo);
 
-        assertTrue(transferirCarta.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null));
+        assertTrue(transferirCarta.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null, null));
     }
 
     @Test 
@@ -130,7 +130,7 @@ public class MetodoCartaTests {
     public void testSacrificioCriterioDeAplicacion(){
         MetodoCarta sacrificio = new Sacrificio(costo);
 
-        assertTrue(sacrificio.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null));
+        assertTrue(sacrificio.esAplicableA(new EtapaPrincipal(), new ZonaMano(),null, null));
     }
 
     @Test 
@@ -155,14 +155,14 @@ public class MetodoCartaTests {
     public void testTomarCartaCriaturaCriterioDeAplicacion(){
         MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Criatura, costo);
 
-        assertTrue(tomarCarta.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null));
+        assertTrue(tomarCarta.esAplicableA(new EtapaDeAtaque(), new ZonaCombate(),null, null));
     }
 
     @Test
     public void testTomarCartaArtefactoCriterioDeAplicacion(){
         MetodoCarta tomarCarta = new TomarCarta(2,Tipo.Artefacto, costo);
 
-        assertTrue(tomarCarta.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null));
+        assertTrue(tomarCarta.esAplicableA(new EtapaPrincipal(), new ZonaCombate(),null, null));
     }
 
     @Test 
@@ -194,7 +194,7 @@ public class MetodoCartaTests {
 
         metodos.push(ejecucion);
 
-        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), metodos);
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), metodos, null);
 
         assertEquals(metodos.size(), 1);
         assertEquals(esAplicable, true);
@@ -228,7 +228,7 @@ public class MetodoCartaTests {
     public void testMetodoReduccionHPEsAplicable() {
         MetodoCarta impedir = new Reducir(costo);
 
-        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), null);
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), null, null);
 
         assertEquals(esAplicable, true);
     }
@@ -255,7 +255,7 @@ public class MetodoCartaTests {
         Deque<Ejecucion> stack = new ArrayDeque<>();
         stack.add(ejecucion);
         
-        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(), stack);
+        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(), stack, null);
         assertTrue(result);
 
     }
