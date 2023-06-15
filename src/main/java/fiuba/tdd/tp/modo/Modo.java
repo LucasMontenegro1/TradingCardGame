@@ -41,4 +41,6 @@ public interface Modo {
     }
 
     public Integer obtenerPuntosDeVida(Tablero tablero) throws ModoSinPuntosDeVida;
+
+    public Integer disminuirHPJugador(Integer cantidad);
 }

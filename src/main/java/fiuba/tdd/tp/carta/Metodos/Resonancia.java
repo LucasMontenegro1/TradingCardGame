@@ -2,9 +2,6 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
-
-import org.apache.tomcat.jni.Sockaddr;
-
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;

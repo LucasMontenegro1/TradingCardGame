@@ -9,6 +9,7 @@ import java.util.Deque;
 
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
+import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
@@ -28,6 +29,7 @@ public class Tablero {
     public Mazo mazoInicial;
     public ArrayList<String> mazoOrdenado;
     public boolean jugadorAtacadoConDrenar;
+    public Modo modo;
     
     final String AGUA  = "AGUA";
     final String FUEGO  = "FUEGO";
@@ -42,14 +44,15 @@ public class Tablero {
         this.mazoInicial = mazo;
         this.mazoOrdenado = new ArrayList<String>();
         this.jugadorAtacadoConDrenar = false;
+        this.modo = modo;
     }
 
-    public void aumentarPuntos(Integer cantidad){
+    public void aumentarPuntos(Integer cantidad) {
         this.puntos += cantidad;
     }
 
     public void disminuirPuntos(Integer cantidad) {
-        this.puntos -= cantidad;
+        this.puntos -= this.modo.disminuirHPJugador(cantidad);
     }
 
     public Carta buscarCarta(String nombreCarta, String zona) {

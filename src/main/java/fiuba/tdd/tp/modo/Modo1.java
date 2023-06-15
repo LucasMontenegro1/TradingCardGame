@@ -117,4 +117,9 @@ public class Modo1 implements Modo {
 	public Integer obtenerPuntosDeVida(Tablero tablero) {
 		return tablero.puntos;
 	}
+
+    @Override
+    public Integer disminuirHPJugador(Integer cantidad) {
+        return cantidad;
+    }
 }

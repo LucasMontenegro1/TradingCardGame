@@ -107,4 +107,9 @@ public class Modo2 implements Modo {
 	public Integer obtenerPuntosDeVida(Tablero tablero) throws ModoSinPuntosDeVida {
 		throw new ModoSinPuntosDeVida("");
 	}
+
+    @Override
+    public Integer disminuirHPJugador(Integer cantidad) {
+        return 0;
+    }
 }
