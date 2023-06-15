@@ -16,7 +16,7 @@ public class Ejecucion {
     private Tablero tableroContrincante;
     private Deque<Ejecucion> pilaDeEjecucion;
     private String jugadorObjetivo;
-    private ArrayList<Carta> cartasObjetivo;
+    public ArrayList<Carta> cartasObjetivo;
     private Carta cartaActivada;    
     private Energia energia;
     

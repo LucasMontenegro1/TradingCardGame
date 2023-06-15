@@ -31,6 +31,13 @@ public class Resonancia extends MetodoCarta {
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
-        
+        ArrayList<Carta> resonanciaAnterior = pilaMetodos.pop().cartasObjetivo;
+        if (resonanciaAnterior.size()+1 != cartasObjetivo.size()) {
+            return;
+        }
+
+        for (Carta criatura: cartasObjetivo) {
+            criatura.descartar();
+        }
     }
 }
