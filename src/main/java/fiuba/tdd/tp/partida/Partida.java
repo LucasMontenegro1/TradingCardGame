@@ -13,6 +13,7 @@ import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.jugador.Tablero;
@@ -38,6 +39,7 @@ public class Partida {
     private Modo modo;
     public Deque<Ejecucion> pilaDeEjecucion;
     public ArrayList<Carta> cartasUsadasEnTurno;
+    public ArrayList<Carta> artefactosInvocados;
     private boolean partidaEnJuego;
     private String ganador;
     public Integer maxZonaCombate;
@@ -61,6 +63,7 @@ public class Partida {
         this.maxZonaArtefactos = modoPartida.getMaxZonaArtefactos();
         this.maxZonaCombate = modoPartida.getMaxZonaCombate();
         this.cartasUsadasEnTurno = new ArrayList<Carta>();
+        this.artefactosInvocados = new ArrayList<Carta>();
     }
 
     public Turno turnoEnProceso() {
@@ -119,6 +122,8 @@ public class Partida {
                 this.turno = new Turno(this.modo);
                 this.jugadorEnTurno = tablero1.usuario;
             }
+
+            this.artefactosInvocados.clear();
         }
 
         Tablero tablero = tableroEnTurno();
@@ -182,6 +187,10 @@ public class Partida {
             tablero.disminuirEnergia(Energia.Fuego, cartaEnTablero.costoDeInvocacion.get(Energia.Fuego));
             tablero.disminuirEnergia(Energia.Agua, cartaEnTablero.costoDeInvocacion.get(Energia.Agua));
             tablero.disminuirEnergia(Energia.Planta, cartaEnTablero.costoDeInvocacion.get(Energia.Planta));
+        }
+
+        if (cartaEnTablero.esTipo(Tipo.Accion)) {   
+            artefactosInvocados.add(cartaEnTablero);
         }
         
         return cartaEnTablero;
