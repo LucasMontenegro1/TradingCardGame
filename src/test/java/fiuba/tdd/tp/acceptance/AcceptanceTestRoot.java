@@ -240,7 +240,12 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
-
+            try {
+                partida.terminarEtapa();
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
+            
             String jugador = mapJugador.get(player);
             String etapa = mapFase.get(phase);
 

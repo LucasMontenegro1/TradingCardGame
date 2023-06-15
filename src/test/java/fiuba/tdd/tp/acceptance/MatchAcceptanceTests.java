@@ -116,7 +116,6 @@ public class MatchAcceptanceTests<Account, Card> extends AcceptanceTestRoot<Juga
         });
     }
 
-    @Disabled
     @Test
     void cantAttackTwiceWithSameCreature() {
         MatchDriver<Carta> match = commonMatch(Stream.of(

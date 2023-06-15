@@ -37,6 +37,7 @@ public class Partida {
     private Turno turno;
     private Modo modo;
     public Deque<Ejecucion> pilaDeEjecucion;
+    public ArrayList<Carta> cartasUsadasEnTurno;
     private boolean partidaEnJuego;
     private String ganador;
     public Integer maxZonaCombate;
@@ -59,6 +60,7 @@ public class Partida {
         this.maxZonaReserva = modoPartida.getMaxZonaReserva();
         this.maxZonaArtefactos = modoPartida.getMaxZonaArtefactos();
         this.maxZonaCombate = modoPartida.getMaxZonaCombate();
+        this.cartasUsadasEnTurno = new ArrayList<Carta>();
     }
 
     public Turno turnoEnProceso() {
@@ -107,6 +109,7 @@ public class Partida {
 
     public void terminarEtapa() throws MovimientoInvalido {
         this.turno.pasarDeEtapa();
+        cartasUsadasEnTurno.clear();
     
         if (this.turno.etapaActual() == null) {
             if (jugadorEnTurno == tablero1.usuario) {
@@ -122,7 +125,6 @@ public class Partida {
         this.turno.etapaActual().iniciar(tablero.cartas);
         if (this.turno.etapaActual() instanceof EtapaInicial) {
             verificarGanador();
-            // terminarEtapa();
         }
     }
 
@@ -197,11 +199,10 @@ public class Partida {
             cartas = tableroContrincante.cartasUsables(etapa, pilaDeEjecucion); 
             tableroContrincante = tableroEnTurno();
             tablero = tableroEnEspera();
-        } else {
-            throw new CartaNoActivable("Esta carta no puede ser activada en este momento");
-        }
+        } 
         
-        if (cartas.containsKey(carta)) {
+        if (cartas != null && cartas.containsKey(carta) && !(cartasUsadasEnTurno.contains(carta))) {
+
             MetodoCarta metodo = cartas.get(carta).get(indiceMetodo);
             if (pilaDeEjecucion != null) {
                 Ejecucion nuevaEjecucion = new Ejecucion(metodo, tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
@@ -209,8 +210,12 @@ public class Partida {
             } else {
                 metodo.ejecutar(tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
             }
+
+            cartasUsadasEnTurno.add(carta);
+        } else {
+            throw new CartaNoActivable("Esta carta no está disponible en este momento");
         }
-        
+
         if (modo instanceof Modo1) {
             this.ganador = modo.calcularGanador(tablero, tableroContrincante);
         }
