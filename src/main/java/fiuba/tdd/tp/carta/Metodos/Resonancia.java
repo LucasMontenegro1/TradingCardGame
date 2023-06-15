@@ -20,10 +20,11 @@ public class Resonancia extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
-        if (zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) return false;
-        assert pilaMetodos.peekLast() != null;
-        return pilaMetodos.peekLast() instanceof Resonancia;
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+        if (pilaMetodos == null || zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
+            return false;
+        }
+        return pilaMetodos.peekLast() != null && pilaMetodos.peekLast().metodo instanceof Resonancia;
     }
 
     @Override

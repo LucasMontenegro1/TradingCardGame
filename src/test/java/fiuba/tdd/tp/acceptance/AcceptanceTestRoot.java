@@ -6,10 +6,13 @@ import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
 import fiuba.tdd.tp.Excepciones.MazoExistente;
+import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
+import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.driver.*;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.jugador.Jugador;
@@ -62,6 +65,13 @@ public class AcceptanceTestRoot<Account, Card> {
         static {
             mapModo.put(DriverGameMode.HitpointLoss, new Modo1());
             mapModo.put(DriverGameMode.CreatureSlayer, new Modo2());
+        }
+
+        static Map<DriverEnergyType, Energia> mapEnergia = new HashMap<>();
+        static {
+            mapEnergia.put(DriverEnergyType.Fire, Energia.Fuego);
+            mapEnergia.put(DriverEnergyType.Plant, Energia.Planta);
+            mapEnergia.put(DriverEnergyType.Water, Energia.Agua);
         }
 
         static Map<DriverMatchSide, String> mapJugador = new HashMap<>();
@@ -228,7 +238,7 @@ public class AcceptanceTestRoot<Account, Card> {
         public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
 
             String jugador = mapJugador.get(player);
-            String etapa = mapFase.get(phase);
+            String etapa = mapFase.get(phase);  
 
             try {
                 while (!partida.jugadorEnTurno(jugador) && !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual())) {
@@ -275,11 +285,6 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public void activateArtifact(Carta artifact, int index, Optional<DriverMatchSide> targetPlayer,
                 List<Carta> targets) {
-            /**
-             * Activate an artifact in the player's active zones, supplying targets if
-             * the specific card needs them
-             * @throws RuntimeException if the artifact can't be activated as indicated
-             */
             
             String jugadorObjetivo = null;
             ArrayList<Carta> cartasObjetivos = new ArrayList<>(targets);
@@ -294,31 +299,61 @@ public class AcceptanceTestRoot<Account, Card> {
                 throw new RuntimeException(e);
             }
         }
+        
+        private void activarAccionReaccion(DriverMatchSide player, DriverCardName card, int index,
+                Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
+            
+            String jugador = mapJugador.get(player);
+            String carta = mapCartas.get(card).nombre;
+            
+            String jugadorObjetivo = null;
+            ArrayList<Carta> cartasObjetivos = new ArrayList<>(targetCards);
+            
+            Tablero tablero = partida.tableroJugador(jugador);
+            HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = tablero.cartasUsables(partida.turnoEnProceso().etapaActual(), partida.pilaDeEjecucion);
+
+            Carta cartaEnJuego = null;
+
+            for (Carta unaCarta : cartasUsables.keySet()) {
+                if (unaCarta.nombre == carta) {
+                    cartaEnJuego = unaCarta;
+                }
+            }
+
+            if (targetPlayer.isPresent()) {
+                jugadorObjetivo = mapJugador.get(targetPlayer.get());
+            } 
+            
+            try {
+                partida.activarCarta(cartaEnJuego, index, jugadorObjetivo, cartasObjetivos, null);
+            } catch (CartaNoActivable e) {
+                throw new RuntimeException(e);
+            }
+        }
 
         @Override
         public void activateAction(DriverMatchSide player, DriverCardName card, int index,
                 Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'activateAction'");
+        
+            activarAccionReaccion(player, card, index, targetPlayer, targetCards);
         }
+
 
         @Override
         public void startReactionWindow() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'startReactionWindow'");
+            partida.iniciarPilaDeEjecucion();
         }
 
         @Override
         public void endReactionWindow() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'endReactionWindow'");
+            partida.ejecutarPila();
         }
 
         @Override
         public void activateReactionFromHand(DriverMatchSide player, DriverCardName card,
                 Optional<DriverMatchSide> targetPlayer, List<Carta> targetCards) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'activateReactionFromHand'");
+            
+            activarAccionReaccion(player, card, 0, targetPlayer, targetCards);
         }
 
         @Override
@@ -330,14 +365,31 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public int playerHealth(DriverMatchSide player) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'playerHealth'");
+            String jugador = mapJugador.get(player);
+        
+            int puntosDeVida;
+            try {
+                puntosDeVida = partida.puntosDeVida(jugador);
+            } catch (ModoSinPuntosDeVida e) {
+                throw new RuntimeException(e);
+            }
+            return puntosDeVida;
         }
 
         @Override
         public int playerEnergy(DriverMatchSide player, DriverEnergyType energyType) {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'playerEnergy'");
+           
+            String jugador = mapJugador.get(player);
+            Energia energia = mapEnergia.get(energyType);
+            Tablero tablero = partida.tableroJugador(jugador);
+
+            switch (energia) {
+                case Fuego -> {return tablero.energiaFuego();}
+                case Agua -> {return tablero.energiaAgua();}
+                case Planta -> {return tablero.energiaPlanta();}
+            }
+            
+            return 0;
         }
 
         @Override

@@ -10,7 +10,7 @@ import fiuba.tdd.tp.tablero.Tablero;
 
 public class Ejecucion {
 
-    private MetodoCarta metodo;
+    public MetodoCarta metodo;
     private Tablero tableroEnJuego;
     private Tablero tableroContrincante;
     private Deque<Ejecucion> pilaDeEjecucion;

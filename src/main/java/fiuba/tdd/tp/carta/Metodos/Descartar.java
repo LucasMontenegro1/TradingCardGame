@@ -21,8 +21,8 @@ public class Descartar extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
-        return !(etapa instanceof EtapaInicial) && (zona == null || zona instanceof ZonaDescarte);
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+        return !(etapa instanceof EtapaInicial) && !(zona == null || zona instanceof ZonaDescarte);
     }
 
     @Override

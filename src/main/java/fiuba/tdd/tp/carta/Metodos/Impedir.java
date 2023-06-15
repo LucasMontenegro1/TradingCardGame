@@ -20,11 +20,15 @@ public class Impedir extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         
-        MetodoCarta ultimoMetodo = pilaMetodos.peekLast();
+        if (pilaMetodos == null) {
+            return false;
+        }
 
-        return ultimoMetodo.tipo == Tipo.Reaccion && zona != null && !(etapa instanceof EtapaInicial);
+        Ejecucion ultimoMetodo = pilaMetodos.peekLast();
+
+        return ultimoMetodo.metodo.tipo == Tipo.Reaccion && zona != null && !(etapa instanceof EtapaInicial);
     }
 
     @Override

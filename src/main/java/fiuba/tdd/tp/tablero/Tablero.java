@@ -16,8 +16,8 @@ import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.jugador.Mazo;
-import java.util.ArrayDeque;
 import fiuba.tdd.tp.modo.Modo;
+import fiuba.tdd.tp.partida.Ejecucion;
 import fiuba.tdd.tp.zona.ZonaMano;
 
 public class Tablero {
@@ -96,13 +96,13 @@ public class Tablero {
         }
     }
 
-    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa) {
+    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa, Deque<Ejecucion> pila) {
         
         HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
-        Deque<MetodoCarta> pila = new ArrayDeque<>();
+
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona,pila)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();
@@ -195,15 +195,15 @@ public class Tablero {
         }
     }
 
-    public Integer energiaFuego() {
+    public int energiaFuego() {
         return this.energia.get(Energia.Fuego);
     }
 
-    public Integer energiaAgua() {
+    public int energiaAgua() {
         return this.energia.get(Energia.Agua);
     }
 
-    public Integer energiaPlanta() {
+    public int energiaPlanta() {
         return this.energia.get(Energia.Planta);
     }
 }

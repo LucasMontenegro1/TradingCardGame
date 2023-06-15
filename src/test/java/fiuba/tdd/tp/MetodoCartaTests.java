@@ -187,10 +187,11 @@ public class MetodoCartaTests {
     public void testMetodoImpedirEsAplicableLuegoDeActivarUnaReaccion() {
         MetodoCarta impedir = new Impedir(costo);
 
-        Deque<MetodoCarta> metodos = new ArrayDeque<MetodoCarta>();
+        Deque<Ejecucion> metodos = new ArrayDeque<Ejecucion>();
         MetodoCarta resonancia = new Resonancia(Tipo.Reaccion, costo);
+        Ejecucion ejecucion = new Ejecucion(resonancia, null, null, metodos, null, null, null, null);
 
-        metodos.push(resonancia);
+        metodos.push(ejecucion);
 
         Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), metodos);
 
@@ -226,7 +227,7 @@ public class MetodoCartaTests {
     public void testMetodoReduccionHPEsAplicable() {
         MetodoCarta impedir = new Reducir(costo);
 
-        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), new ArrayDeque<MetodoCarta>());
+        Boolean esAplicable = impedir.esAplicableA(new EtapaPrincipal(), new ZonaCombate(), null);
 
         assertEquals(esAplicable, true);
     }
@@ -247,9 +248,13 @@ public class MetodoCartaTests {
     public void replicaSeUsaEnArtefacto(){
         MetodoCarta energia = new AumentarEnergia(Energia.Fuego,1,Tipo.Artefacto, costo);
         MetodoCarta replica = new Replica(costo);
-        Deque<MetodoCarta> stack = new ArrayDeque<>();
-        stack.add(energia);
-        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(),stack);
+
+        Ejecucion ejecucion = new Ejecucion(energia, null, null, null, null, null, null, null);
+
+        Deque<Ejecucion> stack = new ArrayDeque<>();
+        stack.add(ejecucion);
+        
+        boolean result = replica.esAplicableA(new EtapaPrincipal(),new ZonaMano(), stack);
         assertTrue(result);
 
     }

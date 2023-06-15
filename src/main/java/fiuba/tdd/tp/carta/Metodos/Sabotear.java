@@ -20,10 +20,13 @@ public class Sabotear extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
-        if (zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) return false;
-        assert pilaMetodos.peekLast() != null;
-        return pilaMetodos.peekLast().tipo == Tipo.Artefacto;
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+
+        if (pilaMetodos == null || zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
+            return false;
+        }
+
+        return pilaMetodos.peekLast() != null && pilaMetodos.peekLast().metodo.tipo == Tipo.Artefacto;
     }
     
     @Override

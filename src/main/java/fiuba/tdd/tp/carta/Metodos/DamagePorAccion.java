@@ -24,19 +24,20 @@ public class DamagePorAccion extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
-        
+
         if (jugadorObjetivo != null) {
             contrincante.disminuirPuntos(3);
-        }
-        for (Carta carta: cartasObjetivo){
-            carta.disminuirHP(this.hp);
+        } else {
+            for (Carta carta: cartasObjetivo) {
+                carta.disminuirHP(this.hp);
+            }
         }
     }
 }

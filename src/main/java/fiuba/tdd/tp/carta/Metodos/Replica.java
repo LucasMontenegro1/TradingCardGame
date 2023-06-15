@@ -20,21 +20,21 @@ public class Replica extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
-        if (zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+        if (pilaMetodos == null || zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
             return false;
         } 
         
-        return pilaMetodos.peekLast() != null && pilaMetodos.peekLast().tipo == Tipo.Artefacto;
+        return pilaMetodos.peekLast() != null && pilaMetodos.peekLast().metodo.tipo == Tipo.Artefacto;
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
             
-            Ejecucion metodo = pilaMetodos.peekLast();
-            //logica para elegir
-            pilaMetodos.add(metodo);
+        Ejecucion metodo = pilaMetodos.peekLast();
+        //logica para elegir
+        pilaMetodos.add(metodo);
     }
     
 }

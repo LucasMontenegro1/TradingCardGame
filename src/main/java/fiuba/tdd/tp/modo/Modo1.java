@@ -3,6 +3,8 @@ package fiuba.tdd.tp.modo;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
+import fiuba.tdd.tp.tablero.Tablero;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -101,4 +103,9 @@ public class Modo1 implements Modo {
     public Integer getMaxZonaArtefactos() {
         return maxZonaArtefactos;
     }
+
+	@Override
+	public Integer obtenerPuntosDeVida(Tablero tablero) {
+		return tablero.puntos;
+	}
 }

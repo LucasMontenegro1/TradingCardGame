@@ -67,7 +67,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
-    @Disabled
     @Test
     void cantSummonInWrongPhase() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -86,7 +85,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         });
     }
 
-    @Disabled
     @Test
     void useAction() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -103,7 +101,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(17, match.playerHealth(Green));
     }
 
-    @Disabled
     @Test
     void useReaction() {
         MatchDriver<Carta> match = commonMatch(Stream.of(

@@ -3,8 +3,10 @@ package fiuba.tdd.tp.modo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.Zona;
 
 public interface Modo {
@@ -44,4 +46,6 @@ public interface Modo {
             unaCarta.cambiarZona();
         }
     }
+
+    public Integer obtenerPuntosDeVida(Tablero tablero) throws ModoSinPuntosDeVida;
 }

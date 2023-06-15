@@ -21,7 +21,8 @@ public class Destruir extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+
         return zona instanceof ZonaMano && etapa instanceof EtapaPrincipal;
     }
     

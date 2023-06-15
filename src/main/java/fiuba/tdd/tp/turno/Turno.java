@@ -24,7 +24,7 @@ public class Turno {
         this.etapa.iniciar(cartas);
     }
 
-    public void pasarDeEtapa(){
+    public void pasarDeEtapa() {
         this.etapa = this.etapa.finalizar();
     }
 }

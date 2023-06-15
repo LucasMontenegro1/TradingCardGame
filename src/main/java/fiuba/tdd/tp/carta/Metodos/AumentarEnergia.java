@@ -28,7 +28,7 @@ public class AumentarEnergia extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<MetodoCarta> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
         if (this.tipo == Tipo.Criatura){
             return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
         }

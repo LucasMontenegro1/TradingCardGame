@@ -1,17 +1,20 @@
 package fiuba.tdd.tp.partida;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
 import fiuba.tdd.tp.Excepciones.CartaNoActivable;
 import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
+import fiuba.tdd.tp.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.etapa.Etapa;
+import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.tablero.Tablero;
@@ -26,12 +29,12 @@ public class Partida {
     final static String ZonaCombate = "ZonaCombate";
     final static String ZonaReserva = "ZonaReserva";
 
-    private String jugadorEnTurno;
+    public String jugadorEnTurno;
     private Tablero tablero1;
     private Tablero tablero2;
     private Turno turno;
     private Modo modo;
-    private Deque<Ejecucion> pilaDeEjecucion;
+    public Deque<Ejecucion> pilaDeEjecucion;
     private boolean partidaEnJuego;
     private String ganador;
     public Integer maxZonaCombate;
@@ -45,6 +48,7 @@ public class Partida {
         this.modo = modoPartida;
         this.partidaEnJuego = true;
         this.ganador = null;
+        this.pilaDeEjecucion = null;
 		this.jugadorEnTurno = unJugador;
         this.tablero1 = new Tablero(unJugador, unMazo, modoPartida);
         this.tablero2 = new Tablero(otroJugador, otroMazo, modoPartida);
@@ -59,7 +63,7 @@ public class Partida {
     }
 
     public void iniciarPartida() throws MovimientoInvalido {
-        
+
         tablero1.iniciarTablero();
         tablero2.iniciarTablero();
         
@@ -79,21 +83,27 @@ public class Partida {
         return null;
     }
 
+    public Integer puntosDeVida(String jugador) throws ModoSinPuntosDeVida {
+        
+        Tablero tablero = tableroJugador(jugador);
+
+        return modo.obtenerPuntosDeVida(tablero);
+    }
+    
     public Tablero tableroEnTurno() {
         return tableroJugador(jugadorEnTurno);
     }
 
     public Tablero tableroEnEspera() {
         if (tablero1.usuario == jugadorEnTurno) {
-            return tablero1;
+            return tablero2;
         }
 
-        return tablero2;
+        return tablero1;
     }
 
     public void terminarEtapa() throws MovimientoInvalido {
         this.turno.pasarDeEtapa();
-        this.turno.etapaActual().iniciar(null);
     
         if (this.turno.etapaActual() == null) {
             if (jugadorEnTurno == tablero1.usuario) {
@@ -103,6 +113,12 @@ public class Partida {
                 this.turno = new Turno(this.modo, this.tablero1.puntos);
                 this.jugadorEnTurno = tablero1.usuario;
             }
+        }
+
+        Tablero tablero = tableroEnTurno();
+        this.turno.etapaActual().iniciar(tablero.cartas);
+        if (this.turno.etapaActual() instanceof EtapaInicial) {
+            terminarEtapa();
         }
     }
 
@@ -138,8 +154,7 @@ public class Partida {
         }
     }
 
-    public Carta invocarCarta(String jugador, String 
-    carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido {
+    public Carta invocarCarta(String jugador, String carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido {
 
         Tablero tablero = tableroJugador(jugador);
 
@@ -160,25 +175,35 @@ public class Partida {
         return cartaEnTablero;
     }
 
-    public void activarCarta(Carta carta, Integer indiceMetodo, String jugadorObjetivo, ArrayList<Carta> cartasObjetivos, Energia energia) throws CartaNoActivable {
+    public void activarCarta(Carta carta, Integer indiceMetodo, String jugadorObjetivo, ArrayList<Carta> cartasObjetivos, Energia energia) throws CartaNoActivable {        
         Etapa etapa = turnoEnProceso().etapaActual();
         Tablero tablero = tableroEnTurno();
         Tablero tableroContrincante = tableroEnEspera();
-        HashMap<Carta, ArrayList<MetodoCarta>>  cartas = tablero.cartasUsables(etapa); 
-
-        if (cartas.containsKey(carta)) {
-            MetodoCarta metodoArtefacto = cartas.get(carta).get(indiceMetodo);
-            metodoArtefacto.ejecutar(tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
+        HashMap<Carta, ArrayList<MetodoCarta>> cartas = null;
+        
+        if (tablero.cartas.contains(carta)) {
+            cartas = tablero.cartasUsables(etapa, pilaDeEjecucion); 
+        } else if (tableroContrincante.cartas.contains(carta)) {
+            cartas = tableroContrincante.cartasUsables(etapa, pilaDeEjecucion); 
+            tableroContrincante = tableroEnTurno();
+            tablero = tableroEnEspera();
         } else {
             throw new CartaNoActivable("Esta carta no puede ser activada en este momento");
         }
+        
+        if (cartas.containsKey(carta)) {
+            MetodoCarta metodo = cartas.get(carta).get(indiceMetodo);
+            if (pilaDeEjecucion != null) {
+                Ejecucion nuevaEjecucion = new Ejecucion(metodo, tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
+                pilaDeEjecucion.push(nuevaEjecucion);
+            } else {
+                metodo.ejecutar(tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
+            }
+        } 
     }
 
-    public void agregarMetodoDeCarta(MetodoCarta metodo, String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
-        
-        Ejecucion unaEjecucion = new Ejecucion(metodo, tablero1, tablero2, pilaDeEjecucion, jugadorObjetivo, cartasObjetivo, cartaActivada, energia);
-        
-        pilaDeEjecucion.push(unaEjecucion);
+    public void iniciarPilaDeEjecucion() {
+        this.pilaDeEjecucion = new ArrayDeque<>();
     }
     
     public void ejecutarPila() {
@@ -192,6 +217,6 @@ public class Partida {
             }
         }
 
-        pilaDeEjecucion.clear();
+        pilaDeEjecucion = null;
     }
 }
