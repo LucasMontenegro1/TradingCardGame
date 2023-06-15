@@ -18,7 +18,7 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.partida.Ejecucion;
-import fiuba.tdd.tp.zona.ZonaMano;
+import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Tablero {
 
@@ -52,12 +52,12 @@ public class Tablero {
     }
 
     public Carta buscarCarta(String nombreCarta) {
-        for (Carta carta : cartas){
-            if (carta.nombreCarta() == nombreCarta && carta.zona instanceof ZonaMano) {
+        for (Carta carta : cartas) {
+            if (carta.nombreCarta() == nombreCarta && (carta.zona != null) && !(carta.zona instanceof ZonaDescarte)) {
                 return carta;
             }
         }
-
+        
         return null;
     }
 

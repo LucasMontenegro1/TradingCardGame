@@ -3,6 +3,7 @@ package fiuba.tdd.tp.carta.Metodos;
 import java.util.ArrayList;
 import java.util.Deque;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
@@ -30,13 +31,18 @@ public class DamagePorAccion extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) throws MovimientoInvalido {
 
         if (jugadorObjetivo != null) {
             contrincante.disminuirPuntos(3);
         } else {
             for (Carta carta: cartasObjetivo) {
                 carta.disminuirHP(this.hp);
+                if (carta.hp == 0) {
+                    carta.descartar();
+                    enJuego.aumentarPuntos(1);
+                    enJuego.cartasEnZona(null).get(0).cambiarZona();
+                }
             }
         }
     }

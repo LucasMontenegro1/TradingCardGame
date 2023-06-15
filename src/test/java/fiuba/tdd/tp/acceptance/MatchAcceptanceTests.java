@@ -28,7 +28,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
             testDriver.startMatch(HitpointLoss, blue, "main", green, "main");
         });
     }
-
+    
     @Test
     void cantStartMatchWithTooManyCards() {
         List<DriverCardName> deck = loopedCardNames(100, Stream.of());
@@ -38,7 +38,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
             testDriver.startMatch(HitpointLoss, blue, "main", green, "main");
         });
     }
-
+    
     @Test
     void cantSummonWithoutEnergy() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -50,7 +50,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
             match.summon(Blue, MagicSword, DriverActiveZone.Combat);
         });
     }
-
+    
     @Test
     void cantSummonInWrongZone() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -66,7 +66,7 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
             match.summon(Blue, Inventor, DriverActiveZone.Artifact);
         });
     }
-
+    
     @Test
     void cantSummonInWrongPhase() {
         MatchDriver<Carta> match = commonMatch(Stream.of(
@@ -146,7 +146,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
         assertEquals(Optional.of(Blue), match.winner());
     }
 
-    @Disabled
     @Test
     void creatureSlayerVictoryCondition() {
         List<DriverCardName> greenCreatures = List.of(
@@ -195,7 +194,6 @@ public class MatchAcceptanceTests<AccountReference, CardReference> extends Accep
 
         for (DriverCardName creature: greenCreatures) {
             assertEquals(Optional.empty(), match.winner());
-
             match.skipToPhase(Green, DriverTurnPhase.Main);
             greenEnergies.forEach(match::activateArtifact);
             Carta target = match.summon(Green, creature, DriverActiveZone.Combat);

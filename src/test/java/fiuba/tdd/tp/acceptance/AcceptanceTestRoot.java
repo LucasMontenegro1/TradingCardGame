@@ -240,14 +240,10 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public void skipToPhase(DriverMatchSide player, DriverTurnPhase phase) {
 
-            System.out.println("SKIP TO PHASE");
-
             String jugador = mapJugador.get(player);
             String etapa = mapFase.get(phase);
 
             try {
-                System.out.println(partida.jugadorEnTurno(jugador));
-                System.out.println(mismaEtapa(etapa, partida.turnoEnProceso().etapaActual(), phase));
                 while (!partida.jugadorEnTurno(jugador) || !mismaEtapa(etapa, partida.turnoEnProceso().etapaActual(), phase)) {
                     partida.terminarEtapa();
                 }
@@ -285,7 +281,7 @@ public class AcceptanceTestRoot<Account, Card> {
 
             try {
                 partida.activarCarta(creature, index, null, cartasObjetivo, null);
-            } catch (CartaNoActivable e) {
+            } catch (CartaNoActivable | MovimientoInvalido e) {
                 throw new RuntimeException(e);
             }
         }
@@ -297,7 +293,7 @@ public class AcceptanceTestRoot<Account, Card> {
 
             try {
                 partida.activarCarta(creature, index, jugadorObjetivo, null, null);
-            } catch (CartaNoActivable e) {
+            } catch (CartaNoActivable | MovimientoInvalido e) {
                 throw new RuntimeException(e);
             }
         }
@@ -312,10 +308,10 @@ public class AcceptanceTestRoot<Account, Card> {
             if (targetPlayer.isPresent()) {
                 jugadorObjetivo = mapJugador.get(targetPlayer.get());
             } 
-            
+
             try {
-                partida.activarCarta(artifact, index, jugadorObjetivo, cartasObjetivos, null);
-            } catch (CartaNoActivable e) {
+                partida.activarCarta(artifact, 0, jugadorObjetivo, cartasObjetivos, null);
+            } catch (CartaNoActivable | MovimientoInvalido e) {
                 throw new RuntimeException(e);
             }
         }
@@ -346,7 +342,7 @@ public class AcceptanceTestRoot<Account, Card> {
             
             try {
                 partida.activarCarta(cartaEnJuego, index, jugadorObjetivo, cartasObjetivos, null);
-            } catch (CartaNoActivable e) {
+            } catch (CartaNoActivable | MovimientoInvalido e) {
                 throw new RuntimeException(e);
             }
         }
@@ -366,7 +362,11 @@ public class AcceptanceTestRoot<Account, Card> {
 
         @Override
         public void endReactionWindow() {
-            partida.ejecutarPila();
+            try {
+                partida.ejecutarPila();
+            } catch (MovimientoInvalido e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @Override
@@ -415,10 +415,9 @@ public class AcceptanceTestRoot<Account, Card> {
         @Override
         public Optional<DriverMatchSide> winner() {
 
-            System.out.println(playerHealth(DriverMatchSide.Green));
-            
-            String ganador = partida.ganador();
-            System.out.println(ganador);
+            System.out.println(partida.tablero2.puntos);
+        
+            String ganador = partida.ganador();    
             if (ganador == null) {
                 return Optional.empty();
             }

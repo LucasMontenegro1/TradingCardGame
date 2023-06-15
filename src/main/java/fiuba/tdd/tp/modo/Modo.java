@@ -29,22 +29,24 @@ public interface Modo {
 
     public Integer getMaxZonaArtefactos();
 
-	public boolean partidaEnProceso(Integer puntos);
+	public String calcularGanador(Tablero tablero1, Tablero tablero2);
 
     public default void tomarCarta(ArrayList<Carta> cartas, Integer cantidad) throws MovimientoInvalido {
         
-        Integer indiceCarta = 0;
-        Zona zona = cartas.get(indiceCarta).zona;
+        Zona zona = cartas.get(0).zona;
 
-        while (zona != null) {
-            indiceCarta++;
-            zona = cartas.get(indiceCarta).zona;
+        for (int i = 0; i < cartas.size(); i++) {
+            zona = cartas.get(i).zona;
+            
+            if (zona == null) {
+                for (int j = 0; j < cantidad; j++) {
+                    Carta unaCarta = cartas.get(j+i);
+                    unaCarta.cambiarZona();
+                }
+                break;
+            }
         }
 
-        for (int i = 0; i < cantidad; i++) {
-            Carta unaCarta = cartas.get(indiceCarta+i);
-            unaCarta.cambiarZona();
-        }
     }
 
     public Integer obtenerPuntosDeVida(Tablero tablero) throws ModoSinPuntosDeVida;

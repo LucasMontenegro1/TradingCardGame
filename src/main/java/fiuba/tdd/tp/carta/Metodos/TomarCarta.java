@@ -2,8 +2,8 @@ package fiuba.tdd.tp.carta.Metodos;
 
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Random;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
@@ -36,14 +36,10 @@ public class TomarCarta extends MetodoCarta {
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
-                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
+                            String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) throws MovimientoInvalido {
         
-        for (int i = 0; i < this.cantidad; i++){
-            ArrayList<Carta> cartas = enJuego.cartasEnZona(null);
-            
-            Random random = new Random();
-            Carta cartaTomada = cartas.get(random.nextInt(cartas.size()));
-            cartaTomada.zona = new ZonaMano();
+        for (int i = 0; i < this.cantidad; i++) {
+            enJuego.cartasEnZona(null).get(0).cambiarZona();
         }
     }
 

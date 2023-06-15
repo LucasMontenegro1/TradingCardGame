@@ -17,6 +17,7 @@ import fiuba.tdd.tp.etapa.Etapa;
 import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
+import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.turno.Turno;
 import fiuba.tdd.tp.zona.ZonaArtefacto;
@@ -30,8 +31,8 @@ public class Partida {
     final static String ZonaReserva = "ZonaReserva";
 
     public String jugadorEnTurno;
-    private Tablero tablero1;
-    private Tablero tablero2;
+    public Tablero tablero1;
+    public Tablero tablero2;
     private Turno turno;
     private Modo modo;
     public Deque<Ejecucion> pilaDeEjecucion;
@@ -46,6 +47,7 @@ public class Partida {
             throw new PartidaInvalida("Los mazos de los jugadores no son compatibles");
         }
         this.modo = modoPartida;
+        this.ganador = null;
         this.partidaEnJuego = true;
         this.ganador = null;
         this.pilaDeEjecucion = null;
@@ -118,7 +120,8 @@ public class Partida {
         Tablero tablero = tableroEnTurno();
         this.turno.etapaActual().iniciar(tablero.cartas);
         if (this.turno.etapaActual() instanceof EtapaInicial) {
-            terminarEtapa();
+            verificarGanador();
+            // terminarEtapa();
         }
     }
 
@@ -126,23 +129,12 @@ public class Partida {
         return unJugador == jugadorEnTurno;
     }
     
-    private String verificarGanador(Tablero tablero) {
-        if (!this.modo.partidaEnProceso(tablero.puntos)) {
-            this.partidaEnJuego = false;
-            
-            if (tablero == tablero1) {
-                return tablero2.usuario;
-            }
-            
-            return tablero1.usuario;
-        }
-
-        return null;
+    private void verificarGanador() {
+        this.ganador = modo.calcularGanador(tablero1, tablero2);
     }
 
     public String ganador() {
-        
-        return verificarGanador(tablero1) == null ? verificarGanador(tablero2) : verificarGanador(tablero1);
+        return this.ganador;
     }
 
     private void invocarPorZona(String zona, Etapa etapaActual, Tablero tablero, Carta cartaEnTablero) throws MovimientoInvalido {
@@ -186,7 +178,7 @@ public class Partida {
         return cartaEnTablero;
     }
 
-    public void activarCarta(Carta carta, Integer indiceMetodo, String jugadorObjetivo, ArrayList<Carta> cartasObjetivos, Energia energia) throws CartaNoActivable {        
+    public void activarCarta(Carta carta, Integer indiceMetodo, String jugadorObjetivo, ArrayList<Carta> cartasObjetivos, Energia energia) throws CartaNoActivable, MovimientoInvalido {        
         Etapa etapa = turnoEnProceso().etapaActual();
         Tablero tablero = tableroEnTurno();
         Tablero tableroContrincante = tableroEnEspera();
@@ -208,9 +200,12 @@ public class Partida {
                 Ejecucion nuevaEjecucion = new Ejecucion(metodo, tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
                 pilaDeEjecucion.push(nuevaEjecucion);
             } else {
-                System.out.println("Entro acá");
                 metodo.ejecutar(tablero, tableroContrincante, pilaDeEjecucion, jugadorObjetivo, cartasObjetivos, carta, energia);
             }
+        }
+        
+        if (modo instanceof Modo1) {
+            this.ganador = modo.calcularGanador(tablero, tableroContrincante);
         }
     }
 
@@ -218,15 +213,10 @@ public class Partida {
         this.pilaDeEjecucion = new ArrayDeque<>();
     }
     
-    public void ejecutarPila() {
+    public void ejecutarPila() throws MovimientoInvalido {
         
         for (Ejecucion ejecucion : pilaDeEjecucion) {
             ejecucion.ejecutar();
-            ganador = verificarGanador(tablero1);
-            ganador = verificarGanador(tablero2);
-            if (!partidaEnJuego) {
-                return;
-            }
         }
 
         pilaDeEjecucion = null;

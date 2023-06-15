@@ -80,8 +80,15 @@ public class Modo1 implements Modo {
     }
 
     @Override
-    public boolean partidaEnProceso(Integer puntos) {
-        return puntos > puntosFinDePartida;
+    public String calcularGanador(Tablero tablero1, Tablero tablero2) {
+        
+        if (tablero1.puntos <= puntosFinDePartida) {
+           return tablero2.usuario;
+        } else if (tablero2.puntos <= puntosFinDePartida) {
+            return tablero1.usuario;
+        } 
+        
+        return null;
     }
 
     @Override

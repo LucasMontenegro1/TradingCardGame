@@ -31,11 +31,8 @@ public class Modo2 implements Modo {
     public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) throws MovimientoInvalido {
         if (puntos > maxPuntosVictoria) {
             return false;
-        }
-        else if (cartas.size() > 0){
-            Random random = new Random();
-            Carta cartaAleatoria  = cartas.get(random.nextInt(cartas.size()));
-            cartaAleatoria.zona = new ZonaMano();
+        } else if (cartas.size() > 0) {
+            tomarCarta(cartas, 1);
             return true;
         }
         return false;
@@ -70,8 +67,15 @@ public class Modo2 implements Modo {
     }
 
     @Override
-    public boolean partidaEnProceso(Integer puntos) {
-        return puntos <= puntosFinDePartida;
+    public String calcularGanador(Tablero tablero1, Tablero tablero2) {
+        
+        if (tablero1.puntos > puntosFinDePartida) {
+           return tablero1.usuario;
+        } else if (tablero2.puntos > puntosFinDePartida) {
+            return tablero2.usuario;
+        } 
+        
+        return null;
     }
 
     @Override

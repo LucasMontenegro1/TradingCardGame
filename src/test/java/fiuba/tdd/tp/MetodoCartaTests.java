@@ -2,6 +2,7 @@ package fiuba.tdd.tp;
 
 import fiuba.tdd.tp.carta.Metodos.*;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
@@ -74,7 +75,7 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testTransferenciaDeEnergia(){
+    public void testTransferenciaDeEnergia() throws MovimientoInvalido{
         MetodoCarta transferirEnergia =  new TransferirEnergia(costo);
 
         Tablero enJuego = new Tablero("Jugador 1", mazoModoUno, modoUno);
@@ -101,7 +102,7 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testTransferirCarta(){
+    public void testTransferirCarta() throws MovimientoInvalido{
         Tablero enJuego = new Tablero("Jugador 1", mazoModoDos, modoDos);
         Tablero contrincante = new Tablero("Jugador 2", mazoModoDos, modoDos);
 
@@ -133,7 +134,7 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testSacrificio(){
+    public void testSacrificio() throws MovimientoInvalido{
         MetodoCarta sacrificio = new Sacrificio(costo);
 
         Carta carta = new Carta(CartasDisponibles.ALQUIMISTA);
@@ -165,7 +166,7 @@ public class MetodoCartaTests {
     }
 
     @Test 
-    public void testTomarCarta(){
+    public void testTomarCarta() throws MovimientoInvalido{
 
         Integer cantidad = 4;
 
@@ -200,7 +201,7 @@ public class MetodoCartaTests {
     }
 
     @Test
-    public void testMetodoImpedirSeEjecutaCorrectamente() {
+    public void testMetodoImpedirSeEjecutaCorrectamente() throws MovimientoInvalido {
 
         MetodoCarta impedir = new Impedir(costo);
 
@@ -233,7 +234,7 @@ public class MetodoCartaTests {
     }
 
     @Test
-    public void testMetodoReduccionDeHPFuncionaCorrectamente() {
+    public void testMetodoReduccionDeHPFuncionaCorrectamente() throws MovimientoInvalido {
         
         Carta barreraMagica = new Carta(CartasDisponibles.BARRERAMAGICA);
 
@@ -260,7 +261,7 @@ public class MetodoCartaTests {
     }
 
     @Test
-    public void damagePorAtributoSeUsaEnCriaturasConElAtributo() throws MazoInvalido {
+    public void damagePorAtributoSeUsaEnCriaturasConElAtributo() throws MazoInvalido, MovimientoInvalido {
         HashMap<String, Integer> cartas = new HashMap<>();
         
         cartas.put(CartasDisponibles.ESPADAMAGICA.nombre, 1);

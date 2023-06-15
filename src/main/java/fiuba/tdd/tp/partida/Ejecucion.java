@@ -3,6 +3,7 @@ package fiuba.tdd.tp.partida;
 import java.util.ArrayList;
 import java.util.Deque;
 
+import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
@@ -31,7 +32,7 @@ public class Ejecucion {
         this.energia = energia;
     }
 
-    public void ejecutar() {
+    public void ejecutar() throws MovimientoInvalido {
         this.metodo.ejecutar(tableroEnJuego, tableroContrincante, pilaDeEjecucion, jugadorObjetivo,
                                 cartasObjetivo, cartaActivada, energia);
     }
