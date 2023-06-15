@@ -25,7 +25,7 @@ public class DamagePorAccion extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
         return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
     }
 

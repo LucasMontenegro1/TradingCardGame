@@ -194,21 +194,12 @@ public class Partida {
         HashMap<Carta, ArrayList<MetodoCarta>> cartas = null;
         
         if (tablero.cartas.contains(carta)) {
-            cartas = tablero.cartasUsables(etapa, pilaDeEjecucion); 
+            cartas = tablero.cartasUsables(etapa, pilaDeEjecucion, cartasUsadasEnTurno); 
         } else if (tableroContrincante.cartas.contains(carta)) {
-            cartas = tableroContrincante.cartasUsables(etapa, pilaDeEjecucion); 
+            cartas = tableroContrincante.cartasUsables(etapa, pilaDeEjecucion, cartasUsadasEnTurno); 
             tableroContrincante = tableroEnTurno();
             tablero = tableroEnEspera();
         } 
-        
-        System.out.println("Activar carta");
-
-        System.out.println(cartas.size());
-
-        for (Carta unaCarta: cartas.keySet()) {
-            System.out.println(unaCarta.nombre);
-            System.out.println(unaCarta);
-        }
 
         if (cartas != null && cartas.containsKey(carta) && !(cartasUsadasEnTurno.contains(carta))) {
 
@@ -236,8 +227,8 @@ public class Partida {
     
     public void ejecutarPila() throws MovimientoInvalido {
         
-        for (Ejecucion ejecucion : pilaDeEjecucion) {
-            ejecucion.ejecutar();
+        while (!pilaDeEjecucion.isEmpty()) {
+            pilaDeEjecucion.pop().ejecutar();
         }
 
         pilaDeEjecucion = null;

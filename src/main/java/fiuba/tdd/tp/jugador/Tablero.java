@@ -100,13 +100,13 @@ public class Tablero {
         }
     }
 
-    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa, Deque<Ejecucion> pila) {
+    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(Etapa etapa, Deque<Ejecucion> pila, ArrayList<Carta> cartasUsadas) {
         
         HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = new HashMap<>();
 
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila)) {
+                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila, cartasUsadas)) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();

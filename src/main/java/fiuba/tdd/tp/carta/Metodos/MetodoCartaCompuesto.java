@@ -22,8 +22,8 @@ public class MetodoCartaCompuesto extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
-        return this.metodoUno.esAplicableA(etapa, zona,pilaMetodos) && this.metodoDos.esAplicableA(etapa, zona,pilaMetodos);
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+        return this.metodoUno.esAplicableA(etapa, zona,pilaMetodos, cartasUsadas) && this.metodoDos.esAplicableA(etapa, zona, pilaMetodos, cartasUsadas);
     }
 
     @Override

@@ -333,7 +333,7 @@ public class AcceptanceTestRoot<Account, Card> {
             ArrayList<Carta> cartasObjetivos = new ArrayList<>(targetCards);
             
             Tablero tablero = partida.tableroJugador(jugador);
-            HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = tablero.cartasUsables(partida.turnoEnProceso().etapaActual(), partida.pilaDeEjecucion);
+            HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = tablero.cartasUsables(partida.turnoEnProceso().etapaActual(), partida.pilaDeEjecucion, partida.cartasUsadasEnTurno);
 
             Carta cartaEnJuego = null;
 

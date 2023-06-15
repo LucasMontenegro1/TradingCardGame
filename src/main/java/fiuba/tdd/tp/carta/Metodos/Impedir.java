@@ -20,7 +20,7 @@ public class Impedir extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
         
         if (pilaMetodos == null) {
             return false;

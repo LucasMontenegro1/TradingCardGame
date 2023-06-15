@@ -3,7 +3,10 @@ package fiuba.tdd.tp.carta.Metodos;
 import java.util.ArrayList;
 import java.util.Deque;
 
+import org.apache.tomcat.jni.Sockaddr;
+
 import fiuba.tdd.tp.carta.Carta;
+import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.jugador.Tablero;
@@ -20,21 +23,19 @@ public class Resonancia extends MetodoCarta {
     }
 
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
-        if (pilaMetodos == null || zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
+        if (pilaMetodos == null || zona instanceof ZonaDescarte) {
             return false;
         }
-        return pilaMetodos.peekLast() != null && pilaMetodos.peekLast().metodo instanceof Resonancia;
+
+        return cartasUsadas.get(cartasUsadas.size()-1).nombre.equals(CartasDisponibles.RESONANCIA.nombre);
     }
 
     @Override
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
-        
-        ArrayList<Carta> resonanciaAnterior = pilaMetodos.pop().cartasObjetivo;
-        if (resonanciaAnterior.size()+1 != cartasObjetivo.size()) {
-            return;
-        }
+
+        pilaMetodos.pop();
 
         for (Carta criatura: cartasObjetivo) {
             criatura.descartar();

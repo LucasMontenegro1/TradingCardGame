@@ -216,7 +216,7 @@ public class TableroTests {
 
         Tablero tablero = new Tablero("jugador", mazo, modoUno);
 
-        HashMap<Carta, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque(), null);
+        HashMap<Carta, ArrayList<MetodoCarta>> resultadoObtenido = tablero.cartasUsables(new EtapaDeAtaque(), null, null);
 
         Set<Carta> cartasUsables = resultadoObtenido.keySet();
 

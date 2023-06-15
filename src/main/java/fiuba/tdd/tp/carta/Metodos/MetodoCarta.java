@@ -19,7 +19,7 @@ public abstract class  MetodoCarta {
     public abstract void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                                     String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) throws MovimientoInvalido;
 
-    public abstract boolean esAplicableA(final Etapa etapa, final Zona zona, Deque<Ejecucion> pilaMetodos);
+    public abstract boolean esAplicableA(final Etapa etapa, final Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas);
     
     public ArrayList<Integer> obtenerCosto() {
         return costo;

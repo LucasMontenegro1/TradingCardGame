@@ -21,7 +21,7 @@ public class Destruir extends MetodoCarta {
     }
     
     @Override
-    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos) {
+    public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas) {
 
         return zona instanceof ZonaMano && etapa instanceof EtapaPrincipal;
     }
@@ -30,8 +30,12 @@ public class Destruir extends MetodoCarta {
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
+        System.out.println("RESONANCIA ACCION");
+
+        
         for (Carta carta : cartasObjetivo) {
             carta.descartar();
         }
+        
     }
 }
