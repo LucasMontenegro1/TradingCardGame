@@ -7,7 +7,7 @@ import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.jugador.Tablero;
 
 public class Ejecucion {
 

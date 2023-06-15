@@ -1,4 +1,4 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;

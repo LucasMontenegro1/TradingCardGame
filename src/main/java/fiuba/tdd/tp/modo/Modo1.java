@@ -1,11 +1,8 @@
 package fiuba.tdd.tp.modo;
 
 import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
-import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.tablero.Tablero;
-
-import java.util.ArrayList;
+import fiuba.tdd.tp.jugador.Tablero;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -25,18 +22,23 @@ public class Modo1 implements Modo {
     final Integer puntosFinDePartida = 0;
 
     @Override
-    public boolean ejecutarEtapaInicial(ArrayList<Carta> cartas, Integer puntos) throws MovimientoInvalido {
-        if (cartas.size() > 0){
-            tomarCarta(cartas, 1);
+    public boolean ejecutarEtapaInicial(Tablero tablero) throws MovimientoInvalido {
+        if (tablero.jugadorAtacadoConDrenar) {
+            tablero.disminuirEnergia(tablero.obtenerEnergiaMaxima(), 1);
+        }
+        
+        if (!tablero.cartas.isEmpty()) {
+            tomarCarta(tablero, 1);
             return true;
        }
+
        return false;
     }
 
     @Override
-    public void iniciarTableros(ArrayList<Carta> cartas1, ArrayList<Carta> cartas2) throws MovimientoInvalido {
-        tomarCarta(cartas1, cantCartasIniciales);
-        tomarCarta(cartas2, cantCartasIniciales);
+    public void iniciarTableros(Tablero tablero1, Tablero tablero2) throws MovimientoInvalido {
+        tomarCarta(tablero1, cantCartasIniciales);
+        tomarCarta(tablero2, cantCartasIniciales);
     }
 
     private Integer cantidadCartas(HashMap<String, Integer> cartas) {

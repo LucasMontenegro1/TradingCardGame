@@ -1,4 +1,4 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -14,11 +14,11 @@ import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
-import fiuba.tdd.tp.tablero.Tablero;
 import fiuba.tdd.tp.zona.ZonaMano;
 
 @SpringBootTest

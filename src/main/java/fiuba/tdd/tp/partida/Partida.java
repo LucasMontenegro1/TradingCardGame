@@ -14,12 +14,12 @@ import fiuba.tdd.tp.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaInicial;
 import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.Etapa;
+import fiuba.tdd.tp.turno.EtapaInicial;
 import fiuba.tdd.tp.turno.Turno;
 import fiuba.tdd.tp.zona.ZonaArtefacto;
 import fiuba.tdd.tp.zona.ZonaCombate;
@@ -56,7 +56,7 @@ public class Partida {
 		this.jugadorEnTurno = unJugador;
         this.tablero1 = new Tablero(unJugador, unMazo, modoPartida);
         this.tablero2 = new Tablero(otroJugador, otroMazo, modoPartida);
-        this.turno = new Turno(modoPartida, this.tablero1.puntos);
+        this.turno = new Turno(modoPartida);
         this.maxZonaReserva = modoPartida.getMaxZonaReserva();
         this.maxZonaArtefactos = modoPartida.getMaxZonaArtefactos();
         this.maxZonaCombate = modoPartida.getMaxZonaCombate();
@@ -72,9 +72,9 @@ public class Partida {
         tablero1.iniciarTablero();
         tablero2.iniciarTablero();
         
-        this.modo.iniciarTableros(tablero1.cartas, tablero2.cartas);
+        this.modo.iniciarTableros(tablero1, tablero2);
 
-        this.turno.iniciarTurno(this.tablero1.cartasEnZona(null));
+        this.turno.iniciarTurno(this.tablero1);
         this.turno.pasarDeEtapa();
     }
 
@@ -113,16 +113,16 @@ public class Partida {
     
         if (this.turno.etapaActual() == null) {
             if (jugadorEnTurno == tablero1.usuario) {
-                this.turno = new Turno(this.modo, this.tablero2.puntos);
+                this.turno = new Turno(this.modo);
                 this.jugadorEnTurno = tablero2.usuario;
             } else {
-                this.turno = new Turno(this.modo, this.tablero1.puntos);
+                this.turno = new Turno(this.modo);
                 this.jugadorEnTurno = tablero1.usuario;
             }
         }
 
         Tablero tablero = tableroEnTurno();
-        this.turno.etapaActual().iniciar(tablero.cartas);
+        this.turno.etapaActual().iniciar(tablero);
         if (this.turno.etapaActual() instanceof EtapaInicial) {
             verificarGanador();
         }

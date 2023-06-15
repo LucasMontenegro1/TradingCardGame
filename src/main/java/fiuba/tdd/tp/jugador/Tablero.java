@@ -1,4 +1,4 @@
-package fiuba.tdd.tp.tablero;
+package fiuba.tdd.tp.jugador;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,10 +14,9 @@ import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
-import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.jugador.Mazo;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.partida.Ejecucion;
+import fiuba.tdd.tp.turno.Etapa;
 import fiuba.tdd.tp.zona.ZonaDescarte;
 
 public class Tablero {
@@ -28,6 +27,7 @@ public class Tablero {
     public HashMap<Energia, Integer> energia = new HashMap<Energia, Integer>();
     public Mazo mazoInicial;
     public ArrayList<String> mazoOrdenado;
+    public boolean jugadorAtacadoConDrenar;
     
     final String AGUA  = "AGUA";
     final String FUEGO  = "FUEGO";
@@ -41,6 +41,7 @@ public class Tablero {
         this.energia.put(Energia.Planta, 0);
         this.mazoInicial = mazo;
         this.mazoOrdenado = new ArrayList<String>();
+        this.jugadorAtacadoConDrenar = false;
     }
 
     public void aumentarPuntos(Integer cantidad){
@@ -207,5 +208,25 @@ public class Tablero {
 
     public int energiaPlanta() {
         return this.energia.get(Energia.Planta);
+    }
+
+    public void recibirDrenar() {
+        this.jugadorAtacadoConDrenar = true;
+    }
+
+    public Energia obtenerEnergiaMaxima() {
+
+        Energia energiaMaxima = null;
+        Integer maxActual = 0;
+
+        for (Energia energiaEspcifica : this.energia.keySet()) {
+            Integer cantidadEnergia = this.energia.get(energiaEspcifica);
+            if (cantidadEnergia > maxActual) {
+                energiaMaxima = energiaEspcifica;
+                maxActual = cantidadEnergia;
+            }
+        }
+
+        return energiaMaxima;
     }
 }

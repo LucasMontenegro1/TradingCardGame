@@ -1,4 +1,4 @@
-package fiuba.tdd.tp.acceptance;
+package fiuba.tdd.tp.aceptación;
 
 
 import fiuba.tdd.tp.Excepciones.CartaNoActivable;
@@ -15,17 +15,18 @@ import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.driver.*;
-import fiuba.tdd.tp.etapa.Etapa;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaInicial;
-import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.jugador.Jugador;
 import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Partida;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.Etapa;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.turno.EtapaInicial;
+import fiuba.tdd.tp.turno.EtapaPrincipal;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.HashMap;

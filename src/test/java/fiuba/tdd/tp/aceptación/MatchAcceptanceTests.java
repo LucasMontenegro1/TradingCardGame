@@ -1,4 +1,4 @@
-package fiuba.tdd.tp.acceptance;
+package fiuba.tdd.tp.aceptación;
 
 import fiuba.tdd.tp.carta.Carta;
 import fiuba.tdd.tp.driver.*;

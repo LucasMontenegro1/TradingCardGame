@@ -1,4 +1,4 @@
-package fiuba.tdd.tp;
+package fiuba.tdd.tp.unitarios;
 
 import fiuba.tdd.tp.carta.Metodos.*;
 import fiuba.tdd.tp.Excepciones.MazoInvalido;
@@ -8,14 +8,14 @@ import fiuba.tdd.tp.carta.CartasDisponibles;
 import fiuba.tdd.tp.carta.Energia;
 import fiuba.tdd.tp.carta.Tipo;
 import fiuba.tdd.tp.carta.Atributo;
-import fiuba.tdd.tp.etapa.EtapaDeAtaque;
-import fiuba.tdd.tp.etapa.EtapaPrincipal;
 import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.jugador.Tablero;
 import fiuba.tdd.tp.modo.Modo;
 import fiuba.tdd.tp.modo.Modo1;
 import fiuba.tdd.tp.modo.Modo2;
 import fiuba.tdd.tp.partida.Ejecucion;
-import fiuba.tdd.tp.tablero.Tablero;
+import fiuba.tdd.tp.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.turno.EtapaPrincipal;
 import fiuba.tdd.tp.zona.ZonaCombate;
 import fiuba.tdd.tp.zona.ZonaMano;
 
