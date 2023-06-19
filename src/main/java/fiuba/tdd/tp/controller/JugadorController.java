@@ -42,7 +42,6 @@ public class JugadorController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{usuario}")
     public void actualizarNombreUsuario(@RequestBody CuentaJugador unaCuenta, @PathVariable String usuario) {
-        System.out.println("PUT");
         if (repositorio.cuentaExistente(unaCuenta) && repositorio.nombreDisponible(usuario)) {
             repositorio.actualizarUsuario(unaCuenta.usuario(), usuario);
         } else {
