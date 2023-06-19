@@ -28,6 +28,18 @@ public class Jugador {
         return cantdDinero;
     }
 
+    public HashMap<String, ArrayList<String>> intercambiosAbiertos() {
+        return intercambios;
+    }
+
+    public Object password() {
+        return contra;
+    }
+
+    public void cambiarUsuario(String nuevoNombre) {
+        this.nombre = nuevoNombre;
+    }
+
     public HashMap<String, Integer> getCartas() {
         return cartas;
     }
@@ -133,9 +145,5 @@ public class Jugador {
         }
 
         this.mazos.remove(nombre);
-    }
-
-    public HashMap<String, ArrayList<String>> intercambiosAbiertos() {
-        return intercambios;
     }
 }

@@ -3,7 +3,9 @@ package fiuba.tdd.tp.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,11 +31,22 @@ public class JugadorController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void registrarJugador(@RequestBody RegistroJugador unaCuenta) {
+    public void registrarJugador(@RequestBody CuentaJugador unaCuenta) {
         if (repositorio.nombreDisponible(unaCuenta.usuario())) {
             repositorio.registrar(unaCuenta.usuario(), unaCuenta.password());
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El nombre de usuario ya está en uso");
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{usuario}")
+    public void actualizarNombreUsuario(@RequestBody CuentaJugador unaCuenta, @PathVariable String usuario) {
+        System.out.println("PUT");
+        if (repositorio.cuentaExistente(unaCuenta) && repositorio.nombreDisponible(usuario)) {
+            repositorio.actualizarUsuario(unaCuenta.usuario(), usuario);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No es posible actualizar el usuario");
         }
     }
 }

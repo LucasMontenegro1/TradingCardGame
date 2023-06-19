@@ -1,11 +1,11 @@
 package fiuba.tdd.tp.controller;
 
-public class RegistroJugador {
+public class CuentaJugador {
     
     private String usuario;
     private String password;
 
-    public RegistroJugador(String usuario, String password) {
+    public CuentaJugador(String usuario, String password) {
         this.usuario = usuario;
         this.password = password;
     }
