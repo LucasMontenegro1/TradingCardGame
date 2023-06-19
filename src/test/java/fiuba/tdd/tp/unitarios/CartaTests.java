@@ -1,11 +1,13 @@
 package fiuba.tdd.tp.unitarios;
 
-import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.carta.Tipo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.carta.Energia;
+import fiuba.tdd.tp.model.carta.Tipo;
+
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

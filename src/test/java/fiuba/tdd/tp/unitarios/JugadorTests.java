@@ -8,13 +8,13 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
-import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
-import fiuba.tdd.tp.Excepciones.MazoExistente;
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.jugador.Jugador;
-import fiuba.tdd.tp.jugador.Mazo;
+import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
+import fiuba.tdd.tp.model.Excepciones.DineroInsuficiente;
+import fiuba.tdd.tp.model.Excepciones.MazoExistente;
+import fiuba.tdd.tp.model.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.jugador.Jugador;
+import fiuba.tdd.tp.model.jugador.Mazo;
 
 @SpringBootTest
 public class JugadorTests {

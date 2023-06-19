@@ -7,24 +7,25 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import fiuba.tdd.tp.Excepciones.CartaNoActivable;
-import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
-import fiuba.tdd.tp.Excepciones.EnergiaInsuficiente;
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
-import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
-import fiuba.tdd.tp.Excepciones.PartidaInvalida;
-import fiuba.tdd.tp.Excepciones.ZonaLlena;
-import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.jugador.Mazo;
-import fiuba.tdd.tp.jugador.Tablero;
-import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.modo.Modo2;
-import fiuba.tdd.tp.partida.Partida;
-import fiuba.tdd.tp.zona.ZonaArtefacto;
-import fiuba.tdd.tp.zona.ZonaCombate;
+
+import fiuba.tdd.tp.model.Excepciones.CartaNoActivable;
+import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
+import fiuba.tdd.tp.model.Excepciones.EnergiaInsuficiente;
+import fiuba.tdd.tp.model.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
+import fiuba.tdd.tp.model.Excepciones.PartidaInvalida;
+import fiuba.tdd.tp.model.Excepciones.ZonaLlena;
+import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.carta.Energia;
+import fiuba.tdd.tp.model.jugador.Mazo;
+import fiuba.tdd.tp.model.jugador.Tablero;
+import fiuba.tdd.tp.model.modo.Modo;
+import fiuba.tdd.tp.model.modo.Modo1;
+import fiuba.tdd.tp.model.modo.Modo2;
+import fiuba.tdd.tp.model.partida.Partida;
+import fiuba.tdd.tp.model.zona.ZonaArtefacto;
+import fiuba.tdd.tp.model.zona.ZonaCombate;
 
 @SpringBootTest
 public class IntegracionTests {

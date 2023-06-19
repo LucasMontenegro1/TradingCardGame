@@ -1,9 +1,10 @@
 package fiuba.tdd.tp.unitarios;
-import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.modo.Modo2;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import fiuba.tdd.tp.model.modo.Modo;
+import fiuba.tdd.tp.model.modo.Modo1;
+import fiuba.tdd.tp.model.modo.Modo2;
 
 import java.util.HashMap;
 

@@ -1,7 +1,7 @@
 package fiuba.tdd.tp.aceptación;
 
-import fiuba.tdd.tp.driver.DriverCardName;
-import fiuba.tdd.tp.jugador.Jugador;
+import fiuba.tdd.tp.model.driver.DriverCardName;
+import fiuba.tdd.tp.model.jugador.Jugador;
 
 import org.junit.jupiter.api.Test;
 

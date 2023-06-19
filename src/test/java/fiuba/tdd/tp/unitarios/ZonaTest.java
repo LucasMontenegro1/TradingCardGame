@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
-import fiuba.tdd.tp.zona.Zona;
-import fiuba.tdd.tp.zona.ZonaArtefacto;
-import fiuba.tdd.tp.zona.ZonaCombate;
-import fiuba.tdd.tp.zona.ZonaDescarte;
-import fiuba.tdd.tp.zona.ZonaMano;
-import fiuba.tdd.tp.zona.ZonaReserva;
+import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
+import fiuba.tdd.tp.model.zona.Zona;
+import fiuba.tdd.tp.model.zona.ZonaArtefacto;
+import fiuba.tdd.tp.model.zona.ZonaCombate;
+import fiuba.tdd.tp.model.zona.ZonaDescarte;
+import fiuba.tdd.tp.model.zona.ZonaMano;
+import fiuba.tdd.tp.model.zona.ZonaReserva;
 
 public class ZonaTest {
 
