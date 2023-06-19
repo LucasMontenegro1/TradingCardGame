@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
 import fiuba.tdd.tp.repository.JugadoresRepository;
 
 @RestController
@@ -28,6 +30,10 @@ public class JugadorController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void registrarJugador(@RequestBody RegistroJugador unaCuenta) {
-        repositorio.registrar(unaCuenta.usuario(), unaCuenta.password());
+        if (repositorio.nombreDisponible(unaCuenta.usuario())) {
+            repositorio.registrar(unaCuenta.usuario(), unaCuenta.password());
+        } else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El nombre de usuario ya está en uso");
+        }
     }
 }

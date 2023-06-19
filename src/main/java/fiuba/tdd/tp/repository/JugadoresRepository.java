@@ -25,4 +25,8 @@ public class JugadoresRepository {
         jugadores.put(nombreJugador, nuevoRegistro);
     }
 
+    public boolean nombreDisponible(String usuario) {
+        return !jugadores.containsKey(usuario);
+    }
+
 }
