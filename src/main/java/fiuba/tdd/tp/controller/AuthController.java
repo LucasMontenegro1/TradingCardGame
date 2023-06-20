@@ -1,31 +1,34 @@
 package fiuba.tdd.tp.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import fiuba.tdd.tp.service.TokenService;
 
 @RestController
 public class AuthController {
     
-    private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
-
     private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthController(TokenService tokenService) {
+    public AuthController(TokenService tokenService, AuthenticationManager authenticationManager) {
         this.tokenService = tokenService;
+        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/token")
-    public String token(Authentication autenticacion) {
-
-        LOG.debug("Token solicitado para el usuario: '{}'", autenticacion.getName());
-        String token = tokenService.generarToken(autenticacion);
-        LOG.debug("Token {}", token);
-
-        return token;
+    public String token(@RequestBody CuentaJugador loginJugador) {
+        
+        Authentication autenticacion = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginJugador.usuario(), 
+                        loginJugador.password()
+                )
+        );
+        return tokenService.generarToken(autenticacion);
     }
 
 }
