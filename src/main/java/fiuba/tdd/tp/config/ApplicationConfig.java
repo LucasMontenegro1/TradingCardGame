@@ -1,6 +1,7 @@
 package fiuba.tdd.tp.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import fiuba.tdd.tp.repository.JugadoresRepository;
 
+@Configuration
 public class ApplicationConfig {
     
     private final JugadoresRepository repositorio;

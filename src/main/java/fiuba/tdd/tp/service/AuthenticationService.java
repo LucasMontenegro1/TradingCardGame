@@ -3,10 +3,11 @@ package fiuba.tdd.tp.service;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.stereotype.Service;
 import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.repository.JugadoresRepository;
 
+@Service
 public class AuthenticationService {
 
     private final JugadoresRepository repositorio;
