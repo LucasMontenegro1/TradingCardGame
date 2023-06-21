@@ -24,17 +24,29 @@ public class AuthenticationController {
     
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/registrarse")
-    public ResponseEntity<AuthenticationResponse> registrarse(
+    public ResponseEntity<String> registrarse(
         @RequestBody CuentaJugador request
     ) {
-        return ResponseEntity.ok(service.registrar(request));
+
+        AuthenticationResponse response = service.registrar(request);
+        if (response == null) {
+            ResponseEntity.badRequest();
+        }
+
+        return ResponseEntity.ok(response.getToken());
     }
 
     @PostMapping("/loguearse")
-    public ResponseEntity<AuthenticationResponse> loguerse(
+    public ResponseEntity<String> loguerse(
         @RequestBody CuentaJugador request
     ) {
-        return ResponseEntity.ok(service.loguear(request));
+
+        AuthenticationResponse response = service.loguear(request);
+        if (response == null) {
+            ResponseEntity.badRequest();
+        }
+
+        return ResponseEntity.ok(response.getToken());
     }
 
 }

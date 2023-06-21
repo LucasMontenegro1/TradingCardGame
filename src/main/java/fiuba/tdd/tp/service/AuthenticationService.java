@@ -24,24 +24,37 @@ public class AuthenticationService {
 
     public AuthenticationResponse registrar(CuentaJugador request) {
 
-        Jugador jugador = new Jugador(request.username(), passwordEncoder.encode(request.password()));
-        repositorio.registrar(request.username(), jugador);
-        var jwtToken = jwtService.generateToken(jugador);
+        if (repositorio.nombreDisponible(request.username())) {
+            Jugador jugador = new Jugador(request.username(), passwordEncoder.encode(request.password()));
+            repositorio.registrar(request.username(), jugador);
+            var jwtToken = jwtService.generateToken(jugador);
 
-        return new AuthenticationResponse(jwtToken);
+            return new AuthenticationResponse(jwtToken);
+        }
+
+        return null;
     }
 
     public AuthenticationResponse loguear(CuentaJugador request) {
+
+        /*
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 request.username(), 
                 request.password()
             )
         );
+        */
 
         Jugador jugador = repositorio.buscarPorUsername(request.username()).orElseThrow(null);
-        var jwtToken = jwtService.generateToken(jugador);
-        return new AuthenticationResponse(jwtToken);
+
+        if (jugador != null) {
+            
+            var jwtToken = jwtService.generateToken(jugador);
+            return new AuthenticationResponse(jwtToken);
+        }
+        
+        return null;
     }
 
 }

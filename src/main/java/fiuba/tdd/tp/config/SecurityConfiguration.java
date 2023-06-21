@@ -39,7 +39,7 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                    .requestMatchers( "/api/auth/**").permitAll()
                     .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(auth -> auth
@@ -47,13 +47,12 @@ public class SecurityConfiguration {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) 
                 .exceptionHandling((ex) -> ex
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                 )   
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class) 
                 .build();
-
     }
 
     @Bean
