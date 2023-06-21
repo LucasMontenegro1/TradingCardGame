@@ -1,15 +1,21 @@
 package fiuba.tdd.tp.model.jugador;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.model.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.model.Excepciones.MazoExistente;
 import fiuba.tdd.tp.model.carta.CartasDisponibles;
 
-public class Jugador {
+public class Jugador implements UserDetails {
 
     private String nombre;
     private String contra;
@@ -145,5 +151,40 @@ public class Jugador {
         }
 
         this.mazos.remove(nombre);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("JUGADOR"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.contra;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.nombre;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

@@ -9,7 +9,6 @@ import java.util.Deque;
 
 import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.model.Excepciones.EnergiaInsuficiente;
-import fiuba.tdd.tp.model.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.model.carta.Carta;
 import fiuba.tdd.tp.model.carta.CartasDisponibles;
 import fiuba.tdd.tp.model.carta.Energia;
