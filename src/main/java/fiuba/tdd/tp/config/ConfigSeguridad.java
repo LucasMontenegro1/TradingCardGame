@@ -8,26 +8,21 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
+import fiuba.tdd.tp.repository.JugadoresRepository;
 
 @Configuration
 public class ConfigSeguridad {
 
-    private RSAKey rsaKey;
+    private final JugadoresRepository repositorio;
+
+    public ConfigSeguridad(JugadoresRepository repositorio) {
+        this.repositorio = repositorio;
+    }
 
     @Bean
     public AuthenticationManager authManager(UserDetailsService userDetailsService) {
@@ -38,13 +33,9 @@ public class ConfigSeguridad {
     }
 
     @Bean
-    public UserDetailsService users() {
-        return new InMemoryUserDetailsManager(
-            User.withUsername("reader")
-                    .password("{noop}password")
-                    .authorities("read")
-                    .build()
-        );
+    public UserDetailsService userDetailsService() {
+        return username -> repositorio.buscarPorUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Jugador no encontrado"));
     }
 
     @Bean
@@ -66,20 +57,4 @@ public class ConfigSeguridad {
                 .build();
     }
 
-    @Bean
-    public JWKSource<SecurityContext> jwkSource() {
-        rsaKey = Jwks.generateRsa();
-        JWKSet jwkSet = new JWKSet(rsaKey);
-        return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
-    }
-
-    @Bean
-    JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwks) {
-        return new NimbusJwtEncoder(jwks);
-    }
-
-    @Bean
-    JwtDecoder jwtDecoder() throws JOSEException {
-         return NimbusJwtDecoder.withPublicKey(rsaKey.toRSAPublicKey()).build();
-    }
 }

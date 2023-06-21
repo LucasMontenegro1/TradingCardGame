@@ -23,7 +23,7 @@ public class JugadoresRepository {
         return new ArrayList<>(jugadores.keySet());
     }
 
-    Optional<Jugador> buscarPorUsername(String username) {
+    public Optional<Jugador> buscarPorUsername(String username) {
         
         if (jugadores.containsKey(username)) {
             return Optional.of(jugadores.get(username));
