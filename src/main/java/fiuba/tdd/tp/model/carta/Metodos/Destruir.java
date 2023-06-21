@@ -30,9 +30,6 @@ public class Destruir extends MetodoCarta {
     public void ejecutar(Tablero enJuego, Tablero contrincante, Deque<Ejecucion> pilaMetodos, 
                             String jugadorObjetivo, ArrayList<Carta> cartasObjetivo, Carta cartaActivada, Energia energia) {
         
-        System.out.println("RESONANCIA ACCION");
-
-        
         for (Carta carta : cartasObjetivo) {
             carta.descartar();
         }

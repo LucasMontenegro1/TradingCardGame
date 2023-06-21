@@ -23,9 +23,11 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse registrar(CuentaJugador request) {
+
         Jugador jugador = new Jugador(request.username(), passwordEncoder.encode(request.password()));
         repositorio.registrar(request.username(), jugador);
         var jwtToken = jwtService.generateToken(jugador);
+
         return new AuthenticationResponse(jwtToken);
     }
 
