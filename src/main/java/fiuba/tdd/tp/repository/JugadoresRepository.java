@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import fiuba.tdd.tp.controller.CuentaJugador;
 import fiuba.tdd.tp.model.jugador.Jugador;
+import fiuba.tdd.tp.service.CuentaJugador;
 
 @Repository
 public class JugadoresRepository {
@@ -33,9 +33,8 @@ public class JugadoresRepository {
     }
 
 
-    public void registrar(String nombreJugador, String contra) {
-        Jugador nuevoRegistro = new Jugador(nombreJugador, contra);
-        jugadores.put(nombreJugador, nuevoRegistro);
+    public void registrar(String nombreJugador, Jugador jugador) {
+        jugadores.put(nombreJugador, jugador);
     }
 
     public void actualizarUsuario(String usuario, String nuevoUsuario) {

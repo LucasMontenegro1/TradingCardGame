@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import fiuba.tdd.tp.repository.JugadoresRepository;
+import fiuba.tdd.tp.service.CuentaJugador;
 
 @RestController
 @RequestMapping("/api/jugadores")

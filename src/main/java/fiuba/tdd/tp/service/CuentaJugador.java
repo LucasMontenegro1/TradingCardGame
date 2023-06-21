@@ -1,4 +1,4 @@
-package fiuba.tdd.tp.controller;
+package fiuba.tdd.tp.service;
 
 public class CuentaJugador  {
     
