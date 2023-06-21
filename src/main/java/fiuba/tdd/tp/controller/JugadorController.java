@@ -32,8 +32,8 @@ public class JugadorController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
     public void registrarJugador(@RequestBody CuentaJugador unaCuenta) {
-        if (repositorio.nombreDisponible(unaCuenta.usuario())) {
-            repositorio.registrar(unaCuenta.usuario(), unaCuenta.password());
+        if (repositorio.nombreDisponible(unaCuenta.username())) {
+            repositorio.registrar(unaCuenta.username(), unaCuenta.password());
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "El nombre de usuario ya está en uso");
         }
@@ -43,7 +43,7 @@ public class JugadorController {
     @PutMapping("/{usuario}")
     public void actualizarNombreUsuario(@RequestBody CuentaJugador unaCuenta, @PathVariable String usuario) {
         if (repositorio.cuentaExistente(unaCuenta) && repositorio.nombreDisponible(usuario)) {
-            repositorio.actualizarUsuario(unaCuenta.usuario(), usuario);
+            repositorio.actualizarUsuario(unaCuenta.username(), usuario);
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No es posible actualizar el usuario");
         }

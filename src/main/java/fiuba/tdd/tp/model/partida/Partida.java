@@ -41,7 +41,6 @@ public class Partida {
     public Deque<Ejecucion> pilaDeEjecucion;
     public ArrayList<Carta> cartasUsadasEnTurno;
     public ArrayList<Carta> artefactosInvocados;
-    private boolean partidaEnJuego;
     private String ganador;
     public Integer maxZonaCombate;
     public Integer maxZonaReserva;
@@ -53,7 +52,6 @@ public class Partida {
         }
         this.modo = modoPartida;
         this.ganador = null;
-        this.partidaEnJuego = true;
         this.ganador = null;
         this.pilaDeEjecucion = null;
 		this.jugadorEnTurno = unJugador;

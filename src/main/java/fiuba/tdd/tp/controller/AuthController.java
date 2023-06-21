@@ -24,7 +24,7 @@ public class AuthController {
         
         Authentication autenticacion = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginJugador.usuario(), 
+                        loginJugador.username(), 
                         loginJugador.password()
                 )
         );

@@ -3,6 +3,7 @@ package fiuba.tdd.tp.repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +23,16 @@ public class JugadoresRepository {
         return new ArrayList<>(jugadores.keySet());
     }
 
+    Optional<Jugador> buscarPorUsername(String username) {
+        
+        if (jugadores.containsKey(username)) {
+            return Optional.of(jugadores.get(username));
+        }
+        
+        return Optional.empty();
+    }
+
+
     public void registrar(String nombreJugador, String contra) {
         Jugador nuevoRegistro = new Jugador(nombreJugador, contra);
         jugadores.put(nombreJugador, nuevoRegistro);
@@ -39,8 +50,8 @@ public class JugadoresRepository {
     }
 
     public boolean cuentaExistente(CuentaJugador unaCuenta) {
-        if (jugadores.containsKey(unaCuenta.usuario())) {
-            if (jugadores.get(unaCuenta.usuario()).password().equals(unaCuenta.password())) {
+        if (jugadores.containsKey(unaCuenta.username())) {
+            if (jugadores.get(unaCuenta.username()).password().equals(unaCuenta.password())) {
                 return true;
             }
         }
