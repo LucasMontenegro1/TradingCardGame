@@ -8,8 +8,13 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.nimbusds.jose.JOSEException;
+
+import fiuba.tdd.tp.service.JwtService;
 
 @Configuration
 @EnableWebSecurity
@@ -18,10 +23,12 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
+    private final JwtService service;
 
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider, JwtService jwtService) {
         this.jwtAuthFilter = jwtAuthenticationFilter;
         this.authenticationProvider = authenticationProvider;
+        this.service = jwtService;
     }
 
     @Bean
@@ -29,7 +36,7 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/api/auth/**").permitAll()
+                    .requestMatchers("/registrarse/**").permitAll()
                     .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(auth -> auth
@@ -41,4 +48,8 @@ public class SecurityConfiguration {
                 .build();
     }
 
+    @Bean
+    JwtDecoder jwtDecoder() throws JOSEException {
+        return NimbusJwtDecoder.withSecretKey(service.getSecretKey()).build();
+    }
 }
