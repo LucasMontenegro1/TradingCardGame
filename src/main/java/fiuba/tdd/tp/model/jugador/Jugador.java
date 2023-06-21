@@ -155,7 +155,7 @@ public class Jugador implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(null));
+        return List.of(new SimpleGrantedAuthority("JUGADOR"));
     }
 
     @Override
