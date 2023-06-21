@@ -10,7 +10,6 @@ import fiuba.tdd.tp.model.carta.Tipo;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Ejecucion;
 import fiuba.tdd.tp.model.turno.Etapa;
-import fiuba.tdd.tp.model.turno.EtapaInicial;
 import fiuba.tdd.tp.model.zona.Zona;
 
 public class Impedir extends MetodoCarta {
@@ -21,14 +20,13 @@ public class Impedir extends MetodoCarta {
     
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
-        
-        if (pilaMetodos == null) {
+        if (etapa == null || zona == null || pilaMetodos == null){
             return false;
-        }
+        }       
 
         Ejecucion ultimoMetodo = pilaMetodos.peekLast();
 
-        return ultimoMetodo.metodo.tipo == Tipo.Reaccion && zona != null && !(etapa instanceof EtapaInicial);
+        return ultimoMetodo.metodo.tipo == Tipo.Reaccion && etapa.impedir();
     }
 
     @Override

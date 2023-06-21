@@ -10,11 +10,7 @@ import fiuba.tdd.tp.model.carta.Tipo;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Ejecucion;
 import fiuba.tdd.tp.model.turno.Etapa;
-import fiuba.tdd.tp.model.turno.EtapaPrincipal;
 import fiuba.tdd.tp.model.zona.Zona;
-import fiuba.tdd.tp.model.zona.ZonaCombate;
-import fiuba.tdd.tp.model.zona.ZonaDescarte;
-import fiuba.tdd.tp.model.zona.ZonaMano;
 
 public class AumentarEnergia extends MetodoCarta {
 
@@ -29,10 +25,10 @@ public class AumentarEnergia extends MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
-        if (this.tipo == Tipo.Criatura) {
-            return tipo.etapa.getClass() == etapa.getClass() && zona instanceof ZonaCombate;
+        if (etapa == null || zona == null){
+            return false;
         }
-        return tipo == Tipo.Artefacto && !(zona instanceof ZonaDescarte || zona instanceof ZonaMano) && etapa instanceof EtapaPrincipal;
+        return etapa.aumentarEnergia(this.tipo) && zona.aumentarEnergia(this.tipo);
     }
 
     @Override

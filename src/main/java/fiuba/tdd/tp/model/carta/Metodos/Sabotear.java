@@ -11,7 +11,6 @@ import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Ejecucion;
 import fiuba.tdd.tp.model.turno.Etapa;
 import fiuba.tdd.tp.model.zona.Zona;
-import fiuba.tdd.tp.model.zona.ZonaDescarte;
 
 public class Sabotear extends MetodoCarta {
 
@@ -22,7 +21,7 @@ public class Sabotear extends MetodoCarta {
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
 
-        if (pilaMetodos == null || zona instanceof ZonaDescarte || etapa.getClass() != tipo.etapa.getClass()) {
+        if (pilaMetodos == null || zona == null || etapa == null || zona.sabotear() || etapa.sabotear()) {
             return false;
         }
 

@@ -10,7 +10,6 @@ import fiuba.tdd.tp.model.carta.Tipo;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Ejecucion;
 import fiuba.tdd.tp.model.turno.Etapa;
-import fiuba.tdd.tp.model.turno.EtapaInicial;
 import fiuba.tdd.tp.model.zona.Zona;
 
 public class Reducir extends MetodoCarta {
@@ -21,7 +20,10 @@ public class Reducir extends MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
-       return zona != null && !(etapa instanceof EtapaInicial);
+        if (etapa == null || zona == null){
+            return false;
+        }       
+        return zona.reducir() && etapa.reducir();
     }
     
     @Override

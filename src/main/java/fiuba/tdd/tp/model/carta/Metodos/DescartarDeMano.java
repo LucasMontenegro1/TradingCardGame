@@ -10,9 +10,7 @@ import fiuba.tdd.tp.model.carta.Tipo;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Ejecucion;
 import fiuba.tdd.tp.model.turno.Etapa;
-import fiuba.tdd.tp.model.turno.EtapaInicial;
 import fiuba.tdd.tp.model.zona.Zona;
-import fiuba.tdd.tp.model.zona.ZonaDescarte;
 import fiuba.tdd.tp.model.zona.ZonaMano;
 
 public class DescartarDeMano extends MetodoCarta {
@@ -23,7 +21,10 @@ public class DescartarDeMano extends MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
-        return !(zona instanceof ZonaDescarte) && !(etapa instanceof EtapaInicial);
+        if (etapa == null || zona == null){
+            return false;
+        }
+        return zona.descartarMano() && etapa.descartarMano();
     }
     
     @Override

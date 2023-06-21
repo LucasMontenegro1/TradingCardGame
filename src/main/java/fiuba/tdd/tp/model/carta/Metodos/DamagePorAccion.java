@@ -11,9 +11,7 @@ import fiuba.tdd.tp.model.carta.Tipo;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Ejecucion;
 import fiuba.tdd.tp.model.turno.Etapa;
-import fiuba.tdd.tp.model.turno.EtapaPrincipal;
 import fiuba.tdd.tp.model.zona.Zona;
-import fiuba.tdd.tp.model.zona.ZonaMano;
 
 public class DamagePorAccion extends MetodoCarta {
 
@@ -26,7 +24,10 @@ public class DamagePorAccion extends MetodoCarta {
 
     @Override
     public boolean esAplicableA(Etapa etapa, Zona zona, Deque<Ejecucion> pilaMetodos, ArrayList<Carta> cartasUsadas, HashMap<Energia, Integer> energiaJugador) {
-        return etapa instanceof EtapaPrincipal && zona instanceof ZonaMano;
+        if (etapa == null || zona == null){
+            return false;
+        }
+        return etapa.damagePorAccion() && zona.damagePorAccion();
     }
 
     @Override
