@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
 import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.model.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.model.carta.CartasDisponibles;
@@ -63,7 +64,7 @@ public class JugadorController {
     }
 
     @GetMapping("/dinero")
-    public Integer depositarDinero(@RequestHeader("Authorization") String authorizationHeader) {
+    public Integer getDinero(@RequestHeader("Authorization") String authorizationHeader) {
 
         Optional<Jugador> unJugador = solicitador(authorizationHeader);
        
@@ -101,6 +102,15 @@ public class JugadorController {
         return ResponseEntity.ok("Compra realizada");
     }
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/mercado")
+    public void unirseAlMercado(@RequestHeader("Authorization") String authorizationHeader) {
+        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+       
+        if (unJugador.isPresent()) {
+            mercadoDeCartas.agregarIntercambiador(unJugador.get());
+        }
+    }
 
     @PostMapping("/intercambiar")
     public ResponseEntity<String> intercambiar(@RequestHeader("Authorization") String authorizationHeader, @RequestBody IntercambioDeCartas intercambioDeCartas) throws CartaNoEncontrada {
