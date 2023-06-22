@@ -85,12 +85,20 @@ public class Partida {
     }
 
     public Tablero tableroJugador(String jugador) {
-        if (this.tablero1.usuario == jugador) {
+        if (this.tablero1.usuario.equals(jugador)) {
             return this.tablero1;
-        } else if (this.tablero2.usuario == jugador) {
+        } else if (this.tablero2.usuario.equals(jugador)) {
             return this.tablero2;
         }
+        return null;
+    }
 
+    public Tablero tableroEnemigo(String jugador) {
+        if (this.tablero1.usuario.equals(jugador)) {
+            return this.tablero2;
+        } else if (this.tablero2.usuario.equals(jugador)) {
+            return this.tablero1;
+        }
         return null;
     }
 

@@ -91,12 +91,18 @@ public class PartidasRepository {
 
 		return null;
 	}
+	
 
 	public Tablero tableroJugador(String jugador) {
 		Partida partida = buscarPartidaEnJuego(jugador);
 		return partida.tableroJugador(jugador);
 	}
 
+	public Tablero tableroEnemigo(String jugador) {
+		Partida partida = buscarPartidaEnJuego(jugador);
+		return partida.tableroEnemigo(jugador);
+	}
+	
 	public Carta invocarCarta(String unJugador, String unaCarta, String unaZona)
 			throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
 				

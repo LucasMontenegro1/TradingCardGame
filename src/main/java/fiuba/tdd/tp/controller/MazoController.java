@@ -18,7 +18,6 @@ import fiuba.tdd.tp.model.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.model.jugador.Mazo;
 import fiuba.tdd.tp.repository.JugadoresRepository;
-import fiuba.tdd.tp.service.JwtService;
 
 @RestController
 @RequestMapping("/api/mazos")
