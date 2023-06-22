@@ -1,6 +1,7 @@
 package fiuba.tdd.tp.repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +21,14 @@ import fiuba.tdd.tp.model.modo.Modo;
 import fiuba.tdd.tp.model.modo.Modo1;
 import fiuba.tdd.tp.model.modo.Modo2;
 import fiuba.tdd.tp.model.partida.Partida;
+import fiuba.tdd.tp.service.PartidaEnEspera;
 
 @Repository
 public class PartidasRepository {
 
 	private final JugadoresRepository repositorio;
 	private final List<Partida> partidasEnJuego = new ArrayList<>();
-	private final List<Partida> partidasEnEspera = new ArrayList<>();
+	private final HashMap<String, List<PartidaEnEspera>> partidasEnEspera = new HashMap<>();
 
 	private final Integer MODO1 = 1;
 	private final Integer MODO2 = 2;
@@ -35,11 +37,10 @@ public class PartidasRepository {
 		this.repositorio = repositorioJugadores;
 	}
 
-	public void registrarPartida(Integer nroModoPartida, String unJugador, String otroJugador, String nombreUnMazo, String nombreOtroMazo)
+	public void registrarPartida(Integer nroModoPartida, String unJugador, String otroJugador, String nombreUnMazo)
 			throws PartidaInvalida {
-		
+
 		Optional<Jugador> jugador = repositorio.buscarPorUsername(unJugador);
-		Optional<Jugador> contrincante = repositorio.buscarPorUsername(otroJugador);
 		Modo modoPartida = null;
 		if (nroModoPartida == MODO1) {
 			modoPartida = new Modo1();
@@ -47,28 +48,29 @@ public class PartidasRepository {
 			modoPartida = new Modo2();
 		}
 		Mazo unMazo = jugador.get().getMazo(nombreUnMazo);
-		Mazo otroMazo = contrincante.get().getMazo(nombreOtroMazo);
 		
-		Partida partida = new Partida(modoPartida, unJugador, otroJugador, unMazo, otroMazo);
-		partidasEnEspera.add(partida);
+		PartidaEnEspera partida = new PartidaEnEspera(modoPartida, unJugador, otroJugador, unMazo);
+
+		if (!partidasEnEspera.containsKey(otroJugador)) {
+			ArrayList<PartidaEnEspera> partidas = new ArrayList<>();
+			this.partidasEnEspera.put(otroJugador, partidas); 
+		}
+		partidasEnEspera.get(otroJugador).add(partida);
 	}
 
 	public List<String> obtenerSolicitudesRecibidas(String jugador) {
-		List<String> partidas = new ArrayList<>();
+		List<String> solicitantes = new ArrayList<>();
+		for (PartidaEnEspera partida : this.partidasEnEspera.get(jugador)) {
+			solicitantes.add(partida.getJugador());
+		}
 
-		partidasEnEspera.forEach((partida) -> {
-			if (partida.tableroEnEspera().usuario.equals(jugador)) {
-				partidas.add(partida.jugadorEnTurno);
-			}
-		});
-
-		return partidas;
+		return solicitantes;
 	}
 
-	public Partida buscarPartida(String jugador, String contrincante) {
+	public PartidaEnEspera buscarPartida(String jugador, String contrincante) {
 
-		for (Partida partida : partidasEnEspera) {
-			if (partida.jugadorEnTurno.equals(jugador) && partida.tableroEnEspera().usuario.equals(contrincante)) {
+		for (PartidaEnEspera partida : this.partidasEnEspera.get(contrincante)) {
+			if (partida.getJugador().equals(jugador)) {
 				return partida;
 			}
 		}
@@ -117,5 +119,15 @@ public class PartidasRepository {
 		// }
 		
 		// partida.activarCarta(carta, indiceMetodo, unJugadorObjetivo, cartasObjetivos, energia);
+	}
+
+	public Partida ponerPartidaEnJuego(PartidaEnEspera partidaEnEspera, Mazo mazo) throws PartidaInvalida {
+		String contrincante = partidaEnEspera.getContrincante();
+		this.partidasEnEspera.get(contrincante).remove(partidaEnEspera);
+		
+		Partida partida = new Partida(partidaEnEspera.getModo(), partidaEnEspera.getJugador(), contrincante, partidaEnEspera.getMazo(), mazo);
+		this.partidasEnJuego.add(partida);
+
+		return partida;
 	}
 }

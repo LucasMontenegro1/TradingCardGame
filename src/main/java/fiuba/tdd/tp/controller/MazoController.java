@@ -25,24 +25,15 @@ import fiuba.tdd.tp.service.JwtService;
 public class MazoController {
  
     private final JugadoresRepository repositorio;
-    private final JwtService jwtService;
 
-    public MazoController(JugadoresRepository repositorioJugadores, JwtService jwtService) {
+    public MazoController(JugadoresRepository repositorioJugadores) {
         this.repositorio = repositorioJugadores;
-        this.jwtService = jwtService;
     }
 
-    private Optional<Jugador> solicitador(String authorizationHeader) {
-        String jwt = authorizationHeader.substring(7);
-        String username = jwtService.extractUsername(jwt);
-
-        Optional<Jugador> unJugador = repositorio.buscarPorUsername(username);
-        return unJugador;
-    }
 
     @GetMapping("")
     public HashMap<String, Mazo> listarMazos(@RequestHeader("Authorization") String authorizationHeader) {
-        Optional<Jugador> jugador = solicitador(authorizationHeader);
+        Optional<Jugador> jugador = repositorio.solicitador(authorizationHeader);
 
         if (jugador.isPresent()) {
             Jugador unJugador = jugador.get();
@@ -59,7 +50,7 @@ public class MazoController {
             @RequestBody HashMap<String, Integer> cartas
     ) throws MazoExistente, CartaNoEncontrada {
     
-        Optional<Jugador> jugador = solicitador(authorizationHeader);
+        Optional<Jugador> jugador = repositorio.solicitador(authorizationHeader);
 
         if (jugador.isPresent()) {
             Jugador unJugador = jugador.get();
@@ -80,7 +71,7 @@ public class MazoController {
             @PathVariable String nombreMazo
     ) throws MazoExistente, CartaNoEncontrada {
     
-        Optional<Jugador> jugador = solicitador(authorizationHeader);
+        Optional<Jugador> jugador = repositorio.solicitador(authorizationHeader);
 
         if (jugador.isPresent()) {
             Jugador unJugador = jugador.get();
@@ -97,7 +88,7 @@ public class MazoController {
             @RequestBody HashMap<String, Integer> cartas
     ) throws MazoExistente, CartaNoEncontrada, MazoInvalido {
     
-        Optional<Jugador> jugador = solicitador(authorizationHeader);
+        Optional<Jugador> jugador = repositorio.solicitador(authorizationHeader);
 
         if (jugador.isPresent()) {
             Jugador unJugador = jugador.get();
@@ -118,7 +109,7 @@ public class MazoController {
             @RequestBody HashMap<String, Integer> cartas
     ) throws MazoInvalido {
 
-        Optional<Jugador> jugador = solicitador(authorizationHeader);
+        Optional<Jugador> jugador = repositorio.solicitador(authorizationHeader);
 
         if (jugador.isPresent()) {
             Jugador unJugador = jugador.get();

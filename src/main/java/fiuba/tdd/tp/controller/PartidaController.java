@@ -1,8 +1,10 @@
 package fiuba.tdd.tp.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,15 +13,17 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import fiuba.tdd.tp.model.Excepciones.CartaNoActivable;
 import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.model.Excepciones.EnergiaInsuficiente;
 import fiuba.tdd.tp.model.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
+import fiuba.tdd.tp.model.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.model.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.jugador.Jugador;
+import fiuba.tdd.tp.model.jugador.Mazo;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Partida;
 import fiuba.tdd.tp.repository.JugadoresRepository;
@@ -27,10 +31,11 @@ import fiuba.tdd.tp.repository.PartidasRepository;
 import fiuba.tdd.tp.service.ActivacionDeCarta;
 import fiuba.tdd.tp.service.InvocacionDeCarta;
 import fiuba.tdd.tp.service.JwtService;
+import fiuba.tdd.tp.service.PartidaEnEspera;
 import fiuba.tdd.tp.service.SolicitudDePartida;
 
 @RestController
-@RequestMapping("/api/partida")
+@RequestMapping("/api/partidas")
 public class PartidaController {
 
 	public PartidasRepository repositorioPartidas;
@@ -50,16 +55,25 @@ public class PartidaController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@PostMapping("/solicitar")
-	public void solicitarPartida(@RequestHeader("Authorization") String authorizationHeader,
-			@RequestBody SolicitudDePartida solicitudDePartida) {
+	@PostMapping("/solicitar/{modoPartida}")
+	public ResponseEntity<String> solicitarPartida(
+			@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody SolicitudDePartida solicitudDePartida,
+			@PathVariable Integer modoPartida
+		) {
+
 		try {
 			String jugador = solicitador(authorizationHeader);
-			this.repositorioPartidas.registrarPartida(solicitudDePartida.modoPartida(), jugador,
-					solicitudDePartida.otroJugador(), solicitudDePartida.unMazo(), solicitudDePartida.otroMazo());
+			if (!jugador.equals(solicitudDePartida.contrincante())) {
+				this.repositorioPartidas.registrarPartida(modoPartida, jugador, solicitudDePartida.contrincante(), solicitudDePartida.mazo());
+			} else {
+				return ResponseEntity.ok("No podes jugar con vos mismo!");
+			}
 		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error creando la Partida");
+			return ResponseEntity.ok(e.getMessage());
 		}
+
+		return ResponseEntity.ok("Partida solicitada!");
 	}
 
 	@GetMapping("/solicitudes")
@@ -68,14 +82,30 @@ public class PartidaController {
 		return this.repositorioPartidas.obtenerSolicitudesRecibidas(jugador);
 	}
 
-	@PostMapping("/aceptarPartida/{contrincante}")
-	public void aceptarPartida(@RequestHeader("Authorization") String authorizationHeader,
-			@PathVariable String contricante)
-			throws MovimientoInvalido {
+	@PostMapping("/aceptarPartida")
+	public ResponseEntity<String> aceptarPartida(
+			@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody SolicitudDePartida solicitudDePartida
+		) throws MovimientoInvalido, PartidaInvalida {
 
-		String jugador = solicitador(authorizationHeader);
-		Partida partida = this.repositorioPartidas.buscarPartida(contricante, jugador);
-		partida.iniciarPartida();
+		String nombreJugador = solicitador(authorizationHeader);
+		Optional<Jugador> unJugador = this.repositorioJugadores.buscarPorUsername(nombreJugador);
+		if (unJugador.isPresent()) {
+			Jugador jugador = unJugador.get();
+			Mazo mazo = jugador.getMazo(solicitudDePartida.mazo());
+			if (mazo == null) {
+				return ResponseEntity.ok("Mazo no encontrado");
+			}
+			PartidaEnEspera partidaEnEspera = this.repositorioPartidas.buscarPartida(solicitudDePartida.contrincante(), nombreJugador);
+			try {
+				Partida partida = this.repositorioPartidas.ponerPartidaEnJuego(partidaEnEspera, mazo);
+				partida.iniciarPartida();
+			} catch (Exception e) {
+				return ResponseEntity.ok(e.getMessage());
+			}
+		}
+
+		return ResponseEntity.ok("Partida iniciada");
 	}
 
 	@GetMapping("/tablero")

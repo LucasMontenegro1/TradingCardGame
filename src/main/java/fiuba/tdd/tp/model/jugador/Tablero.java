@@ -46,6 +46,10 @@ public class Tablero {
         this.modo = modo;
     }
 
+    public void setMazo(Mazo mazo){
+        this.mazoInicial = mazo;
+    }
+
     public void aumentarPuntos(Integer cantidad) {
         this.puntos += cantidad;
     }

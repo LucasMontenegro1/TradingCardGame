@@ -9,14 +9,24 @@ import org.springframework.stereotype.Repository;
 
 import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.service.CuentaJugador;
+import fiuba.tdd.tp.service.JwtService;
 
 @Repository
 public class JugadoresRepository {
     
     private final HashMap<String, Jugador> jugadores = new HashMap<>();
+    private final JwtService jwtService;
 
-    public JugadoresRepository() {
-        
+    public JugadoresRepository(JwtService jwtService) {
+        this.jwtService = jwtService;
+    }
+
+    public Optional<Jugador> solicitador(String authorizationHeader) {
+        String jwt = authorizationHeader.substring(7);
+        String username = jwtService.extractUsername(jwt);
+
+        Optional<Jugador> unJugador = buscarPorUsername(username);
+        return unJugador;
     }
 
     public List<String> jugadoresRegistrados() {

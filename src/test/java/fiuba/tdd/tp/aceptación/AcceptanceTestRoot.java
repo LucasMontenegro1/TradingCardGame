@@ -230,7 +230,7 @@ public class AcceptanceTestRoot<Account, Card> {
         public void start() {
             try {
                 partida.iniciarPartida();
-            } catch (MovimientoInvalido e) {
+            } catch (MovimientoInvalido | PartidaInvalida e) {
                 throw new RuntimeException(e);
             }
         }

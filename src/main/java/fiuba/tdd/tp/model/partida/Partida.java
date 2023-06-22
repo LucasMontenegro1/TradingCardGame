@@ -50,6 +50,7 @@ public class Partida {
         if (!modoPartida.verificarMazoValido(unMazo.cartas) || !modoPartida.verificarMazoValido(otroMazo.cartas)) {
             throw new PartidaInvalida("Los mazos de los jugadores no son compatibles");
         }
+
         this.modo = modoPartida;
         this.ganador = null;
         this.ganador = null;
@@ -69,8 +70,11 @@ public class Partida {
         return turno;
     }
 
-    public void iniciarPartida() throws MovimientoInvalido {
+    public void setMazo(Mazo mazo){
+        this.tablero2.setMazo(mazo);
+    }
 
+    public void iniciarPartida() throws MovimientoInvalido, PartidaInvalida {
         tablero1.iniciarTablero();
         tablero2.iniciarTablero();
         

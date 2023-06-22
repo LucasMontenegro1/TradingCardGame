@@ -18,33 +18,22 @@ import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.model.jugador.Mercado;
 import fiuba.tdd.tp.repository.JugadoresRepository;
 import fiuba.tdd.tp.service.IntercambioDeCartas;
-import fiuba.tdd.tp.service.JwtService;
 
 @RestController
 @RequestMapping("/api/mercado")
 public class IntercambiosController {
 
     private final JugadoresRepository repositorio;
-    private final JwtService jwtService;
     private final Mercado mercadoDeCartas = new Mercado();
 
-     public IntercambiosController(JugadoresRepository repositorioJugadores, JwtService jwtService) {
+     public IntercambiosController(JugadoresRepository repositorioJugadores) {
         this.repositorio = repositorioJugadores;
-        this.jwtService = jwtService;
-    }
-
-    private Optional<Jugador> solicitador(String authorizationHeader) {
-        String jwt = authorizationHeader.substring(7);
-        String username = jwtService.extractUsername(jwt);
-
-        Optional<Jugador> unJugador = repositorio.buscarPorUsername(username);
-        return unJugador;
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PostMapping("")
     public void unirseAlMercado(@RequestHeader("Authorization") String authorizationHeader) {
-        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+        Optional<Jugador> unJugador = repositorio.solicitador(authorizationHeader);
        
         if (unJugador.isPresent()) {
             mercadoDeCartas.agregarIntercambiador(unJugador.get());
@@ -54,7 +43,7 @@ public class IntercambiosController {
     @PostMapping("/intercambiar")
     public ResponseEntity<String> intercambiar(@RequestHeader("Authorization") String authorizationHeader, @RequestBody IntercambioDeCartas intercambioDeCartas) throws CartaNoEncontrada {
 
-        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+        Optional<Jugador> unJugador = repositorio.solicitador(authorizationHeader);
 
         if (unJugador.isPresent()) {
             try {
@@ -70,7 +59,7 @@ public class IntercambiosController {
     @PostMapping("/eliminarIntercambio")
     public ResponseEntity<String> eliminarIntercambio(@RequestHeader("Authorization") String authorizationHeader, @RequestBody IntercambioDeCartas intercambioDeCartas) throws CartaNoEncontrada {
 
-        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+        Optional<Jugador> unJugador = repositorio.solicitador(authorizationHeader);
 
         if (unJugador.isPresent()) {
             try {
@@ -90,7 +79,7 @@ public class IntercambiosController {
 
     @GetMapping("/intercambios")
     public ResponseEntity<HashMap<String, ArrayList<String>>> verIntercambiosJugador(@RequestHeader("Authorization") String authorizationHeader) throws CartaNoEncontrada {
-        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+        Optional<Jugador> unJugador = repositorio.solicitador(authorizationHeader);
         if (unJugador.isPresent()) {
             return ResponseEntity.ok(mercadoDeCartas.intercambiosJugador(unJugador.get().getUsername()));
         }
