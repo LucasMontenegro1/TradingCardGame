@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
 import fiuba.tdd.tp.model.Excepciones.DineroInsuficiente;
 import fiuba.tdd.tp.model.Excepciones.MazoExistente;
+import fiuba.tdd.tp.model.Excepciones.MazoInvalido;
 import fiuba.tdd.tp.model.carta.CartasDisponibles;
 
 public class Jugador implements UserDetails {
@@ -114,26 +115,53 @@ public class Jugador implements UserDetails {
         return mazos.get(nombreMazo);
     }
 
+    public void agregarCartasAMazo(String nombreMazo, HashMap<String, Integer> cartas) throws MazoInvalido, CartaNoEncontrada {
+        if (!this.mazos.containsKey(nombreMazo)) {
+            throw new MazoInvalido("El mazo al cual quiere agregar cartas no existe");
+        }
+        Mazo mazo = this.mazos.get(nombreMazo);
+
+        for (Entry<String, Integer> carta : cartas.entrySet()) {
+            String nombreCarta = carta.getKey();
+            Integer cantidadAAgregar = carta.getValue();
+            Integer cantidadActual = mazo.cantCartaEspecifica(nombreCarta);
+
+            Integer cantidadCartasJugador = this.cartas.get(nombreCarta);
+            if (cantidadActual == null || (cantidadCartasJugador < (cantidadAAgregar+cantidadActual))) {
+                throw new CartaNoEncontrada("No tiene la carta " + nombreCarta);
+            }
+
+            mazo.agregarCarta(nombreCarta, cantidadAAgregar);
+        }
+    }
+
+    public void removerCartasDeMazo(String nombreMazo, HashMap<String, Integer> cartas) throws MazoInvalido, CartaNoEncontrada {
+        if (!this.mazos.containsKey(nombreMazo)) {
+            throw new MazoInvalido("El mazo del cual quiere eliminar cartas no existe");
+        }
+        Mazo mazo = this.mazos.get(nombreMazo);
+
+        for (Entry<String, Integer> carta : cartas.entrySet()) {
+            String nombreCarta = carta.getKey();
+            Integer canitdadAEliminar = carta.getValue();
+
+            for (int i = 0; i < canitdadAEliminar; i++) {
+                mazo.eliminarCarta(nombreCarta);
+            }
+        }
+    }
+
     public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente, CartaNoEncontrada {
         if (this.mazos.containsKey(nombre)) {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
-        }
-
-        if (this.cartas.isEmpty()) {
-            throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
         }
 
         for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
             String nombreCarta = carta.getKey();
             Integer cantidadMazo = carta.getValue();
 
-            Integer cantidadAcual = this.cartas.get(nombreCarta);
-
-            if (cantidadAcual == cantidadMazo) {
-                this.cartas.remove(nombreCarta);
-            } else if (cantidadAcual > cantidadMazo) {
-                this.cartas.put(nombreCarta, cantidadAcual-cantidadMazo);
-            } else {
+            Integer cantidadActual = this.cartas.get(nombreCarta);
+            if (cantidadActual == null && cantidadActual < cantidadMazo) {
                 throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
             }
         }
@@ -144,17 +172,8 @@ public class Jugador implements UserDetails {
     public void eliminarMazo(String nombre) {
         Mazo mazo = this.mazos.get(nombre);
         if (mazo != null) {
-            for (Entry<String, Integer> carta : mazo.cartas.entrySet()) {
-                String nombreCarta = carta.getKey();
-                Integer cantidadMazo = carta.getValue();
-    
-                Integer cantidadAcual = this.cartas.get(nombreCarta) != null ? this.cartas.get(nombreCarta) : 0;
-    
-                this.cartas.put(nombreCarta, cantidadAcual+cantidadMazo);
-            }
+            this.mazos.remove(nombre);
         }
-
-        this.mazos.remove(nombre);
     }
 
     @Override

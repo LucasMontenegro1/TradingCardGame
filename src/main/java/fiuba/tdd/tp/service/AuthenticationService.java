@@ -38,7 +38,6 @@ public class AuthenticationService {
         Jugador jugador = repositorio.buscarPorUsername(request.username()).orElseThrow(null);
 
         if (jugador != null) {
-            
             var jwtToken = jwtService.generateToken(jugador);
             return new AuthenticationResponse(jwtToken);
         }

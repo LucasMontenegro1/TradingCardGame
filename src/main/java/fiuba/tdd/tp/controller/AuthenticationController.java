@@ -29,7 +29,7 @@ public class AuthenticationController {
 
         AuthenticationResponse response = service.registrar(request);
         if (response == null) {
-            ResponseEntity.badRequest();
+            return ResponseEntity.ok("Usuario ya resgistrado");
         }
 
         return ResponseEntity.ok(response.getToken());
@@ -42,7 +42,7 @@ public class AuthenticationController {
 
         AuthenticationResponse response = service.loguear(request);
         if (response == null) {
-            ResponseEntity.badRequest();
+            return ResponseEntity.ok("Usuario no resgistrado");
         }
 
         return ResponseEntity.ok(response.getToken());
