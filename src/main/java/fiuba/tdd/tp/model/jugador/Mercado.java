@@ -72,4 +72,23 @@ public class Mercado {
 
         jugador.agregarCarta(cartaDispuesta);
     }
+
+    public HashMap<String, ArrayList<String>> intercambiosJugador(String jugador) {
+        for (Jugador intercambiador : intercambiadores) {
+            if (intercambiador.getUsername().equals(jugador)) {
+                return intercambiador.intercambiosAbiertos();
+            }
+        }
+
+        return null;
+    }
+
+    public HashMap<String, HashMap<String, ArrayList<String>>> intercambiosDisponibles() {
+        HashMap<String, HashMap<String, ArrayList<String>>> intercambios = new HashMap<>();
+        for (Jugador intercambiador : intercambiadores) {
+            intercambios.put(intercambiador.getUsername(), intercambiador.intercambiosAbiertos());
+        }
+        
+        return intercambios;
+    }
 }

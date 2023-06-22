@@ -1,5 +1,6 @@
 package fiuba.tdd.tp.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -128,4 +129,34 @@ public class JugadorController {
         return ResponseEntity.ok("Intercambio realizado");
     }
 
+    @PostMapping("/eliminarIntercambio")
+    public ResponseEntity<String> eliminarIntercambio(@RequestHeader("Authorization") String authorizationHeader, @RequestBody IntercambioDeCartas intercambioDeCartas) throws CartaNoEncontrada {
+
+        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+
+        if (unJugador.isPresent()) {
+            try {
+                mercadoDeCartas.eliminarIntercambio(unJugador.get(), intercambioDeCartas.cartaDispuesta(), intercambioDeCartas.cartaDeseada());
+            } catch (Exception e) {
+                return ResponseEntity.ok("Intercambio no encontrado");
+            }
+        }
+
+        return ResponseEntity.ok("Intercambio eliminado");
+    }
+
+    @GetMapping("/intercambiosMercado")
+    public ResponseEntity<HashMap<String,HashMap<String, ArrayList<String>>>> verIntercambios(@RequestHeader("Authorization") String authorizationHeader) throws CartaNoEncontrada {
+        return ResponseEntity.ok(mercadoDeCartas.intercambiosDisponibles());
+    }
+
+    @GetMapping("/intercambios")
+    public ResponseEntity<HashMap<String, ArrayList<String>>> verIntercambiosJugador(@RequestHeader("Authorization") String authorizationHeader) throws CartaNoEncontrada {
+        Optional<Jugador> unJugador = solicitador(authorizationHeader);
+        if (unJugador.isPresent()) {
+            return ResponseEntity.ok(mercadoDeCartas.intercambiosJugador(unJugador.get().getUsername()));
+        }
+        
+        return null;
+    }
 }
