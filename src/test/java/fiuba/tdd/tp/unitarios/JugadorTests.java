@@ -216,7 +216,7 @@ public class JugadorTests {
             jugador.agregarMazo("Mazo modo uno", mazo);
         });
 
-        assertEquals(jugador.getCartas().size(), 0);
+        assertEquals(jugador.getCartas().size(), 1);
         assertEquals(jugador.getMazos().size(), 1);
     }
 

@@ -161,7 +161,7 @@ public class Jugador implements UserDetails {
             Integer cantidadMazo = carta.getValue();
 
             Integer cantidadActual = this.cartas.get(nombreCarta);
-            if (cantidadActual == null && cantidadActual < cantidadMazo) {
+            if (cantidadActual == null || cantidadActual < cantidadMazo) {
                 throw new CartaNoEncontrada("No tiene las cartas necesarias para armar el mazo");
             }
         }
