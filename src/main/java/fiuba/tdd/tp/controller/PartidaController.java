@@ -1,15 +1,13 @@
 package fiuba.tdd.tp.controller;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Vector;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,73 +20,106 @@ import fiuba.tdd.tp.model.Excepciones.ModoSinPuntosDeVida;
 import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.model.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.model.carta.Carta;
-import fiuba.tdd.tp.model.carta.Energia;
-import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Partida;
+import fiuba.tdd.tp.repository.JugadoresRepository;
 import fiuba.tdd.tp.repository.PartidasRepository;
+import fiuba.tdd.tp.service.ActivacionDeCarta;
+import fiuba.tdd.tp.service.InvocacionDeCarta;
+import fiuba.tdd.tp.service.JwtService;
 import fiuba.tdd.tp.service.SolicitudDePartida;
 
 @RestController
 @RequestMapping("/api/partida")
 public class PartidaController {
 
-	public PartidasRepository repositorio;
+	public PartidasRepository repositorioPartidas;
+	public JugadoresRepository repositorioJugadores;
+	private final JwtService jwtService;
+
+	public PartidaController(PartidasRepository repositorioPartidas, JugadoresRepository repositorioJugadores,
+			JwtService jwtService) {
+		this.repositorioPartidas = repositorioPartidas;
+		this.repositorioJugadores = repositorioJugadores;
+		this.jwtService = jwtService;
+	}
+
+	private String solicitador(String authorizationHeader) {
+		String jwt = authorizationHeader.substring(7);
+		return jwtService.extractUsername(jwt);
+	}
 
 	@ResponseStatus(HttpStatus.OK)
 	@PostMapping("/solicitar")
-	public void solicitarPartida(@RequestBody SolicitudDePartida solicitudDePartida) {
+	public void solicitarPartida(@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody SolicitudDePartida solicitudDePartida) {
 		try {
-			//this.repositorio.registrarPartida(solicitudDePartida.);
+			String jugador = solicitador(authorizationHeader);
+			this.repositorioPartidas.registrarPartida(solicitudDePartida.modoPartida(), jugador,
+					solicitudDePartida.otroJugador(), solicitudDePartida.unMazo(), solicitudDePartida.otroMazo());
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error creando la Partida");
 		}
 	}
 
-	@GetMapping("/solicitudes/{jugador}")
-	public Vector<String> obtenerSolicitudesRecibidas(@PathVariable("jugador") String jugador) {
-		return this.repositorio.obtenerSolicitudesRecibidas(jugador);
+	@GetMapping("/solicitudes")
+	public List<String> obtenerSolicitudesRecibidas(@RequestHeader("Authorization") String authorizationHeader) {
+		String jugador = solicitador(authorizationHeader);
+		return this.repositorioPartidas.obtenerSolicitudesRecibidas(jugador);
 	}
 
-	@PostMapping("/aceptarPartida")
-	public void aceptarPartida(@RequestBody String jugador) throws MovimientoInvalido {
-		//;
+	@PostMapping("/aceptarPartida/{contrincante}")
+	public void aceptarPartida(@RequestHeader("Authorization") String authorizationHeader,
+			@PathVariable String contricante)
+			throws MovimientoInvalido {
+
+		String jugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartida(contricante, jugador);
+		partida.iniciarPartida();
 	}
 
+	@GetMapping("/tablero")
+	public Tablero getTablero(@RequestHeader("Authorization") String authorizationHeader) {
 
-	@GetMapping("/tablero/{partida}/{jugador}")
-	public Tablero getTablero(@PathVariable("partida") Integer partida, @PathVariable("jugador") String jugador) {
-		return this.repositorio.tableroJugador(partida, jugador);
+		String jugador = solicitador(authorizationHeader);
+		return this.repositorioPartidas.tableroJugador(jugador);
 	}
 
-	@GetMapping("/puntosDeVida/{partida}/{jugador}")
-	public Integer getPuntosDeVida(@PathVariable("partida") Integer partida, @PathVariable("jugador") String jugador) throws ModoSinPuntosDeVida {
-		return this.repositorio.puntosDeVida(partida, jugador);
+	@GetMapping("/puntos")
+	public Integer getPuntosDeVida(@RequestHeader("Authorization") String authorizationHeader)
+			throws ModoSinPuntosDeVida {
+
+		String jugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		return partida.tableroJugador(jugador).puntos;
 	}
 
-	@PostMapping("/terminarEtapa/{partida}")
-	public void terminarEtapa(@PathVariable("partida") Integer partida) throws MovimientoInvalido {
-		this.repositorio.terminarEtapa(partida);
+	@PostMapping("/terminarEtapa")
+	public void terminarEtapa(@RequestHeader("Authorization") String authorizationHeader) throws MovimientoInvalido {
+
+		String jugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		partida.terminarEtapa();
 	}
 
-	@PostMapping("/invocarCarta/{partida}")
-	public Carta invocarCarta(@PathVariable("partida") Integer partida, @RequestBody String jugador, @RequestBody String carta, @RequestBody String zona)
+	@PostMapping("/invocarCarta")
+	public Carta invocarCarta(@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody InvocacionDeCarta invocacionDeCarta)
 			throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
 
-		return this.repositorio.invocarCarta(partida, jugador, carta, zona);
+		String jugador = solicitador(authorizationHeader);
+		return this.repositorioPartidas.invocarCarta(jugador,
+				invocacionDeCarta.carta(), invocacionDeCarta.zona());
 	}
 
-	@PostMapping("/activarCarta/{partida}")
-	public void activarCarta(
-			@PathVariable("partida") Integer partida,
-			@RequestBody Carta carta,
-			@RequestBody Integer indiceMetodo,
-			@RequestBody String jugadorObjetivo,
-			@RequestBody ArrayList<Carta> cartasObjetivos,
-			@RequestBody Energia energia)
-			throws CartaNoActivable, MovimientoInvalido {
+	@PostMapping("/activarCarta")
+	public void activarCarta(@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody ActivacionDeCarta activacionDeCarta) throws CartaNoActivable, MovimientoInvalido {
 
-		this.repositorio.activarCarta(partida, carta, indiceMetodo, jugadorObjetivo, cartasObjetivos, energia);
+		String jugador = solicitador(authorizationHeader);
+		this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
+				activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
+				activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
 	}
 
 }

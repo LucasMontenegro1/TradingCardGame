@@ -110,6 +110,10 @@ public class Jugador implements UserDetails {
         }
     }
 
+    public Mazo getMazo(String nombreMazo) {
+        return mazos.get(nombreMazo);
+    }
+
     public void agregarMazo(String nombre, Mazo mazo) throws MazoExistente, CartaNoEncontrada {
         if (this.mazos.containsKey(nombre)) {
             throw new MazoExistente("No puede agregar un mazo con ese nombre");
