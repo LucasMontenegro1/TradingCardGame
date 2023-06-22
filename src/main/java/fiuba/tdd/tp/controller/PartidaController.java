@@ -2,6 +2,7 @@ package fiuba.tdd.tp.controller;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Vector;
 
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,11 @@ import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.model.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.model.carta.Carta;
 import fiuba.tdd.tp.model.carta.Energia;
+import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.model.jugador.Tablero;
 import fiuba.tdd.tp.model.partida.Partida;
 import fiuba.tdd.tp.repository.PartidasRepository;
+import fiuba.tdd.tp.service.SolicitudDePartida;
 
 @RestController
 @RequestMapping("/api/partida")
@@ -33,10 +36,10 @@ public class PartidaController {
 	public PartidasRepository repositorio;
 
 	@ResponseStatus(HttpStatus.OK)
-	@PostMapping
-	public void solicitarPartida() {
+	@PostMapping("/solicitar")
+	public void solicitarPartida(@RequestBody SolicitudDePartida solicitudDePartida) {
 		try {
-			this.repositorio.registrarPartida(null, null, null, null, null);
+			//this.repositorio.registrarPartida(solicitudDePartida.);
 		} catch (Exception e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error creando la Partida");
 		}
