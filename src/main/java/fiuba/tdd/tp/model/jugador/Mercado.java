@@ -31,7 +31,8 @@ public class Mercado {
                         jugador.eliminarCarta(cartaDispuesta);
                         jugador.agregarCarta(cartaDesada);
                         intercambiador.agregarCarta(cartaDispuesta);
-    
+                        intercambiador.eliminarCarta(cartaDesada);
+
                         return true;
                     }
                 }
@@ -47,8 +48,6 @@ public class Mercado {
         }
         
         if (!buscarMatchIntercambio(jugador, cartaDispuesta, cartaDeseada)) {
-
-            jugador.eliminarCarta(cartaDispuesta);
 
             ArrayList<String> cartasDeseadas = jugador.intercambiosAbiertos().get(cartaDispuesta);
             if (cartasDeseadas == null) {

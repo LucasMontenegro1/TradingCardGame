@@ -106,8 +106,15 @@ public class Jugador implements UserDetails {
         int cantidad = this.cartas.get(nombreCarta);
         if (cantidad == 1) {
             this.cartas.remove(nombreCarta);
+            this.intercambios.remove(nombreCarta);
         } else {
             this.cartas.put(nombreCarta, cantidad-1);
+        }
+
+        for (Mazo mazo : this.mazos.values()) {
+            if (mazo.cantCartaEspecifica(nombreCarta) == cantidad) {
+                mazo.eliminarCarta(nombreCarta);
+            }
         }
     }
 

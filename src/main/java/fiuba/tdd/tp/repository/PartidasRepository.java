@@ -60,8 +60,11 @@ public class PartidasRepository {
 
 	public List<String> obtenerSolicitudesRecibidas(String jugador) {
 		List<String> solicitantes = new ArrayList<>();
-		for (PartidaEnEspera partida : this.partidasEnEspera.get(jugador)) {
-			solicitantes.add(partida.getJugador());
+		List<PartidaEnEspera> partidas = this.partidasEnEspera.get(jugador);
+		if (partidas != null) {
+			for (PartidaEnEspera partida : partidas) {
+				solicitantes.add(partida.getJugador());
+			}
 		}
 
 		return solicitantes;
