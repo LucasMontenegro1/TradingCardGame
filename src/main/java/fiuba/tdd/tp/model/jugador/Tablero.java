@@ -61,7 +61,7 @@ public class Tablero {
     public Carta buscarCarta(String nombreCarta, String zona) {
         for (Carta carta : cartas) {
 
-            if (carta.nombreCarta() == nombreCarta && (carta.zona != null) && 
+            if (carta.nombreCarta().equals(nombreCarta) && (carta.zona != null) && 
                 !(carta.zona instanceof ZonaDescarte) && !(carta.zona.getClass().getSimpleName().equals(zona))) {
 
                 return carta;
@@ -112,7 +112,10 @@ public class Tablero {
 
         this.cartas.forEach(carta -> {
             carta.metodos.forEach(efecto -> {
-                if (carta.zona != null && efecto.esAplicableA(etapa, carta.zona, pila, cartasUsadas, this.energia)) {
+                if (carta.zona != null && 
+                    efecto.esAplicableA(etapa, carta.zona, pila, cartasUsadas, this.energia) &&
+                    !cartasUsadas.contains(carta)
+                ) {
                     ArrayList<MetodoCarta> efectosCarta = cartasUsables.get(carta);
                     if (efectosCarta == null) {
                         efectosCarta = new ArrayList<>();

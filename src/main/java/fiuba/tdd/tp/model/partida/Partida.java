@@ -121,6 +121,10 @@ public class Partida {
         return tablero1;
     }
 
+    public HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables(){
+		return tableroEnTurno().cartasUsables(turno.etapaActual(),pilaDeEjecucion, cartasUsadasEnTurno);
+	}
+
     public void terminarEtapa() throws MovimientoInvalido {
         this.turno.pasarDeEtapa();
         cartasUsadasEnTurno.clear();

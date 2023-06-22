@@ -24,6 +24,7 @@ import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.model.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.model.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.carta.Metodos.MetodoCarta;
 import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.model.jugador.Mazo;
 import fiuba.tdd.tp.model.jugador.Tablero;
@@ -167,13 +168,15 @@ public class PartidaController {
 		tableroEnJuego.put("ZonaReserva", new ArrayList<>());
 
 		ArrayList<HashMap<String, Integer>> cartasEnZona;
+		Integer i = 0;
 		for (Carta carta : tablero.cartas) {
 			if (carta.zona != null) {
 				cartasEnZona = tableroEnJuego.get(carta.zona.getClass().getSimpleName());
 				HashMap<String, Integer> unaCarta = new HashMap<>();
-				unaCarta.put(carta.nombre, carta.hp);
+				unaCarta.put(String.format("%d: %s", i, carta.nombre), carta.hp);
 				cartasEnZona.add(unaCarta);
 			}
+			i++;
 		}
 
 		return tableroEnJuego;
@@ -195,32 +198,97 @@ public class PartidaController {
 		return tableroEnemigo;
 	}
 
+	@PostMapping("/invocarCarta")
+	public ResponseEntity<String> invocarCarta(
+			@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody InvocacionDeCarta invocacionDeCarta
+		) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
+
+		String jugador = solicitador(authorizationHeader);
+		try {
+			this.repositorioPartidas.invocarCarta(jugador, invocacionDeCarta.carta(), invocacionDeCarta.zona());
+			return ResponseEntity.ok("Carta invocada");
+		} catch (Exception e) {
+			return ResponseEntity.ok(e.getMessage());
+		}
+		
+	}
+
 	@PostMapping("/terminarEtapa")
-	public void terminarEtapa(@RequestHeader("Authorization") String authorizationHeader) throws MovimientoInvalido {
+	public ResponseEntity<String> terminarEtapa(@RequestHeader("Authorization") String authorizationHeader) throws MovimientoInvalido {
 
 		String jugador = solicitador(authorizationHeader);
 		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
-		partida.terminarEtapa();
+		if (partida.jugadorEnTurno.equals(jugador)) {
+			partida.terminarEtapa();
+			return ResponseEntity.ok(partida.turnoEnProceso().etapaActual().getClass().getSimpleName());
+		}
+
+		return ResponseEntity.ok("No podes pasar de turno");
 	}
 
-	@PostMapping("/invocarCarta")
-	public Carta invocarCarta(@RequestHeader("Authorization") String authorizationHeader,
-			@RequestBody InvocacionDeCarta invocacionDeCarta)
-			throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
+	@GetMapping("/etapa")
+	public String getEtapa(@RequestHeader("Authorization") String authorizationHeader) {
 
 		String jugador = solicitador(authorizationHeader);
-		return this.repositorioPartidas.invocarCarta(jugador,
-				invocacionDeCarta.carta(), invocacionDeCarta.zona());
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		return partida.turnoEnProceso().etapaActual().getClass().getSimpleName();
+	}
+
+	private HashMap<String, ArrayList<Integer>> serializarCartasUsables(HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables){
+		HashMap<String, ArrayList<Integer>> result = new HashMap<>();
+		for (Carta carta : cartasUsables.keySet()){
+			ArrayList<Integer> numbers = new ArrayList<>();
+			Integer method_len = cartasUsables.get(carta).size();
+			for (int i = 0; i < method_len; i++) {numbers.add(i);}
+			result.put(carta.nombreCarta(), numbers);
+		}
+		return result;
+	}
+
+	@GetMapping("/cartasUsables")
+	public HashMap<String, ArrayList<Integer>> getCartasUsables(@RequestHeader("Authorization") String authorizationHeader) {
+
+		String jugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		HashMap<Carta, ArrayList<MetodoCarta>> cartasUsables = partida.cartasUsables();
+		return serializarCartasUsables(cartasUsables);
+	}
+
+	@GetMapping("/cartasAtacables")
+	public ArrayList<HashMap<String, Integer>> getCartasAtacables(@RequestHeader("Authorization") String authorizationHeader) {
+
+		String jugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		Tablero tableroEnemigo = partida.tableroEnemigo(jugador);
+		ArrayList<Carta> cartasAtacables = tableroEnemigo.cartasAtacables();
+
+		ArrayList<HashMap<String, Integer>> cartas = new ArrayList<>();
+		if (cartasAtacables != null) {
+			for (Carta carta : cartasAtacables) {
+				HashMap<String, Integer> unaCarta = new HashMap<>();
+				unaCarta.put(carta.nombre, carta.hp);
+				cartas.add(unaCarta);
+			}
+		}
+
+		return cartas;
 	}
 
 	@PostMapping("/activarCarta")
-	public void activarCarta(@RequestHeader("Authorization") String authorizationHeader,
-			@RequestBody ActivacionDeCarta activacionDeCarta) throws CartaNoActivable, MovimientoInvalido {
+	public void activarCarta(
+			@RequestHeader("Authorization") String authorizationHeader,
+			@RequestBody ActivacionDeCarta activacionDeCarta
+		) throws CartaNoActivable, MovimientoInvalido {
 
 		String jugador = solicitador(authorizationHeader);
-		this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
-				activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
-				activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
+		Partida partida = repositorioPartidas.buscarPartidaEnJuego(jugador);
+
+		if (jugador.equals(partida.jugadorEnTurno)) {
+			this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
+					activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
+					activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
+		}
 	}
 
 	@PostMapping("/iniciarPila")

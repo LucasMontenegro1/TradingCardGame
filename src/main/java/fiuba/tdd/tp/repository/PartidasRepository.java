@@ -14,6 +14,7 @@ import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
 import fiuba.tdd.tp.model.Excepciones.PartidaInvalida;
 import fiuba.tdd.tp.model.Excepciones.ZonaLlena;
 import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.carta.Energia;
 import fiuba.tdd.tp.model.jugador.Jugador;
 import fiuba.tdd.tp.model.jugador.Mazo;
 import fiuba.tdd.tp.model.jugador.Tablero;
@@ -115,19 +116,24 @@ public class PartidasRepository {
 		return null;
 	}
 
-	public void activarCarta(String unJugador, String unaCarta, Integer indiceMetodo, String unJugadorObjetivo,
-			ArrayList<String> unasCartasObjetivos, String energia) throws CartaNoActivable, MovimientoInvalido {
+	public void activarCarta(String unJugador, Integer unaCarta, Integer indiceMetodo, String unJugadorObjetivo,
+			ArrayList<Integer> unasCartasObjetivos, String energia) throws CartaNoActivable, MovimientoInvalido {
 		
-		// Partida partida = buscarPartidaEnJuego(unJugador);
-		// Tablero tablero = partida.tableroJugador(unJugador);
-		
-		
-		// List<Carta> cartasObjetivos = new ArrayList<>();
-		// for (String cartaObjetivo : unasCartasObjetivos) {
-		// 	cartasObjetivos.add(tablero.buscarCarta(cartaObjetivo));
-		// }
-		
-		// partida.activarCarta(carta, indiceMetodo, unJugadorObjetivo, cartasObjetivos, energia);
+		Partida partida = buscarPartidaEnJuego(unJugador);
+		Tablero tablero = partida.tableroJugador(unJugador);
+		Tablero tableroEnemigo = partida.tableroEnEspera();
+
+		ArrayList<Carta> cartasObjetivos = new ArrayList<>();
+		for (Integer carta : unasCartasObjetivos) {
+			cartasObjetivos.add(tableroEnemigo.cartas.get(carta));
+		}
+
+		Energia unaEnergia = null;
+		if (energia != null) {
+			unaEnergia = Energia.valueOf(energia);
+		}		
+
+		partida.activarCarta(tablero.cartas.get(unaCarta), indiceMetodo, unJugadorObjetivo, cartasObjetivos, unaEnergia);
 	}
 
 	public Partida ponerPartidaEnJuego(PartidaEnEspera partidaEnEspera, Mazo mazo) throws PartidaInvalida {

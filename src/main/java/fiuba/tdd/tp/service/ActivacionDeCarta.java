@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class ActivacionDeCarta {
 
-	private String carta;
+	private Integer carta;
 	private Integer indiceMetodo;
 	private String jugadorObjetivo;
-	private ArrayList<String> cartasObjetivos;
+	private ArrayList<Integer> cartasObjetivos;
 	private String energia;
 
-	public ActivacionDeCarta(String carta, Integer indiceMetodo, String jugadorObjetivo,
-			ArrayList<String> cartasObjetivos, String energia) {
+	public ActivacionDeCarta(Integer carta, Integer indiceMetodo, String jugadorObjetivo,
+			ArrayList<Integer> cartasObjetivos, String energia) {
 		this.indiceMetodo = indiceMetodo;
 		this.carta = carta;
 		this.jugadorObjetivo = jugadorObjetivo;
@@ -19,7 +19,7 @@ public class ActivacionDeCarta {
 		this.energia = energia;
 	}
 
-	public String carta() {
+	public Integer carta() {
 		return carta;
 	}
 
@@ -31,7 +31,7 @@ public class ActivacionDeCarta {
 		return jugadorObjetivo;
 	}
 
-	public ArrayList<String> cartasObjetivos() {
+	public ArrayList<Integer> cartasObjetivos() {
 		return cartasObjetivos;
 	}
 
