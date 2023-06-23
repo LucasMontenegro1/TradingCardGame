@@ -291,16 +291,22 @@ public class PartidaController {
 	}
 
 	@PostMapping("/activarCarta")
-	public void activarCarta(
+	public ResponseEntity<String> activarCarta(
 			@RequestHeader("Authorization") String authorizationHeader,
 			@RequestBody ActivacionDeCarta activacionDeCarta
 		) throws CartaNoActivable, MovimientoInvalido {
 
 		String jugador = solicitador(authorizationHeader);
 
-		this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
-				activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
-				activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
+		try {
+			this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
+					activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
+					activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
+		} catch (Exception e) {
+			return ResponseEntity.ok("No podés activar esa carta");
+		}
+
+		return ResponseEntity.ok("Carta activada");
 	}
 
 	@PostMapping("/iniciarPila")
@@ -315,23 +321,6 @@ public class PartidaController {
 		String jugador = solicitador(authorizationHeader);
 		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
 		partida.ejecutarPila();
-	}
-
-	private void avanzarEtapa(Partida partida, String jugador, String etapa) throws MovimientoInvalido {
-        partida.terminarEtapa();
-        while (!partida.jugadorEnTurno(jugador) || !(partida.turnoEnProceso().etapaActual().getClass().getSimpleName().equals(etapa))) {
-            partida.terminarEtapa();
-        }
-    }
-
-	@PostMapping("/moverAEtapa/{jugador}/{etapa}")
-	public void moverAEtapa(@RequestHeader("Authorization") String authorizationHeader,
-		@PathVariable String jugador,
-		@PathVariable String etapa
-	) throws MovimientoInvalido {
-		String unJugador = solicitador(authorizationHeader);
-		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(unJugador);
-		avanzarEtapa(partida, jugador, etapa);
 	}
 
 	@PostMapping("/reordenarMazo")
