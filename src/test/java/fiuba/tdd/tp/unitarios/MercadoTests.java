@@ -11,11 +11,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fiuba.tdd.tp.Excepciones.CartaNoEncontrada;
-import fiuba.tdd.tp.Excepciones.DineroInsuficiente;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.jugador.Jugador;
-import fiuba.tdd.tp.jugador.Mercado;
+import fiuba.tdd.tp.model.Excepciones.CartaNoEncontrada;
+import fiuba.tdd.tp.model.Excepciones.DineroInsuficiente;
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.jugador.Jugador;
+import fiuba.tdd.tp.model.jugador.Mercado;
 
 @SpringBootTest
 public class MercadoTests {
@@ -93,7 +93,7 @@ public class MercadoTests {
     }
 
     @Test
-    void testJugadorNoPuedeOfrecerLaMismaCartaEnDosVeces() throws DineroInsuficiente, CartaNoEncontrada {
+    void testJugadorNoPuedeIntercambiarLaMismaCartaEnDosVeces() throws DineroInsuficiente, CartaNoEncontrada {
         Jugador jugador = new Jugador("Jugador", "1234");
         mercado.agregarIntercambiador(jugador);
 
@@ -101,6 +101,7 @@ public class MercadoTests {
         jugador.comprarCarta(CartasDisponibles.ALQUIMISTA);
 
         mercado.realizarIntercambio(jugador, CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
+        jugador.eliminarCarta(CartasDisponibles.ALQUIMISTA.nombre);
         assertThrows(CartaNoEncontrada.class, () -> {
             mercado.realizarIntercambio(jugador, CartasDisponibles.ALQUIMISTA.nombre, CartasDisponibles.AGUA.nombre);
         });

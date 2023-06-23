@@ -4,18 +4,19 @@ import java.util.HashMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
-import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.jugador.Mazo;
-import fiuba.tdd.tp.jugador.Tablero;
-import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.modo.Modo2;
-import fiuba.tdd.tp.turno.EtapaDeAtaque;
-import fiuba.tdd.tp.turno.EtapaInicial;
-import fiuba.tdd.tp.turno.EtapaPrincipal;
-import fiuba.tdd.tp.turno.Turno;
+
+import fiuba.tdd.tp.model.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.jugador.Mazo;
+import fiuba.tdd.tp.model.jugador.Tablero;
+import fiuba.tdd.tp.model.modo.Modo;
+import fiuba.tdd.tp.model.modo.Modo1;
+import fiuba.tdd.tp.model.modo.Modo2;
+import fiuba.tdd.tp.model.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.model.turno.EtapaInicial;
+import fiuba.tdd.tp.model.turno.EtapaPrincipal;
+import fiuba.tdd.tp.model.turno.Turno;
 
 @SpringBootTest
 public class TurnoTests {

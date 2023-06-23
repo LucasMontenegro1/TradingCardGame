@@ -4,8 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.jugador.Mazo;
+
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.jugador.Mazo;
 
 @SpringBootTest
 public class MazoTests {

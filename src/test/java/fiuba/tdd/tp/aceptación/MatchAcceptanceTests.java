@@ -1,8 +1,9 @@
 package fiuba.tdd.tp.aceptación;
 
-import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.driver.*;
-import fiuba.tdd.tp.jugador.Jugador;
+import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.driver.*;
+import fiuba.tdd.tp.model.jugador.Jugador;
+
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static fiuba.tdd.tp.driver.DriverCardName.*;
-import static fiuba.tdd.tp.driver.DriverGameMode.*;
-import static fiuba.tdd.tp.driver.DriverMatchSide.*;
+import static fiuba.tdd.tp.model.driver.DriverCardName.*;
+import static fiuba.tdd.tp.model.driver.DriverGameMode.*;
+import static fiuba.tdd.tp.model.driver.DriverMatchSide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchAcceptanceTests<Account, Card> extends AcceptanceTestRoot<Jugador, Carta> {

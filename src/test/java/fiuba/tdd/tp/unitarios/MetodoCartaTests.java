@@ -1,23 +1,23 @@
 package fiuba.tdd.tp.unitarios;
 
-import fiuba.tdd.tp.carta.Metodos.*;
-import fiuba.tdd.tp.Excepciones.MazoInvalido;
-import fiuba.tdd.tp.Excepciones.MovimientoInvalido;
-import fiuba.tdd.tp.carta.Carta;
-import fiuba.tdd.tp.carta.CartasDisponibles;
-import fiuba.tdd.tp.carta.Energia;
-import fiuba.tdd.tp.carta.Tipo;
-import fiuba.tdd.tp.carta.Atributo;
-import fiuba.tdd.tp.jugador.Mazo;
-import fiuba.tdd.tp.jugador.Tablero;
-import fiuba.tdd.tp.modo.Modo;
-import fiuba.tdd.tp.modo.Modo1;
-import fiuba.tdd.tp.modo.Modo2;
-import fiuba.tdd.tp.partida.Ejecucion;
-import fiuba.tdd.tp.turno.EtapaDeAtaque;
-import fiuba.tdd.tp.turno.EtapaPrincipal;
-import fiuba.tdd.tp.zona.ZonaCombate;
-import fiuba.tdd.tp.zona.ZonaMano;
+import fiuba.tdd.tp.model.Excepciones.MazoInvalido;
+import fiuba.tdd.tp.model.Excepciones.MovimientoInvalido;
+import fiuba.tdd.tp.model.carta.Atributo;
+import fiuba.tdd.tp.model.carta.Carta;
+import fiuba.tdd.tp.model.carta.CartasDisponibles;
+import fiuba.tdd.tp.model.carta.Energia;
+import fiuba.tdd.tp.model.carta.Tipo;
+import fiuba.tdd.tp.model.carta.Metodos.*;
+import fiuba.tdd.tp.model.jugador.Mazo;
+import fiuba.tdd.tp.model.jugador.Tablero;
+import fiuba.tdd.tp.model.modo.Modo;
+import fiuba.tdd.tp.model.modo.Modo1;
+import fiuba.tdd.tp.model.modo.Modo2;
+import fiuba.tdd.tp.model.partida.Ejecucion;
+import fiuba.tdd.tp.model.turno.EtapaDeAtaque;
+import fiuba.tdd.tp.model.turno.EtapaPrincipal;
+import fiuba.tdd.tp.model.zona.ZonaCombate;
+import fiuba.tdd.tp.model.zona.ZonaMano;
 
 import org.junit.jupiter.api.Test;
 
