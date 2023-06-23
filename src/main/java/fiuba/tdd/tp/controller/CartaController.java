@@ -53,9 +53,10 @@ public class CartaController {
         if (unJugador.isPresent()) {
             for (int i = 0; i < cantidad; i++){
                 try {
-                    unJugador.get().comprarCarta(CartasDisponibles.valueOf(carta));
+                    CartasDisponibles unaCarta = CartasDisponibles.valueOf(carta);
+                    unJugador.get().comprarCarta(unaCarta);
                 } catch (Exception e) {
-                    return ResponseEntity.ok("Dinero insuficiente");
+                    return ResponseEntity.ok(e.getMessage());
                 }
             }
         }

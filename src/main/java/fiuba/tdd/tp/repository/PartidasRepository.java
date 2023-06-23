@@ -49,6 +49,9 @@ public class PartidasRepository {
 			modoPartida = new Modo2();
 		}
 		Mazo unMazo = jugador.get().getMazo(nombreUnMazo);
+		if (unMazo == null) {
+			throw new PartidaInvalida("No tiene el mazo");
+		}
 		
 		PartidaEnEspera partida = new PartidaEnEspera(modoPartida, unJugador, otroJugador, unMazo);
 

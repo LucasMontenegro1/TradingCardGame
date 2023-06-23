@@ -101,14 +101,25 @@ public class PartidaController {
 			}
 			PartidaEnEspera partidaEnEspera = this.repositorioPartidas.buscarPartida(solicitudDePartida.contrincante(), nombreJugador);
 			try {
-				Partida partida = this.repositorioPartidas.ponerPartidaEnJuego(partidaEnEspera, mazo);
-				partida.iniciarPartida();
+				this.repositorioPartidas.ponerPartidaEnJuego(partidaEnEspera, mazo);
 			} catch (Exception e) {
 				return ResponseEntity.ok(e.getMessage());
 			}
 		}
 
-		return ResponseEntity.ok("Partida iniciada");
+		return ResponseEntity.ok("Partida aceptada!");
+	}
+	
+	@PostMapping("/iniciar")
+	public ResponseEntity<String> iniciarPartida(@RequestHeader("Authorization") String authorizationHeader) throws MovimientoInvalido, PartidaInvalida {
+		String jugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		try {
+			partida.iniciarPartida();
+		} catch (Exception e){
+			return ResponseEntity.ok(e.getMessage());
+		}
+		return ResponseEntity.ok("Partida iniciada!");
 	}
 
 	@GetMapping("/puntos")
@@ -205,6 +216,7 @@ public class PartidaController {
 		) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
 
 		String jugador = solicitador(authorizationHeader);
+
 		try {
 			this.repositorioPartidas.invocarCarta(jugador, invocacionDeCarta.carta(), invocacionDeCarta.zona());
 			return ResponseEntity.ok("Carta invocada");
@@ -232,6 +244,9 @@ public class PartidaController {
 
 		String jugador = solicitador(authorizationHeader);
 		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
+		if (partida.turnoEnProceso().etapaActual() == null) {
+			return "EtapaFinal";
+		}
 		return partida.turnoEnProceso().etapaActual().getClass().getSimpleName();
 	}
 
@@ -282,13 +297,10 @@ public class PartidaController {
 		) throws CartaNoActivable, MovimientoInvalido {
 
 		String jugador = solicitador(authorizationHeader);
-		Partida partida = repositorioPartidas.buscarPartidaEnJuego(jugador);
 
-		if (jugador.equals(partida.jugadorEnTurno)) {
-			this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
-					activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
-					activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
-		}
+		this.repositorioPartidas.activarCarta(jugador, activacionDeCarta.carta(),
+				activacionDeCarta.indiceMetodo(), activacionDeCarta.jugadorObjetivo(),
+				activacionDeCarta.cartasObjetivos(), activacionDeCarta.energia());
 	}
 
 	@PostMapping("/iniciarPila")
@@ -303,5 +315,40 @@ public class PartidaController {
 		String jugador = solicitador(authorizationHeader);
 		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(jugador);
 		partida.ejecutarPila();
+	}
+
+	private void avanzarEtapa(Partida partida, String jugador, String etapa) throws MovimientoInvalido {
+        partida.terminarEtapa();
+        while (!partida.jugadorEnTurno(jugador) || !(partida.turnoEnProceso().etapaActual().getClass().getSimpleName().equals(etapa))) {
+            partida.terminarEtapa();
+        }
+    }
+
+	@PostMapping("/moverAEtapa/{jugador}/{etapa}")
+	public void moverAEtapa(@RequestHeader("Authorization") String authorizationHeader,
+		@PathVariable String jugador,
+		@PathVariable String etapa
+	) throws MovimientoInvalido {
+		String unJugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(unJugador);
+		avanzarEtapa(partida, jugador, etapa);
+	}
+
+	@PostMapping("/reordenarMazo")
+	public ResponseEntity<String> reordenarMazo(
+		@RequestHeader("Authorization") String authorizationHeader,
+		@RequestBody ArrayList<String> listaOrdenada
+	) throws CartaNoEncontrada {
+		String unJugador = solicitador(authorizationHeader);
+		Partida partida = this.repositorioPartidas.buscarPartidaEnJuego(unJugador);
+
+		Tablero tablero = partida.tableroJugador(unJugador);
+		try {
+			tablero.reordenarMazo(listaOrdenada);
+		} catch (Exception e) {
+			return ResponseEntity.ok(e.getMessage());
+		}
+		
+		return ResponseEntity.ok("Mazo reordenado");
 	}
 }

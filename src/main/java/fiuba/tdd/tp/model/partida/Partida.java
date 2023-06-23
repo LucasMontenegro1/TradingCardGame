@@ -149,7 +149,7 @@ public class Partida {
     }
 
     public boolean jugadorEnTurno(String unJugador) {
-        return unJugador == jugadorEnTurno;
+        return unJugador.equals(jugadorEnTurno);
     }
     
     private void verificarGanador() {
@@ -188,6 +188,10 @@ public class Partida {
 
     public Carta invocarCarta(String jugador, String carta, String zona) throws CartaNoEncontrada, EnergiaInsuficiente, MovimientoInvalido, ZonaLlena {
 
+        if (!jugador.equals(this.jugadorEnTurno)) {
+            throw new MovimientoInvalido("No es tu turno");
+        }
+
         Tablero tablero = tableroJugador(jugador);
 
         Carta cartaEnTablero = tablero.buscarCarta(carta, zona);
@@ -219,11 +223,13 @@ public class Partida {
         
         if (tablero.cartas.contains(carta)) {
             cartas = tablero.cartasUsables(etapa, pilaDeEjecucion, cartasUsadasEnTurno); 
-        } else if (tableroContrincante.cartas.contains(carta)) {
+        } else if (tableroContrincante.cartas.contains(carta) && carta.esTipo(Tipo.Reaccion)) {
             cartas = tableroContrincante.cartasUsables(etapa, pilaDeEjecucion, cartasUsadasEnTurno); 
             tableroContrincante = tableroEnTurno();
             tablero = tableroEnEspera();
-        } 
+        } else {
+            throw new MovimientoInvalido("No podes activar esta carta ahora");
+        }
 
         if (cartas != null && cartas.containsKey(carta) && !(cartasUsadasEnTurno.contains(carta))) {
 
