@@ -1,0 +1,1304 @@
+{
+	"info": {
+		"_postman_id": "2835abb8-4c2e-45b2-a9f8-2528df9557fb",
+		"name": "Endpoints TP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26432950",
+		"_collection_link": "https://winter-spaceship-187817.postman.co/workspace/TP-TDD~58f5925a-0c64-4519-95f6-d917d809a234/collection/26432950-2835abb8-4c2e-45b2-a9f8-2528df9557fb?action=share&creator=26432950&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Registrar usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"pedro\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/registrarse",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"registrarse"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loguear usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"juan\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/loguearse",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"loguearse"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cartas",
+			"item": [
+				{
+					"name": "Lista de cartas y precios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cartas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cartas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Precio de una carta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cartas/FUEGO",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cartas",
+								"FUEGO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cartas del jugador",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jugadores/cartas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jugadores",
+								"cartas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Comprar carta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/cartas/comprar/PLANTA/40",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"cartas",
+								"comprar",
+								"PLANTA",
+								"40"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jugador",
+			"item": [
+				{
+					"name": "Jugadores enfrentables",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jugadores",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jugadores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dinero disponible",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jugadores/dinero",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jugadores",
+								"dinero"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Depositar dinero",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/jugadores/depositar/2000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"jugadores",
+								"depositar",
+								"2000"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mazo",
+			"item": [
+				{
+					"name": "Mazos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/mazos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mazos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear mazo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"AGUA\": 40\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/mazos/agregar/mazoOfensivo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mazos",
+								"agregar",
+								"mazoOfensivo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar mazo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/mazos/eliminar/mazoOfensivo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mazos",
+								"eliminar",
+								"mazoOfensivo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar cartas a un mazo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FUEGO\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/mazos/agregarCartas/mazoOfensivo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mazos",
+								"agregarCartas",
+								"mazoOfensivo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar cartas de mazo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ESPADAMAGICA\": 3,\r\n    \"GOBLIN\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/mazos/eliminarCartas/mazoOfensivo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mazos",
+								"eliminarCartas",
+								"mazoOfensivo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Intercambio de cartas",
+			"item": [
+				{
+					"name": "Entrar al mercado",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/mercado",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mercado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Intercambios disponibles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/mercado/intercambiosMercado",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mercado",
+								"intercambiosMercado"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mis intercambios",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/mercado/intercambios",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mercado",
+								"intercambios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Intercambiar carta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cartaDispuesta\":\"FUEGO\",\r\n    \"cartaDeseada\":\"GOBLIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/mercado/intercambiar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mercado",
+								"intercambiar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar intercambio",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cartaDispuesta\":\"AGUA\",\r\n    \"cartaDeseada\":\"GOBLIN\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/mercado/eliminarIntercambio",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"mercado",
+								"eliminarIntercambio"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Partida",
+			"item": [
+				{
+					"name": "Tablero",
+					"item": [
+						{
+							"name": "Tablero",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{juan}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/partidas/tablero",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"partidas",
+										"tablero"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tablero enemígo",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{pedro}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/partidas/tableroEnemigo",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"partidas",
+										"tableroEnemigo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cartas usables",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{pedro}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/partidas/cartasUsables",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"partidas",
+										"cartasUsables"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cartas atacables",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{juan}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/partidas/cartasAtacables",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"partidas",
+										"cartasAtacables"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Solicitudes de partida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/solicitudes",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"solicitudes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Solicitar partida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contrincante\": \"pedro\",\r\n    \"mazo\": \"mazoOfensivo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/partidas/solicitar/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"solicitar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aceptar solicitud de partida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"contrincante\": \"juan\",\r\n    \"mazo\": \"mazoOfensivo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/partidas/aceptarPartida",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"aceptarPartida"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reordenar mazo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    \"ORCO\",\r\n    \"SABOTEAR\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\",\r\n    \"AGUA\"\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/partidas/reordenarMazo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"reordenarMazo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar partida",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/iniciar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"iniciar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener puntos",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/puntos",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"puntos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ganador",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/ganador",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"ganador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Jugador en turno",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/turno",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"turno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Etapa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/etapa",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"etapa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Energía",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/energia",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"energia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Energía enemiga",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{pedro}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/energiaEnemigo",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"energiaEnemigo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invocar carta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carta\": \"FUEGO\",\r\n    \"zona\": \"ZonaArtefacto\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/partidas/invocarCarta",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"invocarCarta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pasar de etapa",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/terminarEtapa",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"terminarEtapa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activar carta",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carta\": 0,\r\n    \"indiceMetodo\": 0,\r\n    \"jugadorObjetivo\": \"pedro\",\r\n    \"cartasObjetivos\": [],\r\n    \"energia\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/partidas/activarCarta",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"activarCarta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inciar ventana de ejecución",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/iniciarPila",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"iniciarPila"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ejecutar pila",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{juan}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/partidas/ejecutarPila",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"partidas",
+								"ejecutarPila"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{pedro}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "localhost:8080"
+		},
+		{
+			"key": "password",
+			"value": "password"
+		},
+		{
+			"key": "pedro",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwZWRybyIsImlhdCI6MTY4NzM5Mjk0NywiZXhwIjoxNjg3Mzk0Mzg3fQ.oBkQpucAgdzhhABaO_iNBNy4CV6lsFIVtkUU8K5nQds"
+		},
+		{
+			"key": "juan",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdWFuIiwiaWF0IjoxNjg3MzkzMDA0LCJleHAiOjE2ODczOTQ0NDR9.SHMhZpavknsir6KMecM2MS2BQ1Z7CAWJtIxEEvC2YAs"
+		}
+	]
+}
